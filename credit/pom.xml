@@ -253,6 +253,31 @@
                     </execution>
                 </executions>
             </plugin>
+                    <!-- Exec Maven Plugin to run the Jakarta EE Migration Tool -->
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.0.0</version>
+            <executions>
+                <execution>
+                    <id>migrate-war-to-jakarta-ee</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                    <configuration>
+                        <executable>java</executable>
+                        <arguments>
+                			    <argument>-jar</argument>
+                            	<argument>/Users/keithpuzey/jakartaee-migration-1.0.8/lib/jakartaee-migration-1.0.8.jar</argument>
+                  				<argument>${project.build.directory}/digitalcredit-2.1.0.20.war</argument>
+   								<argument>${project.build.directory}/credit.war</argument>
+                        </arguments>
+                    </configuration>
+                </execution>
+            </executions>
+            </plugin>
+            
 			<plugin>
                 <groupId>net.serenity-bdd.maven.plugins</groupId>
                 <artifactId>serenity-maven-plugin</artifactId>

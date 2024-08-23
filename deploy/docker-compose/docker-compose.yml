@@ -1,63 +1,14 @@
 version: "3.5"
 services:
 
-# =====================================================================
-# Digital Broker Service Configuration
-# =====================================================================
-  broker:
-    image: digisic/digitalbroker:latest
-    container_name: broker
-    hostname: broker
-    ports:
-      - "8161:8161"
-      - "61616:61616"
-    networks:
-      - digitalnet
-    restart: unless-stopped
 
-# =====================================================================
-# Digital Credit Service Configuration
-# =====================================================================    
-  credit:
-    image: keithpuzey/digitalcredit:tomcat10
-    container_name: credit
-    hostname: credit
-    environment:
 
-      # Logging Options
-      LOGGING_LEVEL_IO_DIGISIC_CREDIT: INFO
-
-      # Digital Broker Connection
-      SPRING_ARTEMIS_MODE: native
-      SPRING_ARTEMIS_HOST: broker
-      SPRING_ARTEMIS_PORT: 61616
-      SPRING_ARTEMIS_USER: admin
-      SPRING_ARTEMIS_PASSWORD: admin
-
-      # Credit Application Process
-      IO_DIGISIC_CREDIT_APP_PROCESS_ENABLED: 'true'
-      IO_DIGISIC_CREDIT_APP_PROCESS_TIME: 20
-
-      # Digital Credit Application Process JMS Queues
-      IO_DIGISIC_PARTNER_CREDIT_APP_REQUEST: CREDIT.APP.REQUEST
-      IO_DIGISIC_PARTNER_CREDIT_APP_RESPONSE: CREDIT.APP.RESPONSE
-
-    ports:
-      - "3500:8080"
-      - "3535:8443"
-    networks:
-      - digitalnet
-    volumes:
-      - digitalcredit:/usr/local/tomcat/conf
-    depends_on:
-      - broker
-    restart: unless-stopped
 
 # =====================================================================
 # Digital Bank Service Configuration
 # =====================================================================
   bank:
-    image: keithpuzey/digitalbank:tomcat10
+    image: bank:keith2
     container_name: bank
     hostname: bank
     environment:
@@ -115,9 +66,7 @@ services:
       - digitalnet
     volumes:
       - digitalbank:/usr/local/tomcat/conf
-    depends_on:
-      - broker
-      - credit
+
     restart: unless-stopped
       
 # =====================================================================
@@ -126,6 +75,6 @@ services:
 networks:
   digitalnet:
 volumes:
-  digitalcredit:
+
   digitalbank:
 
