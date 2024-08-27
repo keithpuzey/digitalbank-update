@@ -52,7 +52,8 @@ public class MultiHttpSecurityConfig {
 	    	Constants.URI_SWAGGER_RES,
 	    	Constants.URI_SWAGGER_CONF,
 	    	Constants.URI_MANAGER_RES,
-	    	Constants.URI_FAVICON_RES
+	    	Constants.URI_FAVICON_RES,
+	    	Constants.URI_QUERY_DB
 	    	
 	};
 	

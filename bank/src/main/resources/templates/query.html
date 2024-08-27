@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Query</title>
+    <script>
+        function fetchData(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+
+            // Create an XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "bank/queryDatabase", true);
+
+            // Set up the callback function to handle the response
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    // Display the results in the results div
+                    document.getElementById('results').innerHTML = xhr.responseText;
+                } else {
+                    document.getElementById('results').innerHTML = "Error fetching data.";
+                }
+            };
+
+            // Handle network errors
+            xhr.onerror = function () {
+                document.getElementById('results').innerHTML = "Network error.";
+            };
+
+            // Send the request
+            xhr.send();
+        }
+    </script>
+</head>
+<body>
+    <h1>Query Demo Database</h1>
+    <a href="/index.html" style="display: inline-block; margin-bottom: 20px; padding: 10px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">Home</a>
+    
+    <form id="queryForm" onsubmit="fetchData(event)">
+        <input type="submit" value="Fetch Data">
+    </form>
+
+    <!-- Placeholder for the query results -->
+    <div id="results"></div>
+</body>
+</html>

@@ -38,7 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	    	Constants.URI_SWAGGER_UI,
 	    	Constants.URI_SWAGGER_V2,
 	    	Constants.URI_SWAGGER_RES,
-	    	Constants.URI_SWAGGER_CONF
+	    	Constants.URI_SWAGGER_CONF,
+	    	Constants.URI_QUERY_DB
 	};
 	
 	

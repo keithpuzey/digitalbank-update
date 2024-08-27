@@ -19,7 +19,7 @@ services:
 # Digital Credit Service Configuration
 # =====================================================================    
   credit:
-    image: keithpuzey/digitalcredit:tomcat10
+    image: keithpuzey/digitalcredit:sep24
     container_name: credit
     hostname: credit
     environment:
@@ -57,7 +57,7 @@ services:
 # Digital Bank Service Configuration
 # =====================================================================
   bank:
-    image: keithpuzey/digitalbank:tomcat10
+    image: keithpuzey/digitalbank:sep24
     container_name: bank
     hostname: bank
     environment:
@@ -106,7 +106,12 @@ services:
       IO_DIGISIC_BANK_OBP_PROTOCOL: https
       IO_DIGISIC_BANK_OBP_HOST: openbankingservices.io
       IO_DIGISIC_BANK_OBP_PORT:
-      
+
+	  DB_HOST: 172.17.0.1
+	  DB_PORT: 3309
+	  DB_NAME: digitalbank
+	  DB_USER: root
+	  DB_PASSWORD: CAdemo123      
 
     ports:
       - "8080:8080"

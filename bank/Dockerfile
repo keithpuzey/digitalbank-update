@@ -12,6 +12,7 @@ COPY /target/classes/application.properties /usr/local/tomcat/conf/digitalbank.p
 COPY /target/classes/keystore/digisic.jks /usr/local/tomcat/conf/digisic.jks
 COPY /target/classes/keystore/digisic.p12 /usr/local/tomcat/conf/digisic.p12
 COPY /target/classes/server.xml /usr/local/tomcat/conf/server.xml
+RUN mkdir /usr/local/tomcat/webapps/ROOT
 HEALTHCHECK CMD curl -fail http://localhost:8080/bank/api/v1/health || exit 1
 # Remove Manager and Host Manager applications
 RUN rm -rf $CATALINA_HOME/webapps/manager \
@@ -20,3 +21,5 @@ RUN rm -rf $CATALINA_HOME/webapps/manager \
 # Secure Tomcat file permissions
 RUN chown -R root:root $CATALINA_HOME \
     && chmod -R 700 $CATALINA_HOME
+COPY /target/classes/templates/index.html /usr/local/tomcat/webapps/ROOT/index.html
+COPY /target/classes/templates/query.html /usr/local/tomcat/webapps/ROOT/query.html
