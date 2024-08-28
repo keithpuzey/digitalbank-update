@@ -16,7 +16,7 @@ public class DatabaseServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     // Load environment variables
-    private String jdbcUrl = "jdbc:mysql://" + System.getenv("DB_HOST") + ":" + System.getenv("DB_PORT") + "/" + System.getenv("DB_NAME");
+    private String jdbcUrl = "jdbc:"+ System.getenv("DB_TYPE") + "://" + System.getenv("DB_HOST") + ":" + System.getenv("DB_PORT") + "/" + System.getenv("DB_NAME");
     private String jdbcUser = System.getenv("DB_USER");
     private String jdbcPassword = System.getenv("DB_PASSWORD");
 
@@ -46,7 +46,7 @@ public class DatabaseServlet extends HttpServlet {
             out.println("<html><body><h2>Most Recent 10 Registered Users</h2><table border='1'>");
             out.println("<tr><th>ID</th><th>First Name</th><th>Last Name</th></tr>");
             while (resultSet.next()) {
-                out.println("<tr><td>" + resultSet.getInt("id") + "</td><td>" + "</td><td>" + 
+                out.println("<tr><td>" + resultSet.getInt("id") + "</td>" + "<td>" + 
                             (resultSet.getString("first_name") != null ? resultSet.getString("first_name") : "N/A") + "</td><td>" + 
                             (resultSet.getString("last_name") != null ? resultSet.getString("last_name") : "N/A") + "</td></tr>");
             }
@@ -60,9 +60,9 @@ public class DatabaseServlet extends HttpServlet {
             if (accountResultSet.next()) {
                 String lastOpenedAccount = accountResultSet.getString("last_opened_account");
                 if (lastOpenedAccount != null) {
-                    out.println("<h2>Last Opened Account Date/Time: " + lastOpenedAccount + "</h2>");
+                    out.println("<h2>Last DataBase Update - Date/Time: " + lastOpenedAccount + "</h2>");
                 } else {
-                    out.println("<h2>Last Opened Account Date/Time: No data available</h2>");
+                    out.println("<h2>Last DataBase Update - Date/Time: No data available</h2>");
                 }
             }
 

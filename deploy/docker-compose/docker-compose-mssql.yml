@@ -136,6 +136,15 @@ services:
       IO_DIGISIC_BANK_OBP_HOST: 
       IO_DIGISIC_BANK_OBP_PORT:
       
+
+		# Database Query Configuration~
+      DB_TYPE: mssql
+	  DB_HOST: 172.17.0.1
+	  DB_PORT: 3309
+	  DB_NAME: digitalbank
+	  DB_USER: root
+	  DB_PASSWORD: CAdemo123    
+		
       # Database Configuration
       SPRING_DATASOURCE_PLATFORM: mssql
       SPRING_DATASOURCE_USERNAME: digitaluser
