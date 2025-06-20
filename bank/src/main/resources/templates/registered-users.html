@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/sections :: header-css"/>
+<body>
+
+<!-- Sidebar -->
+<aside th:replace="common/menus :: left-panel"></aside>
+
+<!-- Main panel -->
+<div id="right-panel" class="right-panel">
+
+    <header th:replace="common/menus :: rp-header"/>
+    <div th:replace="common/menus :: rp-breadcrumbs (pageTitle='Registered Users')"/>
+
+    <!-- Page Content -->
+    <div class="content mt-3">
+        <div class="animated fadeIn">
+            <div class="card">
+                <div class="card-header bg-flat-color-2 text-white">
+                    <strong>Registered Users</strong>
+                </div>
+                <div class="card-body">
+                    <form id="queryForm" onsubmit="fetchData(event)">
+                        <button class="btn btn-primary btn-sm">Refresh</button>
+                    </form>
+                    <hr />
+                    <div id="results"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div> <!-- End right-panel -->
+
+<div th:replace="common/sections :: footer-scripts"></div>
+
+<script th:inline="javascript">
+    function fetchData(event) {
+        event.preventDefault();
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", /*[[@{/queryDatabase}]]*/, true);
+        xhr.onload = function () {
+            document.getElementById('results').innerHTML = (xhr.status === 200)
+                ? xhr.responseText
+                : "Error fetching data.";
+        };
+        xhr.onerror = function () {
+            document.getElementById('results').innerHTML = "Network error.";
+        };
+        xhr.send();
+    }
+</script>
+
+</body>
+</html>
