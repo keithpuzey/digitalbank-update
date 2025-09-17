@@ -17,6 +17,7 @@ import io.digisic.bank.model.security.Users;
 import io.digisic.bank.util.Constants;
 import com.github.javafaker.Faker;
 
+
 @Service
 @Transactional
 public class SampleDataService {

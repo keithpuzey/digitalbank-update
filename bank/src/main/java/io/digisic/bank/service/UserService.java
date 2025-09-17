@@ -32,6 +32,8 @@ import io.digisic.bank.repository.UserRoleRepository;
 import io.digisic.bank.security.JwtTokenProvider;
 import io.digisic.bank.util.Messages;
 import io.digisic.bank.util.Patterns;
+import io.digisic.bank.config.data.SampleData;
+import io.digisic.bank.util.Constants;
 
 @Service
 @Transactional
@@ -59,8 +61,12 @@ public class UserService {
 	  
 	@Autowired
 	private BCryptPasswordEncoder encoder;
-	
-	
+
+	@Autowired
+	private SampleDataService sampleDataService;
+
+	@Autowired
+	private AccountService accountService;
 	/*
 	 * Rest API Authentication service
 	 */
@@ -160,31 +166,41 @@ public class UserService {
 	 * Creates a new User account within the data store.
 	 */
 	public void createUser(Users newUser, String role) {
-	
-		// Encode the password before storing user
-		newUser.setPassword(encoder.encode(newUser.getPassword()));
-		
+
+	    // Encode the password before storing user
+	    newUser.setPassword(encoder.encode(newUser.getPassword()));
+
 	    // Set Date of Membership to current date the user account was created
 	    newUser.getUserProfile().setDom(new Date());
-	   
+
 	    // Ensure the SSN format is consistent
 	    newUser.getUserProfile().setSsn(normalizeSSNFormat(newUser.getUserProfile().getSsn()));
-	    
+
 	    // Set username to the email address
 	    newUser.setUsername(newUser.getUserProfile().getEmailAddress());
-	    	    
+
 	    // Set the Role Authority for the user
 	    Set<UserRole> userRoles = new HashSet<>();
 	    UserRole userRole = new UserRole(newUser, roleRepository.findByName(role));
 	    userRoles.add(userRole);
 	    newUser.setUserRoles(userRoles);
-	    
+
 	    // Save the User to the data store
 	    newUser = userRepository.save(newUser);
-	    
+
 	    LOG.debug("Create User: New User Created.");
-	    
-	}
+
+	 // Only generate accounts if the account types exist
+	    if (accountService.getAccoutTypeByCode(Constants.ACCT_SAV_MMA_CODE) != null &&
+	        accountService.getAccoutTypeByCode(Constants.ACCT_CHK_STD_CODE) != null) {
+
+	        sampleDataService.createIndividualSavings(newUser);
+	        sampleDataService.createIndividualChecking(newUser);
+	        LOG.debug("Sample individual accounts created for new user.");
+	    } else {
+	        LOG.warn("Account types not initialized. Sample accounts skipped.");
+	        }
+	    }
 	
 	/*
 	 * Delete the user
