@@ -24,5 +24,5 @@ RUN chown -R root:root $CATALINA_HOME \
 COPY /target/classes/templates/index.jsp /usr/local/tomcat/webapps/ROOT/index.jsp
 COPY /target/classes/templates/query.html /usr/local/tomcat/webapps/ROOT/query.html
 COPY /target/classes/templates/nestedtableexample.html /usr/local/tomcat/webapps/ROOT/nestedtablexample.html
-COPY /target/classes/templates/nestedtablexample2.html /usr/local/tomcat/webapps/ROOT/nestedtablexample2.html
+COPY /target/classes/templates/nestedtableexample1.html /usr/local/tomcat/webapps/ROOT/nestedtableexample1.html
 COPY /target/classes/templates/guicardexample.html /usr/local/tomcat/webapps/ROOT/guicardexample.html
