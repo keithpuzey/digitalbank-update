@@ -420,6 +420,8 @@ public class UserController extends CommonController{
 		profile.setLastName(uup.getLastName());
 		profile.setTitle(uup.getTitle());
 		profile.setGender(uup.getGender());
+        profile.setOccupation(uup.getOccupation());
+        profile.setGdprAccepted(uup.getGdprAccepted());
 		profile.setHomePhone(uup.getHomePhone());
 		profile.setMobilePhone(uup.getMobilePhone());
 		profile.setWorkPhone(uup.getWorkPhone());
@@ -476,95 +478,125 @@ public class UserController extends CommonController{
 	 * This allows us to only focus validation on required
 	 * fields that we are permitting update
 	 */
-	private static class UpdateUser {
-		
-		@NotEmpty (message=Messages.USER_FIRST_NAME_REQUIRED)
-		private String firstName;
-		
-		@NotEmpty (message=Messages.USER_LAST_NAME_REQUIRED)
-		private String lastName;
-		
-		@NotEmpty (message=Messages.USER_TITLE_REQUIRED)
-		@Pattern(regexp=Patterns.USER_TITLE, message=Messages.USER_TITLE_FORMAT)
-		private String title;
-		
-		@NotEmpty (message=Messages.USER_GENDER_REQUIRED)
-		@Pattern(regexp=Patterns.USER_GENDER, message=Messages.USER_GENDER_FORMAT)
-		private String gender;
-		
-		@NotEmpty (message=Messages.USER_PHONE_HOME_REQUIRED)
-		@Pattern(regexp=Patterns.USER_PHONE_REQ, message=Messages.USER_PHONE_HOME_FORMAT)
-		private String homePhone;
-		
-		@Pattern(regexp=Patterns.USER_PHONE_NOT_REQ, message=Messages.USER_PHONE_MOBILE_FORMAT)
-		private String mobilePhone;
-		
-		@Pattern(regexp=Patterns.USER_PHONE_NOT_REQ, message=Messages.USER_PHONE_WORK_FORMAT)
-		private String workPhone;
-		
-		@NotEmpty (message=Messages.USER_ADDRESS_REQUIRED)
-		private String address;
-		
-		@NotEmpty (message=Messages.USER_LOCALITY_REQUIRED)
-		private String locality;
-		
-		@NotEmpty (message=Messages.USER_REGION_REQUIRED)
-		private String region;
-		
-		@NotEmpty (message=Messages.USER_POSTAL_CODE_REQUIRED)
-		private String postalCode;
-		
-		@NotEmpty (message=Messages.USER_COUNTRY_REQUIRED)
-		private String country;
-		
-		public String getFirstName() {
-			return firstName;
-		}
+	public static class UpdateUser {
+	    
+	    @NotEmpty(message = Messages.USER_FIRST_NAME_REQUIRED)
+	    private String firstName;
+	    
+	    @NotEmpty(message = Messages.USER_LAST_NAME_REQUIRED)
+	    private String lastName;
+	    
+	    @NotEmpty(message = Messages.USER_TITLE_REQUIRED)
+	    @Pattern(regexp = Patterns.USER_TITLE, message = Messages.USER_TITLE_FORMAT)
+	    private String title;
+	    
+	    @NotEmpty(message = Messages.USER_GENDER_REQUIRED)
+	    @Pattern(regexp = Patterns.USER_GENDER, message = Messages.USER_GENDER_FORMAT)
+	    private String gender;
+	    
+	    @NotEmpty(message = Messages.USER_OCCUPATION_REQUIRED)
+	    private String occupation;
+	    
+	    @NotNull(message = Messages.USER_GDPR_ACCEPT_REQUIRED)
+	    private Boolean gdprAccepted;
+	    
+	    @NotEmpty(message = Messages.USER_SSN_REQUIRED)
+	    @Pattern(regexp = Patterns.USER_SSN, message = Messages.USER_SSN_FORMAT)
+	    private String ssn;
+	    
+	    @NotNull(message = Messages.USER_DOB_REQUIRED)
+	    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Patterns.DATE_FORMAT)
+	    @DateTimeFormat(pattern = Patterns.DATE_FORMAT)
+	    private Date dob;
+	    
+	    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Patterns.DATE_FORMAT)
+	    @DateTimeFormat(pattern = Patterns.DATE_FORMAT)
+	    private Date dom;
+	    
+	    @NotEmpty(message = Messages.USER_EMAIL_REQUIRED)
+	    @Pattern(regexp = Patterns.USER_EMAIL, message = Messages.USER_EMAIL_FORMAT)
+	    private String emailAddress;
+	    
+	    @NotEmpty(message = Messages.USER_PHONE_HOME_REQUIRED)
+	    @Pattern(regexp = Patterns.USER_PHONE_REQ, message = Messages.USER_PHONE_HOME_FORMAT)
+	    private String homePhone;
+	    
+	    @Pattern(regexp = Patterns.USER_PHONE_NOT_REQ, message = Messages.USER_PHONE_MOBILE_FORMAT)
+	    private String mobilePhone;
+	    
+	    @Pattern(regexp = Patterns.USER_PHONE_NOT_REQ, message = Messages.USER_PHONE_WORK_FORMAT)
+	    private String workPhone;
+	    
+	    @NotEmpty(message = Messages.USER_ADDRESS_REQUIRED)
+	    private String address;
+	    
+	    @NotEmpty(message = Messages.USER_LOCALITY_REQUIRED)
+	    private String locality;
+	    
+	    @NotEmpty(message = Messages.USER_REGION_REQUIRED)
+	    private String region;
+	    
+	    @NotEmpty(message = Messages.USER_POSTAL_CODE_REQUIRED)
+	    private String postalCode;
+	    
+	    @NotEmpty(message = Messages.USER_COUNTRY_REQUIRED)
+	    private String country;
 
-		public String getLastName() {
-			return lastName;
-		}
+	    // ---- Getters & Setters ----
 
-		public String getTitle() {
-			return title;
-		}
+	    public String getFirstName() { return firstName; }
+	    public void setFirstName(String firstName) { this.firstName = firstName; }
 
-		public String getGender() {
-			return gender;
-		}
+	    public String getLastName() { return lastName; }
+	    public void setLastName(String lastName) { this.lastName = lastName; }
 
-		public String getHomePhone() {
-			return homePhone;
-		}
+	    public String getTitle() { return title; }
+	    public void setTitle(String title) { this.title = title; }
 
-		public String getMobilePhone() {
-			return mobilePhone;
-		}
+	    public String getGender() { return gender; }
+	    public void setGender(String gender) { this.gender = gender; }
 
-		public String getWorkPhone() {
-			return workPhone;
-		}
+	    public String getOccupation() { return occupation; }
+	    public void setOccupation(String occupation) { this.occupation = occupation; }
 
-		public String getAddress() {
-			return address;
-		}
+	    public Boolean getGdprAccepted() { return gdprAccepted; }
+	    public void setGdprAccepted(Boolean gdprAccepted) { this.gdprAccepted = gdprAccepted; }
 
-		public String getLocality() {
-			return locality;
-		}
+	    public String getSsn() { return ssn; }
+	    public void setSsn(String ssn) { this.ssn = ssn; }
 
-		public String getRegion() {
-			return region;
-		}
+	    public Date getDob() { return dob; }
+	    public void setDob(Date dob) { this.dob = dob; }
 
-		public String getPostalCode() {
-			return postalCode;
-		}
+	    public Date getDom() { return dom; }
+	    public void setDom(Date dom) { this.dom = dom; }
 
-		public String getCountry() {
-			return country;
-		}
-		
+	    public String getEmailAddress() { return emailAddress; }
+	    public void setEmailAddress(String emailAddress) { this.emailAddress = emailAddress; }
+
+	    public String getHomePhone() { return homePhone; }
+	    public void setHomePhone(String homePhone) { this.homePhone = homePhone; }
+
+	    public String getMobilePhone() { return mobilePhone; }
+	    public void setMobilePhone(String mobilePhone) { this.mobilePhone = mobilePhone; }
+
+	    public String getWorkPhone() { return workPhone; }
+	    public void setWorkPhone(String workPhone) { this.workPhone = workPhone; }
+
+	    public String getAddress() { return address; }
+	    public void setAddress(String address) { this.address = address; }
+
+	    public String getLocality() { return locality; }
+	    public void setLocality(String locality) { this.locality = locality; }
+
+	    public String getRegion() { return region; }
+	    public void setRegion(String region) { this.region = region; }
+
+	    public String getPostalCode() { return postalCode; }
+	    public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
+
+	    public String getCountry() { return country; }
+	    public void setCountry(String country) { this.country = country; }
 	}
 	
 	/*
