@@ -32,6 +32,8 @@ import io.digisic.bank.repository.UserRoleRepository;
 import io.digisic.bank.security.JwtTokenProvider;
 import io.digisic.bank.util.Messages;
 import io.digisic.bank.util.Patterns;
+import io.digisic.bank.config.data.SampleData;
+import io.digisic.bank.util.Constants;
 
 @Service
 @Transactional
@@ -59,6 +61,12 @@ public class UserService {
 	  
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+
+	@Autowired
+	private SampleDataService sampleDataService;
+
+	@Autowired
+	private AccountService accountService;
 	
 	
 	/*
@@ -185,15 +193,17 @@ public class UserService {
 	    LOG.debug("Create User: New User Created.");
 		
 
-    // ----------------------------
-    // Generate sample individual accounts for the new user
-    // ----------------------------
-    sampleDataService.createIndividualSavings(newUser);
-    sampleDataService.createIndividualChecking(newUser);
+		 // Only generate accounts if the account types exist
+	    if (accountService.getAccoutTypeByCode(Constants.ACCT_SAV_MMA_CODE) != null &&
+	        accountService.getAccoutTypeByCode(Constants.ACCT_CHK_STD_CODE) != null) {
 
-    LOG.debug("Sample individual accounts created for new user.");
-	    
-	}
+	        sampleDataService.createIndividualSavings(newUser);
+	        sampleDataService.createIndividualChecking(newUser);
+	        LOG.debug("Sample individual accounts created for new user.");
+	    } else {
+	        LOG.warn("Account types not initialized. Sample accounts skipped.");
+	        }
+	    }
 	
 	/*
 	 * Delete the user
