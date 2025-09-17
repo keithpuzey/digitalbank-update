@@ -1,10 +1,10 @@
-FROM tomcat:11.0.8-jdk21-temurin
+FROM tomcat:11.0.11-jdk21-temurin
 # Environment variables
 ENV CATALINA_HOME /usr/local/tomcat
 EXPOSE 8080
 EXPOSE 8443
 # Install OpenJDK 17 or any necessary packages
-RUN apt-get update 
+# RUN apt-get update 
 # Update the PATH environment variable
 # ENV PATH="/usr/lib/jvm/java-17-openjdk-arm64/bin:${PATH}"
 COPY /target/bank.war /usr/local/tomcat/webapps/bank.war
@@ -23,3 +23,6 @@ RUN chown -R root:root $CATALINA_HOME \
     && chmod -R 700 $CATALINA_HOME
 COPY /target/classes/templates/index.jsp /usr/local/tomcat/webapps/ROOT/index.jsp
 COPY /target/classes/templates/query.html /usr/local/tomcat/webapps/ROOT/query.html
+COPY /target/classes/templates/nestedtableexample.html /usr/local/tomcat/webapps/ROOT/nestedtablexample.html
+COPY /target/classes/templates/nestedtablexample2.html /usr/local/tomcat/webapps/ROOT/nestedtablexample2.html
+COPY /target/classes/templates/guicardexample.html /usr/local/tomcat/webapps/ROOT/guicardexample.html

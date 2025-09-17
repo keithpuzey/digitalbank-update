@@ -311,7 +311,7 @@
                         <classpathPrefix>lib/</classpathPrefix>
                     </manifest>
                 </archive>
-                <warName>digitalbank-2.1.0.21</warName>
+         			<warName>digitalbank-2.1.0.${buildNumber}</warName>
                 
             </configuration>
         </plugin>   
