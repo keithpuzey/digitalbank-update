@@ -378,7 +378,7 @@
                         <arguments>
                 			    <argument>-jar</argument>
                             	<argument>/Users/keithpuzey/jakartaee-migration-1.0.8/lib/jakartaee-migration-1.0.8.jar</argument>
-                  				<argument>${project.build.directory}/digitalbank-2.1.0.20.war</argument>
+								<argument>${project.build.directory}/${contextPathName}##${revision}.war</argument>
    								<argument>${project.build.directory}/bank.war</argument>
                         </arguments>
                     </configuration>

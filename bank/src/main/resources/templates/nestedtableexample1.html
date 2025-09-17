@@ -2,31 +2,95 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mock Financial Statement</title>
 <style>
   body {
     font-family: Arial, sans-serif;
     margin: 40px;
+    position: relative;
   }
+
+  /* Sticky Home button */
+  .home-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 15px;
+    background-color: #343A40;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    z-index: 1000;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
   table {
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 20px;
   }
+
   th, td {
     border: 1px solid #333;
     padding: 8px;
     text-align: left;
   }
+
   th {
     background-color: #f2f2f2;
   }
+
   .inner-table th {
     background-color: #d9edf7;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 600px) {
+    body {
+      margin: 20px;
+    }
+
+    table, th, td {
+      font-size: 14px;
+      display: block;
+      width: 100%;
+    }
+
+    tr {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    th, td {
+      text-align: right;
+      padding-left: 50%;
+      position: relative;
+    }
+
+    th::before, td::before {
+      position: absolute;
+      left: 10px;
+      width: 45%;
+      white-space: nowrap;
+      text-align: left;
+      font-weight: bold;
+    }
+
+    /* Add labels for mobile display */
+    th:nth-of-type(1)::before { content: attr(data-label); }
+    td:nth-of-type(1)::before { content: attr(data-label); }
   }
 </style>
 </head>
 <body>
+
+<a href="/index.jsp" class="home-button">Home</a>
+
 <h2>Mock Account Statement</h2>
 
 <table>
@@ -35,6 +99,7 @@
     <th>Month</th>
     <th>Transactions</th>
   </tr>
+
   <tr>
     <td>Checking</td>
     <td>September 2025</td>
@@ -67,6 +132,7 @@
       </table>
     </td>
   </tr>
+
   <tr>
     <td>Savings</td>
     <td>September 2025</td>
