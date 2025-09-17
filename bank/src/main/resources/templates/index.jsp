@@ -76,12 +76,15 @@
         <div class="buttons">
             <a href="/bank">Digital Banking</a>
             <a href="/query.html">Database Demo</a>
+			<a href="https://blazedemo.com/" target="_blank">Travel Website</a>
+			<a href="https://www.demoblaze.com/index.html" target="_blank">Product Store</a>
         </div>
 
         <!-- Second row of buttons -->
         <div class="buttons" style="margin-top: 10px;">
-            <a href="https://blazedemo.com/" target="_blank">Travel Website</a>
-            <a href="https://www.demoblaze.com/index.html" target="_blank">Product Store</a>
+			<a href="/nestedtableexample.html">Mock Financial Statement</a>
+			<a href="/nestedtableexample1.html">Advanced Portfolio Dashboard</a>
+			<a href="/guicardexample.html">Financial Dashboard - GUI Cards</a>
         </div>
 
         <!-- Tomcat version -->

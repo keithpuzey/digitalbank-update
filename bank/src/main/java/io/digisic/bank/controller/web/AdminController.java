@@ -1,4 +1,4 @@
-package io.digisic.bank.controller;
+package io.digisic.bank.controller.web;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

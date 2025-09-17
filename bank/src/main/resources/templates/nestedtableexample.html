@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Advanced Portfolio Dashboard</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+  }
+  h2 { margin-bottom: 20px; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  th, td {
+    border: 1px solid #333;
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  .inner-table th {
+    background-color: #d9edf7;
+  }
+  .inner-table td {
+    padding: 6px;
+  }
+  .collapsible {
+    cursor: pointer;
+    background-color: #f7f7f7;
+  }
+  .collapsible:hover {
+    background-color: #e2e2e2;
+  }
+  .nested {
+    display: none;
+  }
+  .gain { color: green; }
+  .loss { color: red; }
+  .totals { font-weight: bold; background-color: #f9f9f9; }
+</style>
+</head>
+<body>
+
+<h2>Advanced Portfolio Dashboard</h2>
+
+<p>Total Portfolio Value: <strong>$107,250</strong></p>
+
+<table>
+  <tr>
+    <th>Asset Class</th>
+    <th>Holdings</th>
+    <th>Class Total</th>
+  </tr>
+
+  <!-- Stocks -->
+  <tr class="collapsible" onclick="toggle('stocks')">
+    <td>Stocks</td>
+    <td>Click to expand/collapse</td>
+    <td>$72,500</td>
+  </tr>
+  <tr id="stocks" class="nested">
+    <td colspan="3">
+      <table class="inner-table">
+        <tr>
+          <th>Ticker</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Market Value</th>
+          <th>% of Portfolio</th>
+          <th>Gain/Loss</th>
+        </tr>
+        <tr><td>AAPL</td><td>50</td><td>$150</td><td>$7,500</td><td>7%</td><td class="gain">+$500</td></tr>
+        <tr><td>GOOGL</td><td>20</td><td>$2800</td><td>$56,000</td><td>52%</td><td class="gain">+$4,000</td></tr>
+        <tr><td>MSFT</td><td>30</td><td>$300</td><td>$9,000</td><td>8%</td><td class="loss">-$200</td></tr>
+        <tr class="totals"><td colspan="3">Stocks Total</td><td>$72,500</td><td>67%</td><td></td></tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- Bonds -->
+  <tr class="collapsible" onclick="toggle('bonds')">
+    <td>Bonds</td>
+    <td>Click to expand/collapse</td>
+    <td>$20,000</td>
+  </tr>
+  <tr id="bonds" class="nested">
+    <td colspan="3">
+      <table class="inner-table">
+        <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Market Value</th>
+          <th>% of Portfolio</th>
+          <th>Gain/Loss</th>
+        </tr>
+        <tr><td>US Treasury 10Y</td><td>10</td><td>$1,000</td><td>$10,000</td><td>9%</td><td class="gain">+$50</td></tr>
+        <tr><td>Corporate Bond XYZ</td><td>5</td><td>$2,000</td><td>$10,000</td><td>9%</td><td class="loss">-$100</td></tr>
+        <tr class="totals"><td colspan="3">Bonds Total</td><td>$20,000</td><td>18%</td><td></td></tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- ETFs -->
+  <tr class="collapsible" onclick="toggle('etfs')">
+    <td>ETFs</td>
+    <td>Click to expand/collapse</td>
+    <td>$14,750</td>
+  </tr>
+  <tr id="etfs" class="nested">
+    <td colspan="3">
+      <table class="inner-table">
+        <tr>
+          <th>Symbol</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Market Value</th>
+          <th>% of Portfolio</th>
+          <th>Gain/Loss</th>
+        </tr>
+        <tr><td>SPY</td><td>25</td><td>$450</td><td>$11,250</td><td>10%</td><td class="gain">+$250</td></tr>
+        <tr><td>QQQ</td><td>10</td><td>$350</td><td>$3,500</td><td>3%</td><td class="loss">-$50</td></tr>
+        <tr class="totals"><td colspan="3">ETFs Total</td><td>$14,750</td><td>14%</td><td></td></tr>
+      </table>
+    </td>
+  </tr>
+
+</table>
+
+<script>
+function toggle(id) {
+  const row = document.getElementById(id);
+  row.style.display = (row.style.display === "table-row") ? "none" : "table-row";
+}
+</script>
+
+</body>
+</html>
