@@ -183,6 +183,15 @@ public class UserService {
 	    newUser = userRepository.save(newUser);
 	    
 	    LOG.debug("Create User: New User Created.");
+		
+
+    // ----------------------------
+    // Generate sample individual accounts for the new user
+    // ----------------------------
+    sampleDataService.createIndividualSavings(newUser);
+    sampleDataService.createIndividualChecking(newUser);
+
+    LOG.debug("Sample individual accounts created for new user.");
 	    
 	}
 	
