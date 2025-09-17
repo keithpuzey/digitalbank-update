@@ -311,8 +311,7 @@
                         <classpathPrefix>lib/</classpathPrefix>
                     </manifest>
                 </archive>
-         			<warName>digitalbank-2.1.0.${buildNumber}</warName>
-                
+                <warName>${contextPathName}##${revision}</warName>
             </configuration>
         </plugin>   
 			<plugin>
@@ -368,7 +367,22 @@
             <artifactId>exec-maven-plugin</artifactId>
             <version>3.0.0</version>
             <executions>
-
+                <execution>
+                    <id>migrate-war-to-jakarta-ee</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                    <configuration>
+                        <executable>java</executable>
+                        <arguments>
+                			    <argument>-jar</argument>
+                            	<argument>/Users/keithpuzey/jakartaee-migration-1.0.8/lib/jakartaee-migration-1.0.8.jar</argument>
+								<argument>${project.build.directory}/${contextPathName}##${revision}.war</argument>
+   								<argument>${project.build.directory}/bank.war</argument>
+                        </arguments>
+                    </configuration>
+                </execution>
             </executions>
         </plugin>
 			<plugin>

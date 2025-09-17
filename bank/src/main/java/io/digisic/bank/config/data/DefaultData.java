@@ -126,6 +126,8 @@ public class DefaultData implements CommandLineRunner, Ordered {
 			userProfile.setHomePhone(faker.numerify("###-###-####"));
 			userProfile.setMobilePhone(faker.numerify("###-###-####"));
 			userProfile.setWorkPhone(faker.numerify("###-###-####"));
+			userProfile.setOccupation("Unknown");  // required field
+			userProfile.setGdprAccepted(true);           // required field
 			  
 			user.setUserProfile(userProfile); userService.createUser(user,
 			Role.ROLE_API); userService.addRole(user, Role.ROLE_ADMIN);

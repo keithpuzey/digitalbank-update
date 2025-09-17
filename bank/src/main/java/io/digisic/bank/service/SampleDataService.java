@@ -79,7 +79,9 @@ public class SampleDataService {
 		maleProfile.setHomePhone(homePhone);
 		maleProfile.setMobilePhone(faker.numerify("###-###-####"));
 		maleProfile.setWorkPhone(faker.numerify("###-###-####"));
-		
+		maleProfile.setOccupation("Engineer");  // or some default
+		maleProfile.setGdprAccepted(true);      // default to true
+	    
 		male.setUserProfile(maleProfile);
 		userService.createUser(male, Role.ROLE_USER);
 		userService.addRole(male, Role.ROLE_API);
@@ -118,7 +120,8 @@ public class SampleDataService {
 		femaleProfile.setHomePhone(homePhone);
 		femaleProfile.setMobilePhone(faker.numerify("###-###-####"));
 		femaleProfile.setWorkPhone(faker.numerify("###-###-####"));
-		
+		femaleProfile.setOccupation("Engineer");  // or some default
+		femaleProfile.setGdprAccepted(true);      // default to true
 		female.setUserProfile(femaleProfile);
 		userService.createUser(female, Role.ROLE_USER);
 		userService.addRole(female, Role.ROLE_API);

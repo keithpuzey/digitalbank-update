@@ -68,6 +68,11 @@
                             <input type="text" class="form-control" id="ssn" th:field="${userProfile.ssn}" required autocomplete="off" th:pattern="${patternSSN}" th:title="${patternSSNMSG}">
                         	<small class="form-text text-muted">ex. 123-45-6789</small>
                         </div>
+						<div class="form-group">
+						    <label class="form-control-label"><strong>Occupation</strong></label>
+						    <input type="text" class="form-control" id="occupation" th:field="${userProfile.occupation}" >
+							<small class="form-text text-muted">ex. Computer Engineer</small>
+						</div>
                         <div class="form-group">
                             <label class="form-control-label"><strong>Email Address</strong></label>
                             <input type="email" class="form-control" id="emailAddress" th:field="${userProfile.emailAddress}" required th:pattern="${patternEmail}">
