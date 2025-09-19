@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/sections :: header-css"></head>
+<body>
+
+    <!-- Left Panel -->
+    <aside th:replace="common/menus :: left-panel"></aside>
+
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+
+        <header th:replace="common/menus :: rp-header"></header>
+        <div th:replace="common/menus :: rp-breadcrumbs (pageTitle='Financial Dashboard')"></div>
+
+        <!-- Original Content Starts -->
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8 space-y-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800">Financial Dashboard</h2>
+
+            <!-- Here, we include your fragment content -->
+            <div th:replace="fragments/dashboard :: dashboard-cards"></div>
+
+        </div>
+        <!-- Original Content Ends -->
+
+    </div> <!-- End right panel -->
+
+    <!-- Footer -->
+    <div th:replace="common/sections :: footer-scripts"></div>
+
+    <!-- Page-specific JS -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function toggleDetails(id) {
+            const details = document.getElementById(id);
+            if (details.style.display === "none" || details.style.display === "") {
+                details.style.display = "block"; // Show the details
+            } else {
+                details.style.display = "none"; // Hide the details
+            }
+        }
+        /*]]>*/
+    </script>
+
+    <!-- Page-specific CSS -->
+    <style>
+        .gain { color: green; }
+        .loss { color: red; }
+        .totals { font-weight: bold; background-color: #f9f9f9; }
+        .collapsible { cursor: pointer; background-color: #f7f7f7; }
+        .collapsible:hover { background-color: #e2e2e2; }
+        .nested { display: none; }
+        .inner-table th { background-color: #d9edf7; }
+    </style>
+
+</body>
+</html>

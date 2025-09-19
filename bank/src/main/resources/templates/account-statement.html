@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/sections :: header-css"></head>
+<body>
+
+    <!-- Left Panel -->
+    <aside th:replace="common/menus :: left-panel"></aside>
+
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+
+        <header th:replace="common/menus :: rp-header"></header>
+        <div th:replace="common/menus :: rp-breadcrumbs (pageTitle='Advanced Portfolio Dashboard')"></div>
+
+        <!-- Original Content Starts -->
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8 space-y-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800">My Account Statement</h2>
+
+			<div class="overflow-x-auto">
+			    <table class="w-full table-auto border-collapse account-table">
+			        <thead>
+			            <tr class="bg-gray-200">
+			                <th class="px-4 py-3 text-left font-semibold text-gray-700">Account</th>
+			                <th class="px-4 py-3 text-left font-semibold text-gray-700">Month</th>
+			                <th class="px-4 py-3 text-left font-semibold text-gray-700">Transactions</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			            <!-- Checking Account -->
+			            <tr>
+			                <td class="px-4 py-3 border-b border-gray-200 rounded-tl-lg">Checking</td>
+			                <td class="px-4 py-3 border-b border-gray-200">September 2025</td>
+			                <td class="px-4 py-3 border-b border-gray-200 rounded-tr-lg">
+			                    <table class="w-full table-auto inner-account-table">
+			                        <thead>
+			                            <tr class="bg-blue-100">
+			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Date</th>
+			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Description</th>
+			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Amount</th>
+			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Balance</th>
+			                            </tr>
+			                        </thead>
+			                        <tbody>
+			                            <tr>
+			                                <td class="px-4 py-2 border-b border-blue-200">01/09/2025</td>
+			                                <td class="px-4 py-2 border-b border-blue-200">Deposit</td>
+			                                <td class="px-4 py-2 border-b border-blue-200 text-green-600 font-medium">$1,500</td>
+			                                <td class="px-4 py-2 border-b border-blue-200">$1,500</td>
+			                            </tr>
+			                            <tr>
+			                                <td class="px-4 py-2 border-b border-blue-200">03/09/2025</td>
+			                                <td class="px-4 py-2 border-b border-blue-200">Grocery Store</td>
+			                                <td class="px-4 py-2 border-b border-blue-200 text-red-600 font-medium">-$120</td>
+			                                <td class="px-4 py-2 border-b border-blue-200">$1,380</td>
+			                            </tr>
+			                            <tr>
+			                                <td class="px-4 py-2 border-b border-blue-200">10/09/2025</td>
+			                                <td class="px-4 py-2 border-b border-blue-200">Electric Bill</td>
+			                                <td class="px-4 py-2 border-b border-blue-200 text-red-600 font-medium">-$80</td>
+			                                <td class="px-4 py-2 border-b border-blue-200">$1,300</td>
+			                            </tr>
+			                        </tbody>
+			                    </table>
+			                </td>
+			            </tr>
+
+			            <!-- Savings Account -->
+			            <tr>
+			                <td class="px-4 py-3 border-b border-gray-200">Savings</td>
+			                <td class="px-4 py-3 border-b border-gray-200">September 2025</td>
+			                <td class="px-4 py-3 border-b border-gray-200">
+			                    <table class="w-full table-auto inner-account-table">
+			                        <thead>
+			                            <tr class="bg-blue-100">
+			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Date</th>
+			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Description</th>
+			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Amount</th>
+			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Balance</th>
+			                            </tr>
+			                        </thead>
+			                        <tbody>
+			                            <tr>
+			                                <td class="px-4 py-2 border-b border-blue-200">01/09/2025</td>
+			                                <td class="px-4 py-2 border-b border-blue-200">Initial Deposit</td>
+			                                <td class="px-4 py-2 border-b border-blue-200 text-green-600 font-medium">$5,000</td>
+			                                <td class="px-4 py-2 border-b border-blue-200">$5,000</td>
+			                            </tr>
+			                            <tr>
+			                                <td class="px-4 py-2 border-b border-blue-200">15/09/2025</td>
+			                                <td class="px-4 py-2 border-b border-blue-200">Interest</td>
+			                                <td class="px-4 py-2 border-b border-blue-200 text-green-600 font-medium">$15</td>
+			                                <td class="px-4 py-2 border-b border-blue-200">$5,015</td>
+			                            </tr>
+			                        </tbody>
+			                    </table>
+			                </td>
+			            </tr>
+			        </tbody>
+			    </table>
+			</div>
+        <!-- Original Content Ends -->
+
+    </div> <!-- End right panel -->
+
+    <!-- Footer -->
+    <div th:replace="common/sections :: footer-scripts"></div>
+
+    <!-- Page-specific JS -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function toggle(id) {
+            const row = document.getElementById(id);
+            row.style.display = (row.style.display === "table-row") ? "none" : "table-row";
+        }
+        /*]]>*/
+    </script>
+
+    <!-- Page-specific CSS -->
+    <style>
+        .gain { color: green; }
+        .loss { color: red; }
+        .totals { font-weight: bold; background-color: #f9f9f9; }
+        .collapsible { cursor: pointer; background-color: #f7f7f7; }
+        .collapsible:hover { background-color: #e2e2e2; }
+        .nested { display: none; }
+        .inner-table th { background-color: #d9edf7; }
+    </style>
+
+</body>
+</html>

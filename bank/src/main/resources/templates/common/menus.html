@@ -63,16 +63,32 @@
                     <li><a id="transfer-menu-item" th:href="@{/account/xfer-between}"><i class="menu-icon fa fa-random"></i>Transfer Between Accounts</a></li>
                     <li><a id="visa-transfer-menu-item" th:href="@{/external/xfer-visa}"><i class="menu-icon fa fa-credit-card"></i>VISA Direct Transfer</a></li>
 
-					<h3 class="menu-title">Administration</h3>
+					<h3 class="menu-title">INSIGHTS</h3>
+					<hr />
 
-					<li class="menu-item-has-children dropdown">
-					    <a href="#" id="admin-menu" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					        <i class="menu-icon fa fa-cogs"></i>Reporting
-					    </a>
-					    <ul class="sub-menu children dropdown-menu">
-					        <li><i class="menu-icon fa fa-users"></i><a id="registered-users-menu-item" th:href="@{/admin/registered-users}">Registered Users</a></li>
-					    </ul>
-					</li>                    
+					<li>
+					  <a th:href="@{/admin/registered-users}">
+					    <i class="menu-icon fa fa-users"></i>Registered Users
+					  </a>
+					</li>
+
+					<li>
+					  <a th:href="@{/admin/account-statement}">
+					    <i class="menu-icon fa fa-tasks"></i>Account Statement
+					  </a>
+					</li>
+
+					<li>
+					  <a th:href="@{/admin/portfolio-dashboard}">
+					    <i class="menu-icon fa fa-money"></i>PortFolio DashBoard
+					  </a>
+					</li>
+
+					<li>
+					  <a th:href="@{/admin/financial-dashboard}">
+					    <i class="menu-icon fa fa-money"></i>Financial Dashboard
+					  </a>
+					</li>                
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
