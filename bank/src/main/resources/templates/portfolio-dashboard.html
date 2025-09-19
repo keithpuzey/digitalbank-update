@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/sections :: header-css" />
+<body>
+
+    <!-- Left Panel -->
+    <aside th:replace="common/menus :: left-panel"></aside>
+
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+
+        <header th:replace="common/menus :: rp-header" />
+        <div th:replace="common/menus :: rp-breadcrumbs (pageTitle='Advanced Portfolio Dashboard')" />
+
+        <!-- Page Content Begin -->
+        <div class="content mt-3">
+            <div class="animated fadeIn">
+
+                <div class="row justify-content-center mb-4">
+                    <div class="col-lg-10">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h2 class="mb-3">Advanced Portfolio Dashboard</h2>
+                                <p>Total Portfolio Value: <strong>$107,250</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+
+                    <!-- Stocks Card -->
+                    <div class="col-lg-10 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="mb-3 text-center collapsible" onclick="toggle('stocksTable')">📈 Stocks (click to expand/collapse)</h4>
+                                <div id="stocksTable" class="nested">
+                                    <table class="table table-bordered table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Ticker</th>
+                                                <th>Quantity</th>
+                                                <th>Price</th>
+                                                <th>Market Value</th>
+                                                <th>% of Portfolio</th>
+                                                <th>Gain/Loss</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>AAPL</td><td>50</td><td>$150</td><td>$7,500</td><td>7%</td><td class="gain">+$500</td></tr>
+                                            <tr><td>GOOGL</td><td>20</td><td>$2800</td><td>$56,000</td><td>52%</td><td class="gain">+$4,000</td></tr>
+                                            <tr><td>MSFT</td><td>30</td><td>$300</td><td>$9,000</td><td>8%</td><td class="loss">-$200</td></tr>
+                                            <tr class="totals">
+                                                <td colspan="3">Stocks Total</td>
+                                                <td>$72,500</td>
+                                                <td>67%</td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bonds Card -->
+                    <div class="col-lg-10 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="mb-3 text-center collapsible" onclick="toggle('bondsTable')">💵 Bonds (click to expand/collapse)</h4>
+                                <div id="bondsTable" class="nested">
+                                    <table class="table table-bordered table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Quantity</th>
+                                                <th>Price</th>
+                                                <th>Market Value</th>
+                                                <th>% of Portfolio</th>
+                                                <th>Gain/Loss</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>US Treasury 10Y</td><td>10</td><td>$1,000</td><td>$10,000</td><td>9%</td><td class="gain">+$50</td></tr>
+                                            <tr><td>Corporate Bond XYZ</td><td>5</td><td>$2,000</td><td>$10,000</td><td>9%</td><td class="loss">-$100</td></tr>
+                                            <tr class="totals">
+                                                <td colspan="3">Bonds Total</td>
+                                                <td>$20,000</td>
+                                                <td>18%</td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ETFs Card -->
+                    <div class="col-lg-10 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="mb-3 text-center collapsible" onclick="toggle('etfsTable')">📊 ETFs (click to expand/collapse)</h4>
+                                <div id="etfsTable" class="nested">
+                                    <table class="table table-bordered table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Symbol</th>
+                                                <th>Quantity</th>
+                                                <th>Price</th>
+                                                <th>Market Value</th>
+                                                <th>% of Portfolio</th>
+                                                <th>Gain/Loss</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>SPY</td><td>25</td><td>$450</td><td>$11,250</td><td>10%</td><td class="gain">+$250</td></tr>
+                                            <tr><td>QQQ</td><td>10</td><td>$350</td><td>$3,500</td><td>3%</td><td class="loss">-$50</td></tr>
+                                            <tr class="totals">
+                                                <td colspan="3">ETFs Total</td>
+                                                <td>$14,750</td>
+                                                <td>14%</td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <!-- End row -->
+
+            </div> <!-- End animated -->
+        </div> <!-- End content -->
+        <!-- Page Content End -->
+
+    </div> <!-- End right panel -->
+
+    <!-- Footer -->
+    <div th:replace="common/sections :: footer-scripts"></div>
+
+    <!-- JavaScript for Toggle -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function toggle(id) {
+            const section = document.getElementById(id);
+            if (section.style.display === "none" || section.style.display === "") {
+                section.style.display = "block";
+            } else {
+                section.style.display = "none";
+            }
+        }
+        /*]]>*/
+    </script>
+
+    <!-- Extra Styling -->
+    <style>
+        .nested {
+            display: none;
+        }
+
+        .collapsible {
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .collapsible:hover {
+            background-color: #f0f0f0;
+        }
+
+        .gain {
+            color: #28a745;
+            font-weight: 500;
+        }
+
+        .loss {
+            color: #dc3545;
+            font-weight: 500;
+        }
+
+        .totals {
+            font-weight: bold;
+            background-color: #f9f9f9;
+        }
+    </style>
+
+</body>
+</html>

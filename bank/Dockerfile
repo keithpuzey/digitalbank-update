@@ -23,6 +23,6 @@ RUN chown -R root:root $CATALINA_HOME \
     && chmod -R 700 $CATALINA_HOME
 COPY /target/classes/templates/index.jsp /usr/local/tomcat/webapps/ROOT/index.jsp
 COPY /target/classes/templates/query.html /usr/local/tomcat/webapps/ROOT/query.html
-COPY /target/classes/templates/nestedtableexample.html /usr/local/tomcat/webapps/ROOT/nestedtableexample.html
-COPY /target/classes/templates/nestedtableexample1.html /usr/local/tomcat/webapps/ROOT/nestedtableexample1.html
-COPY /target/classes/templates/guicardexample.html /usr/local/tomcat/webapps/ROOT/guicardexample.html
+COPY /target/classes/templates/nestedtableexample-landing.html /usr/local/tomcat/webapps/ROOT/nestedtableexample.html
+COPY /target/classes/templates/nestedtableexample1-landing.html /usr/local/tomcat/webapps/ROOT/nestedtableexample1.html
+COPY /target/classes/templates/guicardexample-landing.html /usr/local/tomcat/webapps/ROOT/guicardexample.html

@@ -4,7 +4,11 @@ public class Constants {
 	
 	// Cookies
 	public static final String COO_REMEBER_ME 		= "remeber-me";
-	
+
+	// API Version
+	public static final String API_VERSION = "2.1";	
+	public static final String API_VERSION_BASE = "/api/" + API_VERSION;
+	public static final String API_BASE = API_VERSION_BASE;
 	
 	// Session Management
 	public static final String COO_JSESSION_ID		= "JSESSIONID";
@@ -95,49 +99,49 @@ public class Constants {
 	public static final String URI_XFER_VISA			= "/xfer-visa";
 	
 	// API Authenticated URIs
-	public static final String URI_API_ALL				= "/api/**";
-	public static final String URI_API_AUTH				= "/api/v1/auth";
-	public static final String URI_API_USR_ALL			= "/api/v1/users";
-	public static final String URI_API_USR				= "/api/v1/user";
-	public static final String URI_API_USR_FIND			= "/api/v1/user/find";
-	public static final String URI_API_USR_ID			= "/api/v1/user/{id}";
-	public static final String URI_API_USR_PROF			= "/api/v1/user/{id}/profile";
-	public static final String URI_API_USR_PROF_CURR	= "/api/v1/user/profile";
-	public static final String URI_API_USR_ROLE			= "/api/v1/user/{id}/role";
-	public static final String URI_API_USR_DATA_CREATE	= "/api/v1/user/{id}/data/create";
-	public static final String URI_API_USR_DATA_DELETE	= "/api/v1/user/{id}/data/delete";
-	public static final String URI_API_USR_ROLE_CURR	= "/api/v1/user/role";
-	public static final String URI_API_USR_SET_PASS		= "/api/v1/user/{id}/password";
-	public static final String URI_API_USR_CHG_PASS		= "/api/v1/user/password";
-	public static final String URI_API_USR_ENABLE		= "/api/v1/user/{id}/state/enable";
-	public static final String URI_API_USR_UNEXPIRE		= "/api/v1/user/{id}/state/unexpire";
-	public static final String URI_API_USR_UNLOCK		= "/api/v1/user/{id}/state/unlock";
-	public static final String URI_API_USR_PASS_UNEXPIRE= "/api/v1/user/{id}/password/unexpire";
-	public static final String URI_API_USR_ACCT			= "/api/v1/user/{id}/account";
-	public static final String URI_API_USR_ACCT_CURR	= "/api/v1/user/account";
-	public static final String URI_API_USR_ACCT_CHK		= "/api/v1/user/{id}/account/checking";
-	public static final String URI_API_USR_ACCT_CHK_CURR= "/api/v1/user/account/checking";
-	public static final String URI_API_USR_ACCT_SAV		= "/api/v1/user/{id}/account/savings";
-	public static final String URI_API_USR_ACCT_SAV_CURR= "/api/v1/user/account/savings";
-	public static final String URI_API_ACCT_ALL			= "/api/v1/account";
-	public static final String URI_API_ACCT				= "/api/v1/account/{id}";
-	public static final String URI_API_ACCT_CHK_ALL		= "/api/v1/account/checking";
-	public static final String URI_API_ACCT_SAV_ALL		= "/api/v1/account/savings";
-	public static final String URI_API_ACCT_TRAN		= "/api/v1/account/{id}/transaction";
-	public static final String URI_API_ACCT_OWNER		= "/api/v1/account/{id}/owner";
-	public static final String URI_API_ACCT_COOWNER		= "/api/v1/account/{id}/coowner";
-	public static final String URI_API_ACCT_XFER		= "/api/v1/account/{id}/transfer";
-	public static final String URI_API_DATA_ACCT_TYP	= "/api/v1/data/account/type";
-	public static final String URI_API_DATA_ACCT_TYP_CHK= "/api/v1/data/account/type/checking";
-	public static final String URI_API_DATA_ACCT_TYP_SAV= "/api/v1/data/account/type/savings";
-	public static final String URI_API_DATA_ACCT_STAND	= "/api/v1/data/account/standing";
-	public static final String URI_API_DATA_ACCT_OWN_TYP= "/api/v1/data/account/ownership/type";
-	public static final String URI_API_DATA_ACCT_TRAN_ST= "/api/v1/data/account/transaction/state";
-	public static final String URI_API_DATA_ACCT_TRAN_TY= "/api/v1/data/account/transaction/type";
-	public static final String URI_API_DATA_ACCT_TRAN_CT= "/api/v1/data/account/transaction/category";
-	public static final String URI_API_PROMO			= "/api/v1/promotions";
-	public static final String URI_API_SEARCH_ATM		= "/api/v1/search/atm";
-	public static final String URI_API_HEALTHCHECK		= "/api/v1/health";
+	public static final String URI_API_ALL				= API_BASE + "/**";
+	public static final String URI_API_AUTH				= API_BASE + "/auth";
+	public static final String URI_API_USR_ALL			= API_BASE + "/users";
+	public static final String URI_API_USR				= API_BASE + "/user";
+	public static final String URI_API_USR_FIND			= API_BASE + "/user/find";
+	public static final String URI_API_USR_ID			= API_BASE + "/user/{id}";
+	public static final String URI_API_USR_PROF			= API_BASE + "/user/{id}/profile";
+	public static final String URI_API_USR_PROF_CURR	= API_BASE + "/user/profile";
+	public static final String URI_API_USR_ROLE			= API_BASE + "/user/{id}/role";
+	public static final String URI_API_USR_DATA_CREATE	= API_BASE + "/user/{id}/data/create";
+	public static final String URI_API_USR_DATA_DELETE	= API_BASE + "/user/{id}/data/delete";
+	public static final String URI_API_USR_ROLE_CURR	= API_BASE + "/user/role";
+	public static final String URI_API_USR_SET_PASS		= API_BASE + "/user/{id}/password";
+	public static final String URI_API_USR_CHG_PASS		= API_BASE + "/user/password";
+	public static final String URI_API_USR_ENABLE		= API_BASE + "/user/{id}/state/enable";
+	public static final String URI_API_USR_UNEXPIRE		= API_BASE + "/user/{id}/state/unexpire";
+	public static final String URI_API_USR_UNLOCK		= API_BASE + "/user/{id}/state/unlock";
+	public static final String URI_API_USR_PASS_UNEXPIRE= API_BASE + "/user/{id}/password/unexpire";
+	public static final String URI_API_USR_ACCT			= API_BASE + "/user/{id}/account";
+	public static final String URI_API_USR_ACCT_CURR	= API_BASE + "/user/account";
+	public static final String URI_API_USR_ACCT_CHK		= API_BASE + "/user/{id}/account/checking";
+	public static final String URI_API_USR_ACCT_CHK_CURR= API_BASE + "/user/account/checking";
+	public static final String URI_API_USR_ACCT_SAV		= API_BASE + "/user/{id}/account/savings";
+	public static final String URI_API_USR_ACCT_SAV_CURR= API_BASE + "/user/account/savings";
+	public static final String URI_API_ACCT_ALL			= API_BASE + "/account";
+	public static final String URI_API_ACCT				= API_BASE + "/account/{id}";
+	public static final String URI_API_ACCT_CHK_ALL		= API_BASE + "/account/checking";
+	public static final String URI_API_ACCT_SAV_ALL		= API_BASE + "/account/savings";
+	public static final String URI_API_ACCT_TRAN		= API_BASE + "/account/{id}/transaction";
+	public static final String URI_API_ACCT_OWNER		= API_BASE + "/account/{id}/owner";
+	public static final String URI_API_ACCT_COOWNER		= API_BASE + "/account/{id}/coowner";
+	public static final String URI_API_ACCT_XFER		= API_BASE + "/account/{id}/transfer";
+	public static final String URI_API_DATA_ACCT_TYP	= API_BASE + "/data/account/type";
+	public static final String URI_API_DATA_ACCT_TYP_CHK= API_BASE + "/data/account/type/checking";
+	public static final String URI_API_DATA_ACCT_TYP_SAV= API_BASE + "/data/account/type/savings";
+	public static final String URI_API_DATA_ACCT_STAND	= API_BASE + "/data/account/standing";
+	public static final String URI_API_DATA_ACCT_OWN_TYP= API_BASE + "/data/account/ownership/type";
+	public static final String URI_API_DATA_ACCT_TRAN_ST= API_BASE + "/data/account/transaction/state";
+	public static final String URI_API_DATA_ACCT_TRAN_TY= API_BASE + "/data/account/transaction/type";
+	public static final String URI_API_DATA_ACCT_TRAN_CT= API_BASE + "/data/account/transaction/category";
+	public static final String URI_API_PROMO			= API_BASE + "/promotions";
+	public static final String URI_API_SEARCH_ATM		= API_BASE + "/search/atm";
+	public static final String URI_API_HEALTHCHECK		= API_BASE + "/health";
 	public static final String URI_API_CREDIT_APP_ALL	= "/api/v1/credit/references";
 	public static final String URI_API_CREDIT_APP		= "/api/v1/credit/reference";
 	public static final String URI_API_CREDIT_APP_ID	= "/api/v1/credit/reference/{id}";
@@ -299,7 +303,7 @@ public class Constants {
 	public static final String APP_OBP_CONSUMER_KEY					= "io.digisic.bank.obp.consumer_key";
 	
 	// Credit API URIs
-	public static final String APP_CREDIT_URI_API_BASE				= "/api/v1";	
+	public static final String APP_CREDIT_URI_API_BASE				= "/api/v1";
 	public static final String APP_CREDIT_URI_API_AUTH				= "/auth";	
 	public static final String APP_CREDIT_URI_CC_ID					= "/credit/card/{0}";
 	public static final String APP_CREDIT_URI_CC_ID_BILLING			= "/credit/card/{0}/billing";

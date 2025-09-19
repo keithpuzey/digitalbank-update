@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Dashboard - GUI Cards</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background-color: #f4f4f4;
+    position: relative;
+  }
+
+  /* Sticky Home button */
+  .home-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 15px;
+    background-color: #343A40;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    z-index: 1000;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 60px; /* prevent overlap with Home button */
+  }
+
+  .card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    padding: 20px;
+    width: 300px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  }
+
+  .card h3 {
+    margin-top: 0;
+    color: #333;
+  }
+
+  .card p {
+    margin: 5px 0;
+    font-size: 16px;
+  }
+
+  .card .amount {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2a9d8f;
+  }
+
+  .card .gain {
+    color: green;
+  }
+
+  .card .loss {
+    color: red;
+  }
+
+  .card button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #264653;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .card button:hover {
+    background-color: #1b2d3b;
+  }
+
+  /* Expandable details */
+  .details {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 600px) {
+    body {
+      margin: 20px;
+    }
+    .dashboard {
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 80px;
+    }
+    .card {
+      width: 100%;
+      padding: 15px;
+    }
+  }
+</style>
+<script>
+  function toggleDetails(cardId) {
+    const details = document.getElementById(cardId);
+    if (details.style.display === "none" || details.style.display === "") {
+      details.style.display = "block";
+    } else {
+      details.style.display = "none";
+    }
+  }
+</script>
+</head>
+<body>
+    <div th:fragment="dashboard-cards" class="flex flex-wrap gap-6 justify-center mt-6">
+        <!-- Checking Account Card -->
+        <div class="card">
+            <h3>Checking Account</h3>
+            <p>Account Number: ****1234</p>
+            <p class="amount">$1,300</p>
+            <p>Month: September 2025</p>
+            <button onclick="toggleDetails('checkingDetails')" class="button">View Details</button>
+            <div class="details" id="checkingDetails" style="display: none;">
+                <p class="text-lg font-medium mb-2">Transaction History:</p>
+                <ul class="list-disc list-inside text-sm">
+                    <li>09/15/2025 - Grocery Store - $120</li>
+                    <li>09/14/2025 - Deposit - $500</li>
+                    <li>09/13/2025 - Electricity Bill - $80</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Portfolio Summary Card -->
+        <div class="card">
+            <h3>Portfolio Summary</h3>
+            <p>Total Value: <span class="amount">$107,250</span></p>
+            <p>Daily Change: <span class="gain">+$1,250</span></p>
+            <button onclick="toggleDetails('portfolioDetails')" class="button">View Portfolio</button>
+            <div class="details" id="portfolioDetails" style="display: none;">
+                <p>Stocks:</p>
+                <ul>
+                    <li>Apple - 50 shares</li>
+                    <li>Amazon - 20 shares</li>
+                    <li>Google - 15 shares</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Recent Transactions Card -->
+        <div class="card">
+            <h3>Recent Transactions</h3>
+            <p>09/15/2025 - Grocery Store - $120</p>
+            <p>09/14/2025 - Deposit - $500</p>
+            <p>09/13/2025 - Electricity Bill - $80</p>
+            <button onclick="toggleDetails('recentDetails')" class="button">View All</button>
+            <div class="details" id="recentDetails" style="display: none;">
+                <ul>
+                    <li>09/12/2025 - Gas Station - $40</li>
+                    <li>09/11/2025 - Netflix - $15</li>
+                    <li>09/10/2025 - Restaurant - $75</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Savings Account Card -->
+        <div class="card">
+            <h3>Savings Account</h3>
+            <p>Account Number: ****5678</p>
+            <p class="amount">$5,015</p>
+            <p>Interest Earned: $15</p>
+            <button onclick="toggleDetails('savingsDetails')" class="button">View Details</button>
+            <div class="details" id="savingsDetails" style="display: none;">
+                <p>Savings Plan Details:</p>
+                <ul>
+                    <li>Goal: Emergency Fund</li>
+                    <li>Interest Rate: 0.5%</li>
+                    <li>Next Interest Credit: 09/30/2025</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
