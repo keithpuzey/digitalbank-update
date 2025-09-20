@@ -26,3 +26,4 @@ COPY /target/classes/templates/query.html /usr/local/tomcat/webapps/ROOT/query.h
 COPY /target/classes/templates/nestedtableexample1-landing.html /usr/local/tomcat/webapps/ROOT/nestedtableexample1.html
 COPY /target/classes/templates/nestedtableexample-landing.html /usr/local/tomcat/webapps/ROOT/nestedtableexample.html
 COPY /target/classes/templates/guicardexample-landing.html /usr/local/tomcat/webapps/ROOT/guicardexample.html
+COPY /target/classes/templates/financedashboard.html /usr/local/tomcat/webapps/ROOT/financedashboard.html
