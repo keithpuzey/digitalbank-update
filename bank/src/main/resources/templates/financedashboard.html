@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Finance Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
   body {
     font-family: Arial, sans-serif;
-    margin: 40px;
+    margin: 0;
     background-color: #f4f4f4;
-    position: relative;
   }
 
-  /* Sticky Home button */
-  .home-button {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    padding: 10px 15px;
-    background-color: #343A40;
+  /* Tabs header */
+  .tabs {
+    display: flex;
+    background-color: #343a40;
     color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    z-index: 1000;
   }
-
-  h2 {
-    margin-bottom: 20px;
+  .tab {
+    flex: 1;
+    padding: 14px;
     text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
   }
+  .tab:hover { background-color: #495057; }
+  .tab.active { background-color: #212529; }
 
+  /* Tab content sections */
+  .tab-content { display: none; padding: 20px; }
+  .tab-content.active { display: block; }
+
+  /* Dashboard / Cards */
   .dashboard {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    margin-top: 60px; /* prevent overlap with Home button */
+    margin-top: 20px;
   }
-
   .card {
     background-color: #fff;
     border-radius: 8px;
@@ -45,157 +48,172 @@
     width: 300px;
     transition: transform 0.2s, box-shadow 0.2s;
   }
-
   .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0,0,0,0.2);
   }
-
-  .card h3 {
-    margin-top: 0;
-    color: #333;
-  }
-
-  .card p {
-    margin: 5px 0;
-    font-size: 16px;
-  }
-
-  .card .amount {
-    font-size: 24px;
-    font-weight: bold;
-    color: #2a9d8f;
-  }
-
-  .card .gain {
-    color: green;
-  }
-
-  .card .loss {
-    color: red;
-  }
-
+  .card h3 { margin-top: 0; color: #333; }
+  .card p { margin: 5px 0; font-size: 16px; }
+  .card .amount { font-size: 24px; font-weight: bold; color: #2a9d8f; }
   .card button {
-    margin-top: 10px;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    background-color: #264653;
-    color: #fff;
-    cursor: pointer;
+    margin-top: 10px; padding: 8px 12px; border: none;
+    border-radius: 4px; background-color: #264653; color: #fff; cursor: pointer;
   }
-
-  .card button:hover {
-    background-color: #1b2d3b;
-  }
-
-  /* Expandable details */
+  .card button:hover { background-color: #1b2d3b; }
   .details {
-    display: none;
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #e9ecef;
-    border-radius: 5px;
-    font-size: 14px;
+    display: none; margin-top: 10px; padding: 10px;
+    background-color: #e9ecef; border-radius: 5px; font-size: 14px;
   }
+
+  /* Charts */
+  canvas {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 20px auto;
+  }
+
+
 
   /* Mobile responsiveness */
   @media (max-width: 600px) {
-    body {
-      margin: 20px;
-    }
-    .dashboard {
-      flex-direction: column;
-      gap: 15px;
-      margin-top: 80px;
-    }
-    .card {
-      width: 100%;
-      padding: 15px;
-    }
+    .dashboard { flex-direction: column; gap: 15px; }
+    .card { width: 100%; padding: 15px; }
   }
 </style>
 <script>
-  function toggleDetails(cardId) {
-    const details = document.getElementById(cardId);
-    if (details.style.display === "none" || details.style.display === "") {
-      details.style.display = "block";
-    } else {
-      details.style.display = "none";
-    }
+function toggleDetails(id) {
+  const el = document.getElementById(id);
+  el.style.display = (el.style.display === "block") ? "none" : "block";
+}
+
+let chartsInitialized = false;
+
+function openTab(evt, tabId) {
+  const tabs = document.getElementsByClassName("tab-content");
+  for (let i = 0; i < tabs.length; i++) tabs[i].classList.remove("active");
+  const btns = document.getElementsByClassName("tab");
+  for (let i = 0; i < btns.length; i++) btns[i].classList.remove("active");
+  document.getElementById(tabId).classList.add("active");
+  evt.currentTarget.classList.add("active");
+
+  // Initialize charts when Expenses tab is first opened
+  if (tabId === 'expenses' && !chartsInitialized) {
+    chartsInitialized = true;
+
+    const expensesData = [1200, 600, 300, 200, 150];
+    const labels = ['Rent','Food','Transport','Entertainment','Other'];
+
+    new Chart(document.getElementById('expensesPie'), {
+      type:'pie',
+      data:{ labels:labels, datasets:[{ data:expensesData, backgroundColor:['#2a9d8f','#e76f51','#f4a261','#264653','#a8dadc'] }] }
+    });
+
+    new Chart(document.getElementById('expensesBar'), {
+      type:'bar',
+      data:{ labels:labels, datasets:[{ label:'Expenses', data:expensesData, backgroundColor:'#2a9d8f' }] },
+      options:{ responsive:true }
+    });
+
+    new Chart(document.getElementById('expensesLine'), {
+      type:'line',
+      data:{ labels:['Jan','Feb','Mar','Apr','May','Jun'], datasets:[{ label:'Expenses over months', data:[2500,2200,2700,3000,2800,3100], borderColor:'#264653', backgroundColor:'rgba(38,70,83,0.2)', fill:true, tension:0.3 }] },
+      options:{ responsive:true }
+    });
   }
+}
+
+window.onload = function() {
+  document.getElementById("defaultTab").click();
+};
 </script>
 </head>
 <body>
 
-<div class="dashboard">
 
-  <!-- Checking Account Card -->
-  <div class="card">
-    <h3>Checking Account</h3>
-    <p>Account Number: ****1234</p>
-    <p class="amount">$1,250</p>
-    <p>Last Transaction: $50</p>
-    <button onclick="toggleDetails('checkingDetails')">View Details</button>
-    <div class="details" id="checkingDetails">
-      <p>Transaction History:</p>
-      <ul>
-        <li>09/15/2025 - Grocery Store - $120</li>
-        <li>09/14/2025 - Deposit - $500</li>
-        <li>09/13/2025 - Electricity Bill - $80</li>
-      </ul>
+<!-- Tab header -->
+<div class="tabs">
+  <div class="tab" id="defaultTab" onclick="openTab(event, 'portfolio')">Portfolio</div>
+  <div class="tab" onclick="openTab(event, 'expenses')">Expenses</div>
+  <div class="tab" onclick="openTab(event, 'japanese')">レポート</div>
+</div>
+
+<!-- Portfolio Tab -->
+<div id="portfolio" class="tab-content">
+  <div class="dashboard">
+    <div class="card">
+      <h3>Checking Account</h3>
+      <p>Account Number: ****1234</p>
+      <p class="amount">$1,250</p>
+      <p>Last Transaction: $50</p>
+      <button onclick="toggleDetails('checkingDetails')">View Details</button>
+      <div class="details" id="checkingDetails">
+        <ul>
+          <li>09/15/2025 - Grocery Store - $120</li>
+          <li>09/14/2025 - Deposit - $500</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Portfolio Summary</h3>
+      <p>Total Value: <span class="amount">$107,250</span></p>
+      <p>Daily Change: <span style="color:green">+$1,250</span></p>
+      <button onclick="toggleDetails('portfolioDetails')">View Portfolio</button>
+      <div class="details" id="portfolioDetails">
+        <ul>
+          <li>Apple - 50 shares</li>
+          <li>Amazon - 20 shares</li>
+          <li>Google - 15 shares</li>
+          <li>Microsoft - 30 shares</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Savings Account</h3>
+      <p>Account Number: ****5678</p>
+      <p class="amount">$5,015</p>
+      <p>Interest Earned: $15</p>
+      <button onclick="toggleDetails('savingsDetails')">View Details</button>
+      <div class="details" id="savingsDetails">
+        <ul>
+          <li>Goal: Emergency Fund</li>
+          <li>Interest Rate: 0.5%</li>
+          <li>Next Interest Credit: 09/30/2025</li>
+        </ul>
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- Portfolio Summary Card -->
-  <div class="card">
-    <h3>Portfolio Summary</h3>
-    <p>Total Value: <span class="amount">$107,250</span></p>
-    <p>Daily Change: <span class="gain">+$1,250</span></p>
-    <button onclick="toggleDetails('portfolioDetails')">View Portfolio</button>
-    <div class="details" id="portfolioDetails">
-      <p>Stocks:</p>
-      <ul>
-        <li>Apple - 50 shares</li>
-        <li>Amazon - 20 shares</li>
-        <li>Google - 15 shares</li>
-      </ul>
-    </div>
-  </div>
+<!-- Expenses Tab -->
+<div id="expenses" class="tab-content">
+  <h2 style="text-align:center">Expenses Breakdown</h2>
+  <canvas id="expensesPie"></canvas>
+  <canvas id="expensesBar"></canvas>
+  <canvas id="expensesLine"></canvas>
+</div>
 
-  <!-- Recent Transactions Card -->
-  <div class="card">
-    <h3>Recent Transactions</h3>
-    <p>09/15/2025 - Grocery Store - $120</p>
-    <p>09/14/2025 - Deposit - $500</p>
-    <p>09/13/2025 - Electricity Bill - $80</p>
-    <button onclick="toggleDetails('recentDetails')">View All</button>
-    <div class="details" id="recentDetails">
-      <ul>
-        <li>09/12/2025 - Gas Station - $40</li>
-        <li>09/11/2025 - Netflix - $15</li>
-        <li>09/10/2025 - Restaurant - $75</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Savings Account Card -->
-  <div class="card">
-    <h3>Savings Account</h3>
-    <p>Account Number: ****5678</p>
-    <p class="amount">$5,015</p>
-    <p>Interest Earned: $15</p>
-    <button onclick="toggleDetails('savingsDetails')">View Details</button>
-    <div class="details" id="savingsDetails">
-      <p>Savings Plan Details:</p>
-      <ul>
-        <li>Goal: Emergency Fund</li>
-        <li>Interest Rate: 0.5%</li>
-        <li>Next Interest Credit: 09/30/2025</li>
-      </ul>
-    </div>
-  </div>
-
+<!-- Japanese Tab -->
+<div id="japanese" class="tab-content">
+  <h2 style="text-align:center">財務レポート</h2>
+  <p>総資産: <strong>¥13,500,000</strong></p>
+  <p>今月の支出: <strong>¥320,000</strong></p>
+  <p>今月の収入: <strong>¥450,000</strong></p>
+  <ul>
+    <li>株式ポートフォリオ: ¥7,250,000</li>
+    <li>債券ポートフォリオ: ¥3,000,000</li>
+    <li>現金: ¥3,250,000</li>
+  </ul>
+  <p>その他の情報:</p>
+  <ul>
+    <li>投資利益率: 5.2%</li>
+    <li>来月の目標支出: ¥300,000</li>
+    <li>過去6か月の支出推移: 増加傾向</li>
+  </ul>
 </div>
 
 </body>

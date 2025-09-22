@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Financial Dashboard - GUI Cards</title>
+<title>Financial Dashboard</title>
 <style>
   body {
     font-family: Arial, sans-serif;
     margin: 40px;
     background-color: #f4f4f4;
     position: relative;
+    padding-top: 70px; /* space for fixed Home button */
   }
 
   /* Sticky Home button */
@@ -35,7 +36,6 @@
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    margin-top: 60px; /* prevent overlap with Home button */
   }
 
   .card {
@@ -84,6 +84,7 @@
     background-color: #264653;
     color: #fff;
     cursor: pointer;
+    width: 100%;
   }
 
   .card button:hover {
@@ -104,26 +105,31 @@
   @media (max-width: 600px) {
     body {
       margin: 20px;
+      padding-top: 80px;
     }
     .dashboard {
       flex-direction: column;
       gap: 15px;
-      margin-top: 80px;
     }
     .card {
       width: 100%;
       padding: 15px;
+    }
+    .card button {
+      font-size: 14px;
+    }
+    .card p {
+      font-size: 14px;
+    }
+    .card .amount {
+      font-size: 20px;
     }
   }
 </style>
 <script>
   function toggleDetails(cardId) {
     const details = document.getElementById(cardId);
-    if (details.style.display === "none" || details.style.display === "") {
-      details.style.display = "block";
-    } else {
-      details.style.display = "none";
-    }
+    details.style.display = (details.style.display === "block") ? "none" : "block";
   }
 </script>
 </head>

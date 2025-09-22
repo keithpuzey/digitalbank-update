@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mock Financial Statement</title>
+<title>Financial Statement</title>
 <style>
   body {
     font-family: Arial, sans-serif;
     margin: 40px;
     position: relative;
+    padding-top: 70px; /* Add space for fixed home button */
   }
 
   /* Sticky Home button */
@@ -53,23 +54,26 @@
   @media (max-width: 600px) {
     body {
       margin: 20px;
+      padding-top: 60px; /* adjust for smaller screens */
     }
 
-    table, th, td {
-      font-size: 14px;
+    table, thead, tbody, th, td, tr {
       display: block;
       width: 100%;
     }
 
     tr {
-      display: block;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      padding: 10px;
     }
 
     th, td {
-      text-align: right;
+      text-align: left;
       padding-left: 50%;
       position: relative;
+      border: none;
+      border-bottom: 1px solid #eee;
     }
 
     th::before, td::before {
@@ -77,13 +81,43 @@
       left: 10px;
       width: 45%;
       white-space: nowrap;
+      font-weight: bold;
       text-align: left;
+    }
+
+    /* Add labels for mobile cells */
+    tr > td:nth-of-type(1)::before { content: "Account"; }
+    tr > td:nth-of-type(2)::before { content: "Month"; }
+    tr > td:nth-of-type(3)::before { content: "Transactions"; }
+
+    /* Inner tables mobile formatting */
+    .inner-table th, .inner-table td {
+      display: block;
+      width: 100%;
+      padding-left: 50%;
+    }
+
+    .inner-table td::before {
+      left: 10px;
+      width: 45%;
       font-weight: bold;
     }
 
-    /* Add labels for mobile display */
-    th:nth-of-type(1)::before { content: attr(data-label); }
-    td:nth-of-type(1)::before { content: attr(data-label); }
+    .inner-table tr {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+
+    .inner-table th:nth-of-type(1)::before { content: "Date"; }
+    .inner-table th:nth-of-type(2)::before { content: "Description"; }
+    .inner-table th:nth-of-type(3)::before { content: "Amount"; }
+    .inner-table th:nth-of-type(4)::before { content: "Balance"; }
+
+    .inner-table td:nth-of-type(1)::before { content: "Date"; }
+    .inner-table td:nth-of-type(2)::before { content: "Description"; }
+    .inner-table td:nth-of-type(3)::before { content: "Amount"; }
+    .inner-table td:nth-of-type(4)::before { content: "Balance"; }
   }
 </style>
 </head>
@@ -91,7 +125,7 @@
 
 <a href="/index.jsp" class="home-button">Home</a>
 
-<h2>Mock Account Statement</h2>
+<h2>My Account Statement</h2>
 
 <table>
   <tr>
