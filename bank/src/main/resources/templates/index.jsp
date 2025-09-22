@@ -110,8 +110,10 @@
             <a href="/nestedtableexample1.html">Mock Financial Statement</a>
             <a href="/nestedtableexample.html">Advanced Portfolio Dashboard</a>
             <a href="/guicardexample.html">Financial Dashboard</a>
+			<a href="https://en.wikipedia.org/wiki/Exploded-view_drawing#/media/File:Gear_pump_exploded.svg" target="_blank">Exploded Diagram</a>
         </div>
 
+		
         <!-- Tomcat version -->
         <div class="tomcat-version">
              <%= application.getServerInfo() %>
