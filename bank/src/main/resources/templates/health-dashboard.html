@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Health Scoreboard</title>
+  <style>
+    :root{
+      --bg:#e0e7ff;          /* lighter main background */
+      --card:#f8fafc;        /* lighter card background */
+      --muted:#6b7280;       /* muted text */
+      --move:#ff3b30;
+      --exercise:#34c759;
+      --stand:#007aff;
+      --sleep:#8e44ad;
+      --glass: rgba(255,255,255,0.3); 
+    }
+    body{
+      margin:0;
+      font-family:Inter,Roboto,sans-serif;
+      background: linear-gradient(180deg,var(--bg),#dbeafe 140%);
+      color:#1f2937;  
+    }
+    .container{max-width:980px;margin:24px auto;padding:18px;}
+    .card{
+      background:var(--card);
+      border-radius:16px;
+      padding:18px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.1);
+      display:flex;
+      flex-wrap:wrap;
+      gap:18px;
+      align-items:center;
+    }
+    .rings{width:230px;height:230px;position:relative;margin:auto;}
+    .center-value{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
+    .stats{display:flex;flex-direction:column;gap:10px;}
+    .stat{display:flex;gap:10px;align-items:center;background:var(--glass);padding:10px;border-radius:10px;color:#1f2937;}
+    .dot{width:12px;height:12px;border-radius:50%;}
+    .controls{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;}
+    .btn{padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600;}
+    .btn.primary{background:linear-gradient(180deg,#0ea5e9,#0369a1);color:#fff;}
+    .btn.ghost{background:transparent;border:1px solid rgba(0,0,0,.1);color:#1f2937;}
+    .edit-panel{background:rgba(255,255,255,.3);padding:14px;border-radius:12px;display:none;flex-direction:column;gap:12px;width:100%;}
+    .edit-row{display:flex;gap:8px;align-items:center;}
+    .edit-row label{flex:0 0 100px;font-size:13px;color:var(--muted);}
+    .edit-row input[type=number]{width:70px;}
+    .graphs{margin-top:20px;display:grid;gap:20px;}
+    canvas{background:var(--card);border-radius:12px;padding:10px;box-shadow:0 6px 20px rgba(0,0,0,0.1);width:100%;}
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Rings card -->
+  <div class="card">
+    <div class="rings" id="ringsWrap">
+      <svg viewBox="0 0 120 120" width="100%" height="100%">
+        <g transform="translate(60,60)">
+          <g id="ring-move">
+            <circle r="46" stroke="rgba(0,0,0,0.05)" stroke-width="10" fill="none"/>
+            <circle r="46" stroke="var(--move)" stroke-width="10" stroke-linecap="round" fill="none" stroke-dasharray="289" stroke-dashoffset="289" transform="rotate(-90)"/>
+          </g>
+          <g id="ring-exercise">
+            <circle r="34" stroke="rgba(0,0,0,0.05)" stroke-width="10" fill="none"/>
+            <circle r="34" stroke="var(--exercise)" stroke-width="10" stroke-linecap="round" fill="none" stroke-dasharray="214" stroke-dashoffset="214" transform="rotate(-90)"/>
+          </g>
+          <g id="ring-stand">
+            <circle r="22" stroke="rgba(0,0,0,0.05)" stroke-width="10" fill="none"/>
+            <circle r="22" stroke="var(--stand)" stroke-width="10" stroke-linecap="round" fill="none" stroke-dasharray="138" stroke-dashoffset="138" transform="rotate(-90)"/>
+          </g>
+        </g>
+      </svg>
+      <div class="center-value">
+        <h2>Today</h2>
+        <p id="center-sub">Move • Exercise • Stand</p>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="dot" style="background:var(--move)"></div><span>Move:</span><span id="val-move">480</span>/<span id="goal-move">600</span></div>
+      <div class="stat"><div class="dot" style="background:var(--exercise)"></div><span>Exercise:</span><span id="val-exercise">30</span>/<span id="goal-exercise">30</span></div>
+      <div class="stat"><div class="dot" style="background:var(--stand)"></div><span>Stand:</span><span id="val-stand">10</span>/<span id="goal-stand">12</span></div>
+    </div>
+    <div class="controls">
+      <button class="btn primary" id="editBtn">Edit</button>
+      <button class="btn ghost" id="resetBtn">Reset</button>
+    </div>
+  </div>
+
+  <!-- Edit panel -->
+  <div class="edit-panel" id="editPanel">
+    <strong>Edit values & goals</strong>
+    <div class="edit-row"><label>Move (val/goal)</label>
+      <input type="number" id="moveVal" value="480"/> /
+      <input type="number" id="moveGoal" value="600"/></div>
+    <div class="edit-row"><label>Exercise (val/goal)</label>
+      <input type="number" id="exerciseVal" value="30"/> /
+      <input type="number" id="exerciseGoal" value="30"/></div>
+    <div class="edit-row"><label>Stand (val/goal)</label>
+      <input type="number" id="standVal" value="10"/> /
+      <input type="number" id="standGoal" value="12"/></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn ghost" id="cancelEdit">Cancel</button>
+      <button class="btn primary" id="saveEdit">Save</button>
+    </div>
+  </div>
+
+  <!-- Extra graphs -->
+  <div class="graphs">
+    <canvas id="weeklyMove" height="200"></canvas>
+    <canvas id="heartRate" height="200"></canvas>
+    <canvas id="sleepChart" height="200"></canvas>
+  </div>
+</div>
+
+<script>
+  let state={move:480,exercise:30,stand:10};
+  let goals={move:600,exercise:30,stand:12};
+
+  function setRingProgress(id,val,goal){
+    const prog=document.querySelector(`#${id} circle:nth-child(2)`);
+    const r=prog.getAttribute("r");
+    const circ=2*Math.PI*r;
+    prog.style.strokeDasharray=circ;
+    prog.style.strokeDashoffset=circ*(1-Math.min(val/goal,1));
+  }
+
+  function render(){
+    document.getElementById("val-move").textContent=state.move;
+    document.getElementById("val-exercise").textContent=state.exercise;
+    document.getElementById("val-stand").textContent=state.stand;
+    document.getElementById("goal-move").textContent=goals.move;
+    document.getElementById("goal-exercise").textContent=goals.exercise;
+    document.getElementById("goal-stand").textContent=goals.stand;
+    setRingProgress("ring-move",state.move,goals.move);
+    setRingProgress("ring-exercise",state.exercise,goals.exercise);
+    setRingProgress("ring-stand",state.stand,goals.stand);
+    document.getElementById("center-sub").textContent=
+      `${Math.round(100*state.move/goals.move)}% • ${Math.round(100*state.exercise/goals.exercise)}% • ${Math.round(100*state.stand/goals.stand)}%`;
+    drawWeekly(); drawHeart(); drawSleep();
+  }
+
+  // edit handlers
+  editBtn.onclick=()=>editPanel.style.display="flex";
+  cancelEdit.onclick=()=>editPanel.style.display="none";
+  saveEdit.onclick=()=>{
+    state.move=+moveVal.value; goals.move=+moveGoal.value;
+    state.exercise=+exerciseVal.value; goals.exercise=+exerciseGoal.value;
+    state.stand=+standVal.value; goals.stand=+standGoal.value;
+    render(); editPanel.style.display="none";
+  };
+  resetBtn.onclick=()=>{state={move:0,exercise:0,stand:0};render();};
+
+  const moveCtx=weeklyMove.getContext("2d");
+  const heartCtx=heartRate.getContext("2d");
+  const sleepCtx=sleepChart.getContext("2d");
+
+  function drawWeekly(){
+    const data=[420,480,510,300,620,700,580];
+    moveCtx.clearRect(0,0,weeklyMove.width,weeklyMove.height);
+    const w=weeklyMove.width, h=weeklyMove.height;
+    const barW=w/10, max=Math.max(...data);
+    data.forEach((val,i)=>{
+      const x=40+i*(barW+10);
+      const barH=h*0.7*(val/max);
+      moveCtx.fillStyle="var(--move)";
+      moveCtx.fillRect(x,h-barH,barW,barH);
+    });
+    moveCtx.fillStyle="black"; moveCtx.font="14px Arial"; moveCtx.fillText("Weekly Move Calories",10,20);
+  }
+
+  function drawHeart(){
+    const data=[72,80,76,88,95,100,85,78,74,70];
+    heartCtx.clearRect(0,0,heartRate.width,heartRate.height);
+    heartCtx.strokeStyle="var(--exercise)";
+    heartCtx.beginPath();
+    data.forEach((v,i)=>{
+      const x=i*(heartRate.width/(data.length-1));
+      const y=heartRate.height-(v-60)*3;
+      if(i==0)heartCtx.moveTo(x,y);else heartCtx.lineTo(x,y);
+    });
+    heartCtx.stroke();
+    heartCtx.fillStyle="black"; heartCtx.font="14px Arial"; heartCtx.fillText("Heart Rate (bpm)",10,20);
+  }
+
+  function drawSleep(){
+    const slept=6, goal=8;
+    const pct=slept/goal;
+    sleepCtx.clearRect(0,0,sleepChart.width,sleepChart.height);
+    const cx=sleepChart.width/2, cy=sleepChart.height/2, r=70;
+    sleepCtx.beginPath();sleepCtx.arc(cx,cy,r,0,2*Math.PI);sleepCtx.strokeStyle="rgba(0,0,0,0.05)";sleepCtx.lineWidth=14;sleepCtx.stroke();
+    sleepCtx.beginPath();sleepCtx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+2*Math.PI*pct);sleepCtx.strokeStyle="var(--sleep)";sleepCtx.lineWidth=14;sleepCtx.stroke();
+    sleepCtx.fillStyle="black";sleepCtx.textAlign="center";sleepCtx.font="14px Arial";sleepCtx.fillText(`${slept}h / ${goal}h Sleep`,cx,cy);
+  }
+
+  render();
+</script>
+</body>
+</html>
