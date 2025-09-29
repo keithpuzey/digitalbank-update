@@ -28,3 +28,4 @@ COPY /target/classes/templates/nestedtableexample-landing.html /usr/local/tomcat
 COPY /target/classes/templates/guicardexample-landing.html /usr/local/tomcat/webapps/ROOT/guicardexample.html
 COPY /target/classes/templates/financedashboard.html /usr/local/tomcat/webapps/ROOT/financedashboard.html
 COPY /target/classes/templates/health-dashboard.html /usr/local/tomcat/webapps/ROOT/health-dashboard.html
+COPY /target/classes/templates/flow-demo.html /usr/local/tomcat/webapps/ROOT/flow-demo.html
