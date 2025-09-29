@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Flow Diagram Editor</title>
+<style>
+  body { font-family: Arial, sans-serif; margin:0; padding:20px; background:#f0f4f8; }
+  h1 { text-align:center; }
+  #diagram-container { border:1px solid #ccc; background:#fff; width:100%; height:600px; position:relative; overflow:hidden; touch-action:none; }
+  .controls { margin:10px 0; display:flex; gap:10px; flex-wrap:wrap; }
+  button, input { padding:6px 12px; font-size:14px; }
+  .node { fill:#4f46e5; stroke:#333; stroke-width:1px; cursor:move; }
+  .node-text { fill:#fff; font-size:14px; pointer-events:none; text-anchor:middle; dominant-baseline:middle; }
+  .selected { stroke:#ff9900; stroke-width:2px; }
+</style>
+</head>
+<body>
+<h1>Advanced Flow Diagram Editor</h1>
+
+<div class="controls">
+  <input type="text" id="nodeLabel" placeholder="Node label">
+  <button id="addNodeBtn">Add Node</button>
+  <button id="connectBtn">Connect Nodes</button>
+  <button id="deleteBtn">Delete Node</button>
+</div>
+
+<div id="diagram-container">
+  <svg id="diagram" width="100%" height="100%">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+      </marker>
+    </defs>
+  </svg>
+</div>
+
+<script>
+const svg = document.getElementById('diagram');
+const container = document.getElementById('diagram-container');
+const addNodeBtn = document.getElementById('addNodeBtn');
+const nodeLabelInput = document.getElementById('nodeLabel');
+const connectBtn = document.getElementById('connectBtn');
+const deleteBtn = document.getElementById('deleteBtn');
+
+let nodes = [];
+let connections = [];
+let selectedNode = null;
+let dragOffset = {x:0, y:0};
+let connectMode = false;
+let connectStartNode = null;
+
+// Utility: mouse/touch coordinates
+function getEventCoords(e){
+  if(e.touches) return {
+    x:e.touches[0].clientX - container.getBoundingClientRect().left,
+    y:e.touches[0].clientY - container.getBoundingClientRect().top
+  };
+  else return {x:e.offsetX, y:e.offsetY};
+}
+
+// Create node
+function createNode(x,y,label){
+  const group = document.createElementNS("http://www.w3.org/2000/svg","g");
+  group.setAttribute('transform', `translate(${x},${y})`);
+
+  const rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
+  rect.setAttribute('width',100);
+  rect.setAttribute('height',50);
+  rect.setAttribute('rx',8);
+  rect.setAttribute('ry',8);
+  rect.classList.add('node');
+
+  const text = document.createElementNS("http://www.w3.org/2000/svg","text");
+  text.classList.add('node-text');
+  text.setAttribute('x',50);
+  text.setAttribute('y',25);
+  text.textContent = label;
+
+  group.appendChild(rect);
+  group.appendChild(text);
+  svg.appendChild(group);
+
+  // Events
+  group.addEventListener('mousedown', e=>{
+    if(connectMode){ connectStartNode = findNode(group); return; }
+    selectedNode = group;
+    const coords = getEventCoords(e);
+    dragOffset.x = coords.x - findNode(group).x;
+    dragOffset.y = coords.y - findNode(group).y;
+  });
+  group.addEventListener('touchstart', e=>{
+    if(connectMode){ connectStartNode = findNode(group); return; }
+    selectedNode = group;
+    const coords = getEventCoords(e);
+    dragOffset.x = coords.x - findNode(group).x;
+    dragOffset.y = coords.y - findNode(group).y;
+  }, {passive:false});
+
+  group.addEventListener('dblclick', e=>{
+    const newLabel = prompt('Enter new label', text.textContent);
+    if(newLabel) text.textContent = newLabel;
+  });
+
+  const nodeObj = {group,x,y,width:100,height:50,text};
+  nodes.push(nodeObj);
+  return nodeObj;
+}
+
+function findNode(group){ return nodes.find(n=>n.group===group); }
+
+function updatePositions(){
+  nodes.forEach(n=> n.group.setAttribute('transform',`translate(${n.x},${n.y})`));
+  updateConnections();
+}
+
+function createConnection(fromNode,toNode){
+  const line = document.createElementNS("http://www.w3.org/2000/svg","line");
+  line.setAttribute('stroke','#333');
+  line.setAttribute('stroke-width','2');
+  line.setAttribute('marker-end','url(#arrow)');
+  svg.insertBefore(line, svg.firstChild);
+  connections.push({line, fromNode, toNode});
+  updateConnections();
+}
+
+function updateConnections(){
+  connections.forEach(conn=>{
+    const fx = conn.fromNode.x + conn.fromNode.width/2;
+    const fy = conn.fromNode.y + conn.fromNode.height/2;
+    const tx = conn.toNode.x + conn.toNode.width/2;
+    const ty = conn.toNode.y + conn.toNode.height/2;
+    conn.line.setAttribute('x1',fx);
+    conn.line.setAttribute('y1',fy);
+    conn.line.setAttribute('x2',tx);
+    conn.line.setAttribute('y2',ty);
+  });
+}
+
+// Dragging
+container.addEventListener('mousemove', e=>{
+  if(selectedNode){
+    const coords = getEventCoords(e);
+    const node = findNode(selectedNode);
+    node.x = coords.x - dragOffset.x;
+    node.y = coords.y - dragOffset.y;
+    updatePositions();
+  }
+});
+container.addEventListener('mouseup', e => selectedNode=null);
+container.addEventListener('mouseleave', e => selectedNode=null);
+
+// Touch dragging
+container.addEventListener('touchmove', e=>{
+  if(selectedNode){
+    e.preventDefault();
+    const coords = getEventCoords(e);
+    const node = findNode(selectedNode);
+    node.x = coords.x - dragOffset.x;
+    node.y = coords.y - dragOffset.y;
+    updatePositions();
+  }
+}, {passive:false});
+container.addEventListener('touchend', e => selectedNode=null);
+
+// Add Node button
+addNodeBtn.addEventListener('click', ()=>{
+  const label = nodeLabelInput.value || `Node ${nodes.length+1}`;
+  createNode(50 + nodes.length*20, 50 + nodes.length*20, label);
+  nodeLabelInput.value = '';
+});
+
+// Connect nodes button
+connectBtn.addEventListener('click', ()=>{
+  connectMode = !connectMode;
+  connectBtn.textContent = connectMode ? 'Select Target Node' : 'Connect Nodes';
+});
+
+// Connect logic
+container.addEventListener('mouseup', e=>{
+  if(connectMode && connectStartNode){
+    const coords = getEventCoords(e);
+    const targetNode = nodes.find(n=> coords.x >= n.x && coords.x <= n.x+n.width &&
+                                      coords.y >= n.y && coords.y <= n.y+n.height );
+    if(targetNode && targetNode!==connectStartNode) createConnection(connectStartNode,targetNode);
+    connectStartNode=null; connectMode=false;
+    connectBtn.textContent='Connect Nodes';
+  }
+});
+
+// Delete selected node
+deleteBtn.addEventListener('click', ()=>{
+  if(selectedNode){
+    const node = findNode(selectedNode);
+    // Remove connections
+    connections = connections.filter(c=>{
+      if(c.fromNode===node || c.toNode===node){
+        svg.removeChild(c.line);
+        return false;
+      }
+      return true;
+    });
+    svg.removeChild(node.group);
+    nodes = nodes.filter(n=> n!==node);
+    selectedNode = null;
+  } else alert('Select a node to delete');
+});
+
+// Example nodes
+createNode(50,50,"Start");
+createNode(250,150,"Process");
+createNode(450,50,"End");
+</script>
+</body>
+</html>
