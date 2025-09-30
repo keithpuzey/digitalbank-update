@@ -438,39 +438,18 @@ public class UserController extends CommonController{
 	 * 
 	 */
 	private static class NewUser extends UpdateUser {
-		
-		@NotEmpty (message=Messages.USER_EMAIL_REQUIRED)
-		@Pattern(regexp=Patterns.USER_EMAIL, message=Messages.USER_EMAIL_FORMAT)
-		private String emailAddress;
-		
-		@NotEmpty (message=Messages.USER_SSN_REQUIRED)
-		@Pattern(regexp=Patterns.USER_SSN, message=Messages.USER_SSN_FORMAT)
-		private String ssn;
-		
-		@NotEmpty(message=Messages.USER_PASSWORD_REQUIRED)
-	    @Pattern(regexp=Patterns.USER_PASSWORD, message=Messages.USER_PASSWORD_FORMAT)
-		private String password;
-		
-		@NotNull (message=Messages.USER_DOB_REQUIRED)
-		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern=Patterns.DATE_FORMAT)
-		@DateTimeFormat(pattern=Patterns.DATE_FORMAT)
-		private Date dob;
 
-		public Date getDob() {
-			return dob;
-		}
+	    @NotEmpty(message = Messages.USER_PASSWORD_REQUIRED)
+	    @Pattern(regexp = Patterns.USER_PASSWORD, message = Messages.USER_PASSWORD_FORMAT)
+	    private String password;
 
-		public String getPassword() {
-			return password;
-		}
-			
-		public String getEmailAddress() {
-			return emailAddress;
-		}
+	    public String getPassword() {
+	        return password;
+	    }
 
-		public String getSsn() {
-			return ssn;
-		}	
+	    public void setPassword(String password) {
+	        this.password = password;
+	    }
 	}
 	
 	/*
