@@ -3,20 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Advanced Flow Diagram Editor</title>
+<title>Diagram Editor with Connect Workflow</title>
 <style>
   body { font-family: Arial, sans-serif; margin:0; padding:20px; background:#f0f4f8; }
   h1 { text-align:center; }
   #diagram-container { border:1px solid #ccc; background:#fff; width:100%; height:600px; position:relative; overflow:hidden; touch-action:none; }
   .controls { margin:10px 0; display:flex; gap:10px; flex-wrap:wrap; }
   button, input { padding:6px 12px; font-size:14px; }
-  .node { fill:#4f46e5; stroke:#333; stroke-width:1px; cursor:move; }
+  .node { fill:#4f46e5; stroke:#333; stroke-width:1px; cursor:pointer; }
   .node-text { fill:#fff; font-size:14px; pointer-events:none; text-anchor:middle; dominant-baseline:middle; }
   .selected { stroke:#ff9900; stroke-width:2px; }
 </style>
 </head>
 <body>
-<h1>Advanced Flow Diagram Editor</h1>
+
+<h1>Diagram Editor with Connect Workflow</h1>
 
 <div class="controls">
   <input type="text" id="nodeLabel" placeholder="Node label">
@@ -47,25 +48,25 @@ let nodes = [];
 let connections = [];
 let selectedNode = null;
 let dragOffset = {x:0, y:0};
-let connectMode = false;
-let connectStartNode = null;
 
-// Utility: mouse/touch coordinates
+// Connect workflow
+let connectMode = false;
+let connectSourceNode = null;
+
+// Utilities
 function getEventCoords(e){
-  if(e.touches) return {
-    x:e.touches[0].clientX - container.getBoundingClientRect().left,
-    y:e.touches[0].clientY - container.getBoundingClientRect().top
-  };
-  else return {x:e.offsetX, y:e.offsetY};
+  const rect = container.getBoundingClientRect();
+  if(e.touches) return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+  return { x: e.offsetX, y: e.offsetY };
 }
 
-// Create node
+// Node management
 function createNode(x,y,label){
   const group = document.createElementNS("http://www.w3.org/2000/svg","g");
   group.setAttribute('transform', `translate(${x},${y})`);
 
   const rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
-  rect.setAttribute('width',100);
+  rect.setAttribute('width',120);
   rect.setAttribute('height',50);
   rect.setAttribute('rx',8);
   rect.setAttribute('ry',8);
@@ -73,7 +74,7 @@ function createNode(x,y,label){
 
   const text = document.createElementNS("http://www.w3.org/2000/svg","text");
   text.classList.add('node-text');
-  text.setAttribute('x',50);
+  text.setAttribute('x',60);
   text.setAttribute('y',25);
   text.textContent = label;
 
@@ -81,17 +82,28 @@ function createNode(x,y,label){
   group.appendChild(text);
   svg.appendChild(group);
 
-  // Events
+  // Node events
   group.addEventListener('mousedown', e=>{
-    if(connectMode){ connectStartNode = findNode(group); return; }
+    if(connectMode){
+      handleConnectClick(findNode(group));
+      return;
+    }
     selectedNode = group;
+    nodes.forEach(n=>n.group.classList.remove('selected'));
+    group.classList.add('selected');
     const coords = getEventCoords(e);
     dragOffset.x = coords.x - findNode(group).x;
     dragOffset.y = coords.y - findNode(group).y;
   });
+
   group.addEventListener('touchstart', e=>{
-    if(connectMode){ connectStartNode = findNode(group); return; }
+    if(connectMode){
+      handleConnectClick(findNode(group));
+      return;
+    }
     selectedNode = group;
+    nodes.forEach(n=>n.group.classList.remove('selected'));
+    group.classList.add('selected');
     const coords = getEventCoords(e);
     dragOffset.x = coords.x - findNode(group).x;
     dragOffset.y = coords.y - findNode(group).y;
@@ -102,7 +114,7 @@ function createNode(x,y,label){
     if(newLabel) text.textContent = newLabel;
   });
 
-  const nodeObj = {group,x,y,width:100,height:50,text};
+  const nodeObj = {group, x, y, width:120, height:50, text};
   nodes.push(nodeObj);
   return nodeObj;
 }
@@ -114,7 +126,8 @@ function updatePositions(){
   updateConnections();
 }
 
-function createConnection(fromNode,toNode){
+// Connections
+function createConnection(fromNode, toNode){
   const line = document.createElementNS("http://www.w3.org/2000/svg","line");
   line.setAttribute('stroke','#333');
   line.setAttribute('stroke-width','2');
@@ -148,9 +161,7 @@ container.addEventListener('mousemove', e=>{
   }
 });
 container.addEventListener('mouseup', e => selectedNode=null);
-container.addEventListener('mouseleave', e => selectedNode=null);
 
-// Touch dragging
 container.addEventListener('touchmove', e=>{
   if(selectedNode){
     e.preventDefault();
@@ -163,36 +174,35 @@ container.addEventListener('touchmove', e=>{
 }, {passive:false});
 container.addEventListener('touchend', e => selectedNode=null);
 
-// Add Node button
+// Connect workflow
+function handleConnectClick(node){
+  if(!connectSourceNode){
+    connectSourceNode = node;
+    connectBtn.textContent = 'Click Target Node';
+  } else if(node && node !== connectSourceNode){
+    createConnection(connectSourceNode, node);
+    connectSourceNode = null;
+    connectMode = false;
+    connectBtn.textContent = 'Connect Nodes';
+  }
+}
+
+// Buttons
 addNodeBtn.addEventListener('click', ()=>{
   const label = nodeLabelInput.value || `Node ${nodes.length+1}`;
   createNode(50 + nodes.length*20, 50 + nodes.length*20, label);
   nodeLabelInput.value = '';
 });
 
-// Connect nodes button
 connectBtn.addEventListener('click', ()=>{
-  connectMode = !connectMode;
-  connectBtn.textContent = connectMode ? 'Select Target Node' : 'Connect Nodes';
+  connectMode = true;
+  connectSourceNode = null;
+  connectBtn.textContent = 'Click Source Node';
 });
 
-// Connect logic
-container.addEventListener('mouseup', e=>{
-  if(connectMode && connectStartNode){
-    const coords = getEventCoords(e);
-    const targetNode = nodes.find(n=> coords.x >= n.x && coords.x <= n.x+n.width &&
-                                      coords.y >= n.y && coords.y <= n.y+n.height );
-    if(targetNode && targetNode!==connectStartNode) createConnection(connectStartNode,targetNode);
-    connectStartNode=null; connectMode=false;
-    connectBtn.textContent='Connect Nodes';
-  }
-});
-
-// Delete selected node
 deleteBtn.addEventListener('click', ()=>{
   if(selectedNode){
     const node = findNode(selectedNode);
-    // Remove connections
     connections = connections.filter(c=>{
       if(c.fromNode===node || c.toNode===node){
         svg.removeChild(c.line);
@@ -202,7 +212,7 @@ deleteBtn.addEventListener('click', ()=>{
     });
     svg.removeChild(node.group);
     nodes = nodes.filter(n=> n!==node);
-    selectedNode = null;
+    selectedNode=null;
   } else alert('Select a node to delete');
 });
 

@@ -6,14 +6,14 @@
   <title>Health Scoreboard</title>
   <style>
     :root{
-      --bg:#e0e7ff;          /* lighter main background */
-      --card:#f8fafc;        /* lighter card background */
-      --muted:#6b7280;       /* muted text */
+      --bg:#eef2ff;         
+      --card:#ffffff;       
+      --muted:#6b7280;      
       --move:#ff3b30;
       --exercise:#34c759;
       --stand:#007aff;
       --sleep:#8e44ad;
-      --glass: rgba(255,255,255,0.3); 
+      --glass: rgba(255,255,255,0.4); 
     }
     body{
       margin:0;
@@ -25,28 +25,35 @@
     .card{
       background:var(--card);
       border-radius:16px;
-      padding:18px;
-      box-shadow:0 6px 20px rgba(0,0,0,0.1);
+      padding:24px;
+      box-shadow:0 4px 16px rgba(0,0,0,0.08);
       display:flex;
       flex-wrap:wrap;
-      gap:18px;
+      gap:24px;
       align-items:center;
     }
     .rings{width:230px;height:230px;position:relative;margin:auto;}
     .center-value{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
-    .stats{display:flex;flex-direction:column;gap:10px;}
-    .stat{display:flex;gap:10px;align-items:center;background:var(--glass);padding:10px;border-radius:10px;color:#1f2937;}
+    .center-value h2{margin:0;font-size:22px;font-weight:600;}
+    .center-value p{margin:6px 0 0;font-size:14px;color:var(--muted);}
+    .stats{display:flex;flex-direction:column;gap:12px;flex:1;}
+    .stat{display:flex;justify-content:space-between;align-items:center;background:var(--glass);padding:10px 14px;border-radius:10px;}
+    .stat-label{display:flex;align-items:center;gap:8px;font-weight:500;}
     .dot{width:12px;height:12px;border-radius:50%;}
-    .controls{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;}
-    .btn{padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600;}
+    .stat-values{font-size:14px;}
+    .percent{font-size:13px;color:var(--muted);margin-left:8px;}
+    .controls{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap;}
+    .btn{padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:600;transition:all .2s;}
     .btn.primary{background:linear-gradient(180deg,#0ea5e9,#0369a1);color:#fff;}
+    .btn.primary:hover{opacity:.9;}
     .btn.ghost{background:transparent;border:1px solid rgba(0,0,0,.1);color:#1f2937;}
-    .edit-panel{background:rgba(255,255,255,.3);padding:14px;border-radius:12px;display:none;flex-direction:column;gap:12px;width:100%;}
+    .btn.ghost:hover{background:#f3f4f6;}
+    .edit-panel{background:rgba(255,255,255,.5);padding:18px;border-radius:12px;display:none;flex-direction:column;gap:14px;width:100%;}
     .edit-row{display:flex;gap:8px;align-items:center;}
     .edit-row label{flex:0 0 100px;font-size:13px;color:var(--muted);}
     .edit-row input[type=number]{width:70px;}
-    .graphs{margin-top:20px;display:grid;gap:20px;}
-    canvas{background:var(--card);border-radius:12px;padding:10px;box-shadow:0 6px 20px rgba(0,0,0,0.1);width:100%;}
+    .graphs{margin-top:24px;display:grid;gap:20px;}
+    canvas{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 4px 16px rgba(0,0,0,0.08);width:100%;}
   </style>
 </head>
 <body>
@@ -72,13 +79,22 @@
       </svg>
       <div class="center-value">
         <h2>Today</h2>
-        <p id="center-sub">Move • Exercise • Stand</p>
+        <p id="center-sub">Your progress</p>
       </div>
     </div>
     <div class="stats">
-      <div class="stat"><div class="dot" style="background:var(--move)"></div><span>Move:</span><span id="val-move">480</span>/<span id="goal-move">600</span></div>
-      <div class="stat"><div class="dot" style="background:var(--exercise)"></div><span>Exercise:</span><span id="val-exercise">30</span>/<span id="goal-exercise">30</span></div>
-      <div class="stat"><div class="dot" style="background:var(--stand)"></div><span>Stand:</span><span id="val-stand">10</span>/<span id="goal-stand">12</span></div>
+      <div class="stat">
+        <div class="stat-label"><div class="dot" style="background:var(--move)"></div>Move</div>
+        <div class="stat-values"><span id="val-move">480</span>/<span id="goal-move">600</span> <span class="percent" id="pct-move"></span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-label"><div class="dot" style="background:var(--exercise)"></div>Exercise</div>
+        <div class="stat-values"><span id="val-exercise">30</span>/<span id="goal-exercise">30</span> <span class="percent" id="pct-exercise"></span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-label"><div class="dot" style="background:var(--stand)"></div>Stand</div>
+        <div class="stat-values"><span id="val-stand">10</span>/<span id="goal-stand">12</span> <span class="percent" id="pct-stand"></span></div>
+      </div>
     </div>
     <div class="controls">
       <button class="btn primary" id="editBtn">Edit</button>
@@ -106,9 +122,9 @@
 
   <!-- Extra graphs -->
   <div class="graphs">
-    <canvas id="weeklyMove" height="200"></canvas>
-    <canvas id="heartRate" height="200"></canvas>
-    <canvas id="sleepChart" height="200"></canvas>
+    <canvas id="weeklyMove" height="220"></canvas>
+    <canvas id="heartRate" height="220"></canvas>
+    <canvas id="sleepChart" height="220"></canvas>
   </div>
 </div>
 
@@ -134,8 +150,12 @@
     setRingProgress("ring-move",state.move,goals.move);
     setRingProgress("ring-exercise",state.exercise,goals.exercise);
     setRingProgress("ring-stand",state.stand,goals.stand);
-    document.getElementById("center-sub").textContent=
-      `${Math.round(100*state.move/goals.move)}% • ${Math.round(100*state.exercise/goals.exercise)}% • ${Math.round(100*state.stand/goals.stand)}%`;
+
+    // update percentages beside each stat
+    document.getElementById("pct-move").textContent=`(${Math.round(100*state.move/goals.move)}%)`;
+    document.getElementById("pct-exercise").textContent=`(${Math.round(100*state.exercise/goals.exercise)}%)`;
+    document.getElementById("pct-stand").textContent=`(${Math.round(100*state.stand/goals.stand)}%)`;
+
     drawWeekly(); drawHeart(); drawSleep();
   }
 
@@ -154,42 +174,123 @@
   const heartCtx=heartRate.getContext("2d");
   const sleepCtx=sleepChart.getContext("2d");
 
+  // Weekly Bar Chart
   function drawWeekly(){
     const data=[420,480,510,300,620,700,580];
+    const labels=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
     moveCtx.clearRect(0,0,weeklyMove.width,weeklyMove.height);
     const w=weeklyMove.width, h=weeklyMove.height;
-    const barW=w/10, max=Math.max(...data);
+    const padding=40;
+    const chartW=w-2*padding, chartH=h-60;
+    const max=Math.max(...data);
+    const barW=chartW/data.length*0.6;
+    moveCtx.strokeStyle="#e5e7eb"; 
+    moveCtx.lineWidth=1;
+    moveCtx.beginPath();
+    moveCtx.moveTo(padding,h-40);
+    moveCtx.lineTo(w-padding,h-40);
+    moveCtx.stroke();
+
     data.forEach((val,i)=>{
-      const x=40+i*(barW+10);
-      const barH=h*0.7*(val/max);
+      const x=padding+i*(chartW/data.length)+10;
+      const barH=(val/max)*chartH;
       moveCtx.fillStyle="var(--move)";
-      moveCtx.fillRect(x,h-barH,barW,barH);
+      moveCtx.beginPath();
+      moveCtx.roundRect(x,h-40-barH,barW,barH,4);
+      moveCtx.fill();
+      moveCtx.fillStyle="black"; 
+      moveCtx.font="12px Arial";
+      moveCtx.textAlign="center";
+      moveCtx.fillText(labels[i],x+barW/2,h-20);
     });
-    moveCtx.fillStyle="black"; moveCtx.font="14px Arial"; moveCtx.fillText("Weekly Move Calories",10,20);
+    moveCtx.fillStyle="black"; 
+    moveCtx.font="14px Arial";
+    moveCtx.textAlign="left";
+    moveCtx.fillText("Weekly Move Calories",padding,20);
   }
 
+  // Heart Rate Line Chart
   function drawHeart(){
     const data=[72,80,76,88,95,100,85,78,74,70];
     heartCtx.clearRect(0,0,heartRate.width,heartRate.height);
+    const w=heartRate.width,h=heartRate.height,padding=40;
+    const max=Math.max(...data),min=Math.min(...data);
+    const chartH=h-60, chartW=w-2*padding;
+
+    // grid lines
+    heartCtx.strokeStyle="#e5e7eb";
+    heartCtx.lineWidth=1;
+    for(let i=0;i<=4;i++){
+      const y=padding+i*(chartH/4);
+      heartCtx.beginPath();
+      heartCtx.moveTo(padding,y);
+      heartCtx.lineTo(w-padding,y);
+      heartCtx.stroke();
+    }
+
+    // line
     heartCtx.strokeStyle="var(--exercise)";
+    heartCtx.lineWidth=2;
     heartCtx.beginPath();
     data.forEach((v,i)=>{
-      const x=i*(heartRate.width/(data.length-1));
-      const y=heartRate.height-(v-60)*3;
+      const x=padding+i*(chartW/(data.length-1));
+      const y=h-40-((v-min)/(max-min))*chartH;
       if(i==0)heartCtx.moveTo(x,y);else heartCtx.lineTo(x,y);
     });
     heartCtx.stroke();
-    heartCtx.fillStyle="black"; heartCtx.font="14px Arial"; heartCtx.fillText("Heart Rate (bpm)",10,20);
+
+    // dots
+    data.forEach((v,i)=>{
+      const x=padding+i*(chartW/(data.length-1));
+      const y=h-40-((v-min)/(max-min))*chartH;
+      heartCtx.fillStyle="var(--exercise)";
+      heartCtx.beginPath();
+      heartCtx.arc(x,y,4,0,2*Math.PI);
+      heartCtx.fill();
+    });
+
+    heartCtx.fillStyle="black"; 
+    heartCtx.font="14px Arial"; 
+    heartCtx.textAlign="left";
+    heartCtx.fillText("Heart Rate (bpm)",padding,20);
   }
 
   function drawSleep(){
-    const slept=6, goal=8;
-    const pct=slept/goal;
+    const slept = 6, goal = 8;
+    const pct = slept / goal;
+
     sleepCtx.clearRect(0,0,sleepChart.width,sleepChart.height);
-    const cx=sleepChart.width/2, cy=sleepChart.height/2, r=70;
-    sleepCtx.beginPath();sleepCtx.arc(cx,cy,r,0,2*Math.PI);sleepCtx.strokeStyle="rgba(0,0,0,0.05)";sleepCtx.lineWidth=14;sleepCtx.stroke();
-    sleepCtx.beginPath();sleepCtx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+2*Math.PI*pct);sleepCtx.strokeStyle="var(--sleep)";sleepCtx.lineWidth=14;sleepCtx.stroke();
-    sleepCtx.fillStyle="black";sleepCtx.textAlign="center";sleepCtx.font="14px Arial";sleepCtx.fillText(`${slept}h / ${goal}h Sleep`,cx,cy);
+
+    const cx = sleepChart.width/2, cy = sleepChart.height/2, r = 70;
+
+    // Draw background ring (light grey)
+    sleepCtx.beginPath();
+    sleepCtx.arc(cx, cy, r, 0, 2 * Math.PI);
+    sleepCtx.strokeStyle = "rgba(0,0,0,0.1)";
+    sleepCtx.lineWidth = 14;
+    sleepCtx.stroke();
+
+    // Draw progress arc (sleep)
+    sleepCtx.beginPath();
+    sleepCtx.arc(
+      cx, cy, r,
+      -Math.PI/2,
+      -Math.PI/2 + 2 * Math.PI * pct,
+      false
+    );
+    sleepCtx.strokeStyle = "var(--sleep)";
+    sleepCtx.lineWidth = 14;
+    sleepCtx.lineCap = "round";
+    sleepCtx.stroke();
+
+    // Add text in center
+    sleepCtx.fillStyle = "#111827"; // dark grey for better contrast
+    sleepCtx.textAlign = "center";
+    sleepCtx.font = "16px Inter, sans-serif";
+    sleepCtx.fillText(`${slept}h / ${goal}h`, cx, cy - 6);
+    sleepCtx.font = "13px Inter, sans-serif";
+    sleepCtx.fillStyle = "var(--muted)";
+    sleepCtx.fillText("Sleep", cx, cy + 14);
   }
 
   render();
