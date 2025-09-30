@@ -25,7 +25,7 @@
                         <button class="btn btn-primary btn-sm">Refresh</button>
                     </form>
                     <hr />
-                    <div id="results"></div>
+                    <div id="results" class="ajax-table-container"></div>
                 </div>
             </div>
         </div>
@@ -35,21 +35,58 @@
 
 <div th:replace="common/sections :: footer-scripts"></div>
 
+<style>
+    /* Table container */
+    .ajax-table-container { overflow-x:auto; margin-top:10px; }
+
+    /* Table styling */
+    table.userTable { width:100%; border-collapse: collapse; min-width:800px; }
+    table.userTable th, table.userTable td { border:1px solid #ddd; padding:8px; text-align:left; }
+    table.userTable th { background:#4CAF50; color:white; cursor:pointer; }
+    table.userTable tr:nth-child(even) { background:#f2f2f2; }
+    table.userTable tr:hover { background:#e0f7fa; }
+    .last-update { color:#4CAF50; font-weight:bold; margin-top:10px; display:block; }
+</style>
+
 <script th:inline="javascript">
     function fetchData(event) {
-        event.preventDefault();
+        if(event) event.preventDefault();
         var xhr = new XMLHttpRequest();
         xhr.open("GET", /*[[@{/queryDatabase}]]*/, true);
         xhr.onload = function () {
-            document.getElementById('results').innerHTML = (xhr.status === 200)
-                ? xhr.responseText
-                : "Error fetching data.";
+            if(xhr.status >= 200 && xhr.status < 300){
+                document.getElementById('results').innerHTML = xhr.responseText;
+                makeTableSortable('userTable');
+            } else {
+                document.getElementById('results').innerHTML = "Error fetching data.";
+            }
         };
         xhr.onerror = function () {
             document.getElementById('results').innerHTML = "Network error.";
         };
         xhr.send();
     }
+
+    function makeTableSortable(tableId) {
+        const table = document.getElementById(tableId);
+        if(!table) return;
+        const headers = table.querySelectorAll('th');
+        headers.forEach((th,index)=>{
+            th.onclick = function(){
+                const tbody = table.querySelector('tbody');
+                Array.from(tbody.querySelectorAll('tr'))
+                    .sort((a,b)=>{
+                        const valA = a.children[index].innerText.toLowerCase();
+                        const valB = b.children[index].innerText.toLowerCase();
+                        return valA.localeCompare(valB);
+                    })
+                    .forEach(tr=>tbody.appendChild(tr));
+            };
+        });
+    }
+
+    // Load table automatically on page load
+    window.addEventListener('DOMContentLoaded', fetchData);
 </script>
 
 </body>
