@@ -117,3 +117,4 @@ public class DatabaseServlet extends HttpServlet {
         return value != null ? value : "N/A";
     }
 }
+
