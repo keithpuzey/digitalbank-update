@@ -95,7 +95,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to Demo Server</h1>
+        <h1>Welcome to the Demo Server</h1>
 
         <!-- First row of buttons -->
         <div class="buttons">
@@ -110,7 +110,7 @@
             <a href="/nestedtableexample1.html">Financial Statement</a>
             <a href="/nestedtableexample.html">Advanced Portfolio Dashboard</a>
             <a href="/guicardexample.html">Financial Dashboard</a>
-			<a href="https://en.wikipedia.org/wiki/Exploded-view_drawing#/media/File:Gear_pump_exploded.svg" target="_blank">Exploded Diagram</a>
+			<a href="/flow-demo.html">Process Flow Demo</a>
         </div>
 
 		

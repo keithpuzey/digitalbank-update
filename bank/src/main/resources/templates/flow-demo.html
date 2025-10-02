@@ -3,21 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diagram Editor with Connect Workflow</title>
+<title>Demo Diagram Editor</title>
 <style>
-  body { font-family: Arial, sans-serif; margin:0; padding:20px; background:#f0f4f8; }
-  h1 { text-align:center; }
-  #diagram-container { border:1px solid #ccc; background:#fff; width:100%; height:600px; position:relative; overflow:hidden; touch-action:none; }
-  .controls { margin:10px 0; display:flex; gap:10px; flex-wrap:wrap; }
-  button, input { padding:6px 12px; font-size:14px; }
-  .node { fill:#4f46e5; stroke:#333; stroke-width:1px; cursor:pointer; }
-  .node-text { fill:#fff; font-size:14px; pointer-events:none; text-anchor:middle; dominant-baseline:middle; }
-  .selected { stroke:#ff9900; stroke-width:2px; }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    padding-top: 70px; /* space for sticky home button */
+    background: #f0f4f8;
+  }
+
+  /* Sticky Home button */
+  .home-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 15px;
+    background-color: #343A40;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    z-index: 1000;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  #diagram-container {
+    border: 1px solid #ccc;
+    background: #fff;
+    width: 100%;
+    height: 600px;
+    position: relative;
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  .controls {
+    margin: 10px 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  button, input {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .node {
+    fill: #4f46e5;
+    stroke: #333;
+    stroke-width: 1px;
+    cursor: pointer;
+  }
+
+  .node-text {
+    fill: #fff;
+    font-size: 14px;
+    pointer-events: none;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+
+  .selected {
+    stroke: #ff9900;
+    stroke-width: 2px;
+  }
 </style>
 </head>
 <body>
 
-<h1>Diagram Editor with Connect Workflow</h1>
+<a href="/index.jsp" class="home-button">Home</a>
+
+<h1>Demo Diagram Editor</h1>
 
 <div class="controls">
   <input type="text" id="nodeLabel" placeholder="Node label">
@@ -46,14 +106,15 @@ const deleteBtn = document.getElementById('deleteBtn');
 
 let nodes = [];
 let connections = [];
-let selectedNode = null;
+let selectedNode = null; // node selected for delete/connect
+let draggingNode = null;  // node currently being dragged
 let dragOffset = {x:0, y:0};
 
 // Connect workflow
 let connectMode = false;
 let connectSourceNode = null;
 
-// Utilities
+// Utility: get event coordinates relative to container
 function getEventCoords(e){
   const rect = container.getBoundingClientRect();
   if(e.touches) return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
@@ -82,47 +143,71 @@ function createNode(x,y,label){
   group.appendChild(text);
   svg.appendChild(group);
 
-  // Node events
-  group.addEventListener('mousedown', e=>{
-    if(connectMode){
-      handleConnectClick(findNode(group));
-      return;
-    }
-    selectedNode = group;
-    nodes.forEach(n=>n.group.classList.remove('selected'));
-    group.classList.add('selected');
-    const coords = getEventCoords(e);
-    dragOffset.x = coords.x - findNode(group).x;
-    dragOffset.y = coords.y - findNode(group).y;
-  });
+  const nodeObj = {group, x, y, width:120, height:50, text};
+  nodes.push(nodeObj);
 
-  group.addEventListener('touchstart', e=>{
-    if(connectMode){
-      handleConnectClick(findNode(group));
-      return;
-    }
-    selectedNode = group;
-    nodes.forEach(n=>n.group.classList.remove('selected'));
-    group.classList.add('selected');
-    const coords = getEventCoords(e);
-    dragOffset.x = coords.x - findNode(group).x;
-    dragOffset.y = coords.y - findNode(group).y;
+  // Node events
+  group.addEventListener('mousedown', e => {
+    e.stopPropagation();
+    handleNodeSelect(nodeObj, e);
+  });
+  group.addEventListener('touchstart', e => {
+    e.preventDefault();
+    handleNodeSelect(nodeObj, e);
   }, {passive:false});
 
-  group.addEventListener('dblclick', e=>{
+  group.addEventListener('dblclick', e => {
     const newLabel = prompt('Enter new label', text.textContent);
     if(newLabel) text.textContent = newLabel;
   });
 
-  const nodeObj = {group, x, y, width:120, height:50, text};
-  nodes.push(nodeObj);
   return nodeObj;
 }
 
-function findNode(group){ return nodes.find(n=>n.group===group); }
+// Select a node
+function handleNodeSelect(nodeObj, e){
+  if(connectMode){
+    handleConnectClick(nodeObj);
+    return;
+  }
 
+  // Select for delete/connect
+  selectedNode = nodeObj;
+  nodes.forEach(n => n.group.classList.remove('selected'));
+  nodeObj.group.classList.add('selected');
+
+  // Start dragging
+  draggingNode = nodeObj;
+  const coords = getEventCoords(e);
+  dragOffset.x = coords.x - nodeObj.x;
+  dragOffset.y = coords.y - nodeObj.y;
+}
+
+// Dragging nodes
+container.addEventListener('mousemove', e => {
+  if(draggingNode){
+    const coords = getEventCoords(e);
+    draggingNode.x = coords.x - dragOffset.x;
+    draggingNode.y = coords.y - dragOffset.y;
+    updatePositions();
+  }
+});
+container.addEventListener('mouseup', e => draggingNode = null);
+
+container.addEventListener('touchmove', e => {
+  if(draggingNode){
+    e.preventDefault();
+    const coords = getEventCoords(e);
+    draggingNode.x = coords.x - dragOffset.x;
+    draggingNode.y = coords.y - dragOffset.y;
+    updatePositions();
+  }
+}, {passive:false});
+container.addEventListener('touchend', e => draggingNode = null);
+
+// Update node positions and connections
 function updatePositions(){
-  nodes.forEach(n=> n.group.setAttribute('transform',`translate(${n.x},${n.y})`));
+  nodes.forEach(n => n.group.setAttribute('transform', `translate(${n.x},${n.y})`));
   updateConnections();
 }
 
@@ -138,48 +223,24 @@ function createConnection(fromNode, toNode){
 }
 
 function updateConnections(){
-  connections.forEach(conn=>{
-    const fx = conn.fromNode.x + conn.fromNode.width/2;
-    const fy = conn.fromNode.y + conn.fromNode.height/2;
-    const tx = conn.toNode.x + conn.toNode.width/2;
-    const ty = conn.toNode.y + conn.toNode.height/2;
-    conn.line.setAttribute('x1',fx);
-    conn.line.setAttribute('y1',fy);
-    conn.line.setAttribute('x2',tx);
-    conn.line.setAttribute('y2',ty);
+  connections.forEach(c => {
+    const fx = c.fromNode.x + c.fromNode.width/2;
+    const fy = c.fromNode.y + c.fromNode.height/2;
+    const tx = c.toNode.x + c.toNode.width/2;
+    const ty = c.toNode.y + c.toNode.height/2;
+    c.line.setAttribute('x1', fx);
+    c.line.setAttribute('y1', fy);
+    c.line.setAttribute('x2', tx);
+    c.line.setAttribute('y2', ty);
   });
 }
-
-// Dragging
-container.addEventListener('mousemove', e=>{
-  if(selectedNode){
-    const coords = getEventCoords(e);
-    const node = findNode(selectedNode);
-    node.x = coords.x - dragOffset.x;
-    node.y = coords.y - dragOffset.y;
-    updatePositions();
-  }
-});
-container.addEventListener('mouseup', e => selectedNode=null);
-
-container.addEventListener('touchmove', e=>{
-  if(selectedNode){
-    e.preventDefault();
-    const coords = getEventCoords(e);
-    const node = findNode(selectedNode);
-    node.x = coords.x - dragOffset.x;
-    node.y = coords.y - dragOffset.y;
-    updatePositions();
-  }
-}, {passive:false});
-container.addEventListener('touchend', e => selectedNode=null);
 
 // Connect workflow
 function handleConnectClick(node){
   if(!connectSourceNode){
     connectSourceNode = node;
     connectBtn.textContent = 'Click Target Node';
-  } else if(node && node !== connectSourceNode){
+  } else if(node !== connectSourceNode){
     createConnection(connectSourceNode, node);
     connectSourceNode = null;
     connectMode = false;
@@ -187,36 +248,41 @@ function handleConnectClick(node){
   }
 }
 
-// Buttons
-addNodeBtn.addEventListener('click', ()=>{
+// Button actions
+addNodeBtn.addEventListener('click', () => {
   const label = nodeLabelInput.value || `Node ${nodes.length+1}`;
   createNode(50 + nodes.length*20, 50 + nodes.length*20, label);
   nodeLabelInput.value = '';
 });
 
-connectBtn.addEventListener('click', ()=>{
+connectBtn.addEventListener('click', () => {
   connectMode = true;
   connectSourceNode = null;
   connectBtn.textContent = 'Click Source Node';
 });
 
-deleteBtn.addEventListener('click', ()=>{
-  if(selectedNode){
-    const node = findNode(selectedNode);
-    connections = connections.filter(c=>{
-      if(c.fromNode===node || c.toNode===node){
-        svg.removeChild(c.line);
-        return false;
-      }
-      return true;
-    });
-    svg.removeChild(node.group);
-    nodes = nodes.filter(n=> n!==node);
-    selectedNode=null;
-  } else alert('Select a node to delete');
+deleteBtn.addEventListener('click', () => {
+  if(!selectedNode){
+    alert('Select a node to delete');
+    return;
+  }
+
+  // Remove related connections
+  connections = connections.filter(c => {
+    if(c.fromNode === selectedNode || c.toNode === selectedNode){
+      svg.removeChild(c.line);
+      return false;
+    }
+    return true;
+  });
+
+  // Remove node
+  svg.removeChild(selectedNode.group);
+  nodes = nodes.filter(n => n !== selectedNode);
+  selectedNode = null;
 });
 
-// Example nodes
+// Initialize with example nodes
 createNode(50,50,"Start");
 createNode(250,150,"Process");
 createNode(450,50,"End");
