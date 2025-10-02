@@ -48,7 +48,9 @@ public class Constants {
 	public static final String URI_SWAGGER_RES		= "/swagger-resources/**";
 	public static final String URI_SWAGGER_CONF		= "/configuration/**";
 	public static final String URI_MANAGER_RES		= "/manager/**";
+
 	public static final String URI_QUERY_DB		    = "/queryDatabase";
+	public static final String URI_QUERY_USER	    = "/userReport";
 
 
 	
