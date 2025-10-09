@@ -110,9 +110,13 @@
             <a href="/nestedtableexample1.html">Financial Statement</a>
             <a href="/nestedtableexample.html">Advanced Portfolio Dashboard</a>
             <a href="/guicardexample.html">Financial Dashboard</a>
-			<a href="/flow-demo.html">Process Flow Demo</a>
         </div>
-
+		<!-- Third row of buttons -->
+		<div class="buttons">
+			<a href="/flow-demo.html">Process Flow Demo</a>
+		    <a href="/sv-user-profile.html">Virtual Service SQL Query Directory</a>
+		    <a href="/sv-profile.html">Virtual Service SQL Query Profile</a>
+		</div>
 		
         <!-- Tomcat version -->
         <div class="tomcat-version">
