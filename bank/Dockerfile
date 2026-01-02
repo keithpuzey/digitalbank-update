@@ -1,4 +1,4 @@
-FROM tomcat:11.0.15-jdk25-temurin
+FROM tomcat:9.0.83-jdk17-temurin
 # Environment variables
 ENV CATALINA_HOME /usr/local/tomcat
 EXPOSE 8080
