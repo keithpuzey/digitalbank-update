@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
-@SequenceGenerator(name="TRANS_NO_SEQ", initialValue=845320001, allocationSize=50)
+@SequenceGenerator(name="TRANS_NO_SEQ", initialValue=845320001, allocationSize=1)
 public class TransactionNumberSeq {
 	
 	@Id
