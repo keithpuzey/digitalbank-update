@@ -16,6 +16,7 @@ import io.digisic.bank.model.security.Role;
 import io.digisic.bank.model.security.Users;
 import io.digisic.bank.util.Constants;
 import com.github.javafaker.Faker;
+import org.springframework.context.annotation.Lazy;
 
 @Service
 @Transactional
@@ -24,7 +25,8 @@ public class SampleDataService {
 	@Autowired
 	private AccountService accountService;
 	
-	@Autowired
+    @Autowired
+	@Lazy // Added this to break the circular dependency with UserService
 	private UserService userService;
 	
 	// Data Generator

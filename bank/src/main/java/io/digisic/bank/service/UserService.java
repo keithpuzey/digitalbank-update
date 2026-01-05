@@ -34,6 +34,7 @@ import io.digisic.bank.util.Messages;
 import io.digisic.bank.util.Patterns;
 import io.digisic.bank.config.data.SampleData;
 import io.digisic.bank.util.Constants;
+import org.springframework.context.annotation.Lazy;
 
 @Service
 @Transactional
@@ -63,6 +64,7 @@ public class UserService {
 	private BCryptPasswordEncoder encoder;
 
 	@Autowired
+	@Lazy
 	private SampleDataService sampleDataService;
 
 	@Autowired

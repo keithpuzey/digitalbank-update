@@ -1,7 +1,7 @@
 package io.digisic.bank.service;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
