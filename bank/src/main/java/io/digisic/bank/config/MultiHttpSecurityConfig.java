@@ -71,21 +71,28 @@ public class MultiHttpSecurityConfig {
     // --- API Security Configuration (Order 1) ---
     @Bean
     @Order(1)
-    public SecurityFilterChain apiFilterChain(HttpSecurity http, JwtTokenProvider jwtTokenProvider) throws Exception {
-        http
-            .securityMatcher(Constants.URI_API_ALL) // Replaces antMatcher
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.POST, Constants.URI_API_AUTH).permitAll()
-                .requestMatchers(HttpMethod.GET, Constants.URI_API_HEALTHCHECK).permitAll()
-                .anyRequest().hasRole(Patterns.ROLE_API)
-            )
-            .exceptionHandling(ex -> ex.accessDeniedPage(Constants.URI_API_AUTH))
-            .with(new JwtTokenFilterConfigurer(jwtTokenProvider), Customizer.withDefaults());
+public SecurityFilterChain apiFilterChain(HttpSecurity http, JwtTokenProvider jwtTokenProvider) throws Exception {
+    http
+        .securityMatcher(Constants.URI_API_ALL) 
+        .csrf(csrf -> csrf.disable())
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests(auth -> auth
+            // 1. Specific Public Endpoints
+            .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+            .requestMatchers(HttpMethod.POST, Constants.URI_API_AUTH).permitAll()
+            .requestMatchers(HttpMethod.GET, Constants.URI_API_HEALTHCHECK).permitAll()
+            
+            // 2. Specific Role Requirements
+            .requestMatchers(Constants.URI_API_ALL).hasRole(Patterns.ROLE_API)
+            
+            // 3. Catch-all (MUST BE LAST)
+            .anyRequest().authenticated()
+        )
+        .exceptionHandling(ex -> ex.accessDeniedPage(Constants.URI_API_AUTH))
+        .with(new JwtTokenFilterConfigurer(jwtTokenProvider), Customizer.withDefaults());
 
-        return http.build();
-    }
+    return http.build();
+}
 
  // --- Form Login Security Configuration (Default Order) ---
     @Bean

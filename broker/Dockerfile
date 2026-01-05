@@ -17,7 +17,7 @@
 
 # ActiveMQ Artemis
 
-FROM eclipse-temurin:21
+FROM eclipse-temurin:17-jdk-jammy
 LABEL maintainer="Apache ActiveMQ Team"
 # Make sure pipes are considered to determine success, see: https://github.com/hadolint/hadolint/wiki/DL4006
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -34,10 +34,11 @@ RUN groupadd -g 1000 -r artemis && useradd -r -u 1000 -g artemis artemis
 
 # Download Apache Artemis
 RUN apt-get update && apt-get install -y wget
-RUN wget -O amq.tar.gz https://downloads.apache.org/activemq/activemq-artemis/2.17.0/apache-artemis-2.17.0-bin.tar.gz
+
+RUN wget -O amq.tar.gz https://downloads.apache.org/activemq/activemq-artemis/2.44.0/apache-artemis-2.44.0-bin.tar.gz
 RUN tar -xvf amq.tar.gz
-RUN rm amq.tar.gz
-RUN mv apache-artemis-2.17.0 activemq-artemis
+RUN mv apache-artemis-2.44.0 activemq-artemis
+
 
 USER artemis
 
