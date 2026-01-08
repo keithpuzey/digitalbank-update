@@ -10,11 +10,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
-@SequenceGenerator(name="TRANS_NO_SEQ", initialValue=845320001, allocationSize=1)
+@SequenceGenerator(name="TRANS_NO_SEQ", initialValue=20001, allocationSize=50)
 public class TransactionNumberSeq {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TRANS_NO_SEQ")
+	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="TRANS_NO_SEQ")
 	@Column(nullable=false, updatable=false, unique=true)
 	@JsonProperty (access = Access.READ_ONLY)
 	private Long id;

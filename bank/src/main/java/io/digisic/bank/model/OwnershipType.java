@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 public class OwnershipType {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id", nullable=false, updatable=false)
 	private Long id;
 	

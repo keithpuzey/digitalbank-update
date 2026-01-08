@@ -28,6 +28,7 @@ public class SampleDataService {
     @Autowired
 	@Lazy // Added this to break the circular dependency with UserService
 	private UserService userService;
+
 	
 	// Data Generator
 	private static Faker faker = new Faker(new Locale("en-US"));
@@ -52,6 +53,7 @@ public class SampleDataService {
 	private static String state = faker.address().stateAbbr();
 	private static String homePhone = faker.numerify("###-###-####");
 	
+
 	/*
 	 * Create Male User
 	 */
@@ -156,7 +158,6 @@ public class SampleDataService {
 		
 		// Create Joint Savings Account
 		Account jointSavings = new Account();
-		jointSavings.setName(SMPL_JOINT_SAVINGS);
 		jointSavings.setOwner(owner);
 		jointSavings.setCoowner(coowner);
 		jointSavings.setDateOpened(dailyCalendar.getTime());
@@ -956,7 +957,7 @@ public class SampleDataService {
 				
 		// Create Personal Savings Account
 		Account personalSavings = new Account();
-		personalSavings.setName(SMPL_INDIVIDUAL_SAVINGS);
+		personalSavings.setName(SMPL_INDIVIDUAL_SAVINGS);		
 		personalSavings.setOwner(user);
 		personalSavings.setDateOpened(dailyCalendar.getTime());
 		personalSavings.setOpeningBalance(new BigDecimal(faker.random().nextInt(800, 1900)));

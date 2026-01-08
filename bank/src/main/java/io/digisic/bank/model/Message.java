@@ -17,7 +17,7 @@ import io.digisic.bank.model.security.Users;
 public class Message {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="message_id", nullable=false, updatable=false)
 	private Long messageId;
 	

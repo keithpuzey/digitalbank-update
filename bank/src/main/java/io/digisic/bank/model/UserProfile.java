@@ -21,7 +21,7 @@ import io.digisic.bank.util.Patterns;
 public class UserProfile {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(nullable=false, updatable=false)
 	@JsonProperty (access = Access.READ_ONLY)
 	private Long id;
