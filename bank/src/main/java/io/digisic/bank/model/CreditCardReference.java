@@ -15,7 +15,7 @@ import io.digisic.bank.util.Patterns;
 public class CreditCardReference {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id", nullable=false, updatable=false)
 	private Long id;
 	

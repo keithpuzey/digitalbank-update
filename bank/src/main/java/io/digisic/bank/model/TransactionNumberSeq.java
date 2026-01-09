@@ -1,28 +1,21 @@
 package io.digisic.bank.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
-@SequenceGenerator(name="TRANS_NO_SEQ", initialValue=20001, allocationSize=50)
+@Table(name = "transaction_number_seq")
 public class TransactionNumberSeq {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="TRANS_NO_SEQ")
-	@Column(nullable=false, updatable=false, unique=true)
-	@JsonProperty (access = Access.READ_ONLY)
-	private Long id;
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, updatable = false)
+    @JsonProperty(access = Access.READ_ONLY)
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
 }

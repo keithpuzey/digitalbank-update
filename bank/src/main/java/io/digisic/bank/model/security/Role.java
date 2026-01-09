@@ -20,7 +20,7 @@ public class Role {
 	public static final String ROLE_API 	= "ROLE_API";
   
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id", nullable=false, updatable=false)
 	private Long id;
 	private String name;

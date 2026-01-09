@@ -6,10 +6,16 @@ import org.springframework.data.repository.CrudRepository;
 import io.digisic.bank.model.Account;
 import io.digisic.bank.model.AccountType;
 import io.digisic.bank.model.security.Users;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import io.digisic.bank.model.Account;
 
 
 public interface AccountRepository extends CrudRepository<Account, Long> {
-		
+
+    @Query("SELECT MAX(a.accountNumber) FROM Account a")
+    Long findMaxAccountNumber();
+    
 	List<Account> findAll ();
 	
 	List<Account> findByAccountType (AccountType accountType);
@@ -28,5 +34,4 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
 	
 	List<Account> findByCoownerAndAccountType_Category (Users user, String category);
 	
-	void deleteByOwner(Users user);
 }

@@ -17,7 +17,7 @@ import io.digisic.bank.model.security.Users;
 public class LinkedUser {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, updatable = false)
 	@JsonProperty(access = Access.READ_ONLY)
 	private Long id;

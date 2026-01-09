@@ -226,6 +226,8 @@ public class Constants {
 	public static final String ACCT_TRAN_TYPE_DIRECT_DEP_CODE		= "DDP";
 	public static final String ACCT_TRAN_TYPE_EFT_CODE				= "EFT";
 	public static final String ACCT_TRAN_TYPE_REFUND_CODE			= "RFD";
+	public static final String ACCT_TRAN_TYPE_INT_CODE              = "INT";
+	
 	
 	// Transaction Category Codes
 	public static final String ACCT_TRAN_CAT_MISC_CODE				= "MIS";

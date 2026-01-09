@@ -23,16 +23,12 @@ import io.digisic.credit.model.security.Users;
 public class Account {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	@Column(nullable=false, updatable=false, unique=true)
-	@JsonProperty (access = Access.READ_ONLY)
-	private Long id;
-	
-	@OneToOne (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "account_number")
-	@JsonProperty (access = Access.READ_ONLY)
-	private AccountNumberSeq accountNumber;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id; // PK
+
+	@Column(name = "account_number", unique = true, nullable = false)
+	private Long accountNumber; // generate manually in code    
+		
 	@JsonFormat(pattern="yyyy-MM-dd'T'hh:mm")
 	@DateTimeFormat(pattern="yyyy-MM-dd'T'hh:mm")
 	private Date dateOpened;

@@ -41,7 +41,7 @@ public class Users implements UserDetails, Serializable {
 	private static final long serialVersionUID = -1173435728882792083L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, updatable = false)
 	@JsonProperty(access = Access.READ_ONLY)
 	private Long id;
