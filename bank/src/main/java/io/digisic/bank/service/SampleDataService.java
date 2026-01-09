@@ -198,16 +198,6 @@ public class SampleDataService {
 @Autowired
 private AccountRepository accountRepository;
 
-public Long getNextAccountNumber() {
-    Long maxNumber = accountRepository.findMaxAccountNumber();
-    if (maxNumber == null) {
-        return 100000001L; // Start from 100 million or whatever you like
-    }
-    return maxNumber + 1;
-}
-
-
-
     private Account createBaseAccount(
             String name,
             Users owner,
@@ -229,9 +219,6 @@ public Long getNextAccountNumber() {
         account.setCurrentBalance(BigDecimal.valueOf(openingBalance)); // initialize current balance
         account.setAccountType(accountService.getAccoutTypeByCode(acctCode));
         account.setOwnershipType(ownershipType);
-
-        // Set a unique account number to avoid duplicates
-        account.setAccountNumber(getNextAccountNumber());
         
         accountService.createNewAccount(account);
         return account;

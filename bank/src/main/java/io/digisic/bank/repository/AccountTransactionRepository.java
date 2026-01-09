@@ -21,6 +21,9 @@ public interface AccountTransactionRepository extends CrudRepository<AccountTran
 	@Modifying
 	@Query(value = "UPDATE transaction_number_seq SET next_val = next_val + 1", nativeQuery = true)
 	void incrementTransactionNumber();
+
+	AccountTransaction findByTransactionNumber(Long transactionNumber);
+	
 	
 	public List<AccountTransaction> findAllByAccount (Account account);
 	public AccountTransaction findTopByAccountOrderByTransactionDateDesc (Account account);

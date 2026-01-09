@@ -26,6 +26,8 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
     @Query(value = "UPDATE account_number_seq SET next_val = next_val + 1", nativeQuery = true)
     void incrementAccountNumber();
     
+    Account findByAccountNumber(Long accountNumber);
+    
     
     @Transactional // Required for delete operations
     void deleteByOwner(Users owner);

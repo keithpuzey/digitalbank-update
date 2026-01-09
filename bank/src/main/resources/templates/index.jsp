@@ -4,259 +4,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo Global Bank | Premier Digital Banking</title>
+    <title>Demo Bank | Premier Digital Banking</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-blue: #003366;
             --accent-blue: #007bff;
             --text-dark: #1a1a1a;
-            --text-light: #f8f9fa;
             --bg-gray: #f4f7f9;
         }
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-gray);
-            color: var(--text-dark);
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; }
+        body, html { margin: 0; padding: 0; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
         /* --- Navigation --- */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 8%;
+            padding: 15px 8%;
             background: #fff;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             position: fixed;
-            top: 0;
-            width: 84%;
-            z-index: 1000;
+            top: 0; width: 100%; z-index: 1001;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-            text-decoration: none;
-            letter-spacing: -1px;
-        }
+        .logo { font-size: 1.4rem; font-weight: 700; color: var(--primary-blue); text-decoration: none; }
 
-        .nav-links {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-        }
+        /* Desktop Links */
+        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
+        /* Hamburger Icon */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1002;
+        }
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--primary-blue);
             transition: 0.3s;
         }
 
-        .nav-links a:hover { color: var(--accent-blue); }
-
-        /* Navigation Buttons */
-        .btn-demo-trigger {
-            cursor: pointer;
-            border: 1px solid var(--primary-blue);
-            padding: 10px 20px;
-            border-radius: 6px;
-        }
-
-        .btn-login {
-            background-color: var(--primary-blue);
-            color: white !important;
-            padding: 10px 25px;
-            border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0,51,102,0.2);
-        }
-
-        /* --- Hero Section --- */
-        .hero {
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 8%;
-            margin-top: 80px;
-            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.8)), 
-                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .hero-text { max-width: 600px; }
-        .hero-text h1 { font-size: 3.5rem; color: var(--primary-blue); margin-bottom: 20px; line-height: 1.1; }
-        .hero-text p { font-size: 1.2rem; color: #555; margin-bottom: 30px; }
-
-        /* --- Demo Modal (The "Demo Links" Page) --- */
-        .modal {
-            display: none; 
+        /* Mobile Menu Overlay */
+        .mobile-menu {
             position: fixed;
-            z-index: 2000;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background-color: #fff;
-            margin: 5% auto;
-            padding: 40px;
+            top: 0;
+            right: -100%;
             width: 80%;
-            max-width: 1000px;
-            border-radius: 15px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            animation: slideDown 0.4s ease-out;
-        }
-
-        @keyframes slideDown {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .close-modal {
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            color: #aaa;
-        }
-
-        /* Grid Layout for Demo Links */
-        .demo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .demo-card {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid var(--accent-blue);
-            transition: 0.3s;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .demo-card:hover {
+            height: 100vh;
             background: #fff;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            padding: 100px 40px;
+            gap: 20px;
+            transition: 0.4s ease-in-out;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
         }
+        .mobile-menu.active { right: 0; }
+        .mobile-menu a { font-size: 1.2rem; text-decoration: none; color: var(--text-dark); font-weight: 600; }
 
-        .demo-card h3 { margin: 0 0 10px 0; color: var(--primary-blue); font-size: 1.1rem; }
-        .demo-card p { margin: 0; font-size: 0.9rem; color: #666; }
-
-        .tomcat-info {
-            margin-top: 30px;
-            font-size: 0.8rem;
-            color: #999;
-            text-align: center;
+        /* --- Carousel --- */
+        .carousel-container { position: relative; height: 85vh; margin-top: 60px; overflow: hidden; background: #000; }
+        .slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; transition: opacity 0.8s; display: flex; align-items: center; padding: 0 8%;
+            background-size: cover; background-position: center;
         }
+        .slide.active { opacity: 1; }
+        .slide:nth-child(1) { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2070'); }
+        .slide:nth-child(2) { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?auto=format&fit=crop&q=80&w=2070'); }
+        
+        .slide-content { color: white; max-width: 600px; }
+        .slide-content h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 15px; }
 
+        .btn-login { background: var(--accent-blue); color: white !important; padding: 12px 25px; border-radius: 6px; text-decoration: none; display: inline-block; }
+
+        /* --- Modal --- */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); overflow-y: auto; }
+        .modal-content { background: #fff; margin: 5% auto; padding: 30px; width: 90%; max-width: 800px; border-radius: 12px; }
+        .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
+        .demo-card { background: #f4f7f9; padding: 15px; border-radius: 8px; text-decoration: none; color: inherit; border-left: 4px solid var(--accent-blue); }
+
+        /* Responsive Breakpoint */
         @media (max-width: 768px) {
-            .hero-text h1 { font-size: 2.5rem; }
-            nav { padding: 15px 5%; width: 90%; }
-            .nav-links { gap: 10px; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#" class="logo">Digital Bank Demo</a>
+        <a href="#" class="logo">Digital Bank</a>
         <div class="nav-links">
-			<a href="/bank/signup" class="btn-login">Create Account</a>
-            <a href="javascript:void(0)" class="btn-demo-trigger" onclick="openModal()">Demo Links</a>
+            <a href="javascript:void(0)" onclick="openModal()">Demo Directory</a>
             <a href="/bank" class="btn-login">Login</a>
+        </div>
+        <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-text">
-            <h1>The Future of Digital Banking is Here.</h1>
-            <p>Secure, fast, and intuitive financial management for individuals and businesses worldwide.</p>
-            <a href="/bank" style="text-decoration:none;" class="btn-login">Open Account</a>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="/bank">Login</a>
+        <a href="javascript:void(0)" onclick="toggleMobileMenu(); openModal();">Demo Directory</a>
+        <a href="/bank/signup">Open Account</a>
+    </div>
+
+    <section class="carousel-container">
+        <div class="slide active">
+            <div class="slide-content">
+                <h1>Banking Without Borders.</h1>
+                <p>Experience the next generation of financial freedom.</p>
+                <a href="/bank/signup" class="btn-login">Join Now</a>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Smart Wealth Management.</h1>
+                <p>Tools designed to help you grow your future.</p>
+                <a href="javascript:void(0)" onclick="openModal()" class="btn-login">View Demo</a>
+            </div>
         </div>
     </section>
 
     <div id="demoModal" class="modal">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 style="color: var(--primary-blue);">Demo Environment Directory</h2>
-            <p>Select a module below to begin your demonstration.</p>
-
+            <span style="float:right; cursor:pointer; font-size:1.5rem;" onclick="closeModal()">&times;</span>
+            <h2 style="color: var(--primary-blue);">Demo Directory</h2>
             <div class="demo-grid">
-                <a href="/bank" class="demo-card">
-                    <h3>Digital Banking</h3>
-                    <p>Core consumer banking interface and dashboard.</p>
-                </a>
-                <a href="/query.html" class="demo-card">
-                    <h3>Database Demo</h3>
-                    <p>Interface for back-end data management.</p>
-                </a>
-                <a href="https://blazedemo.com/" target="_blank" class="demo-card">
-                    <h3>Travel Website</h3>
-                    <p>Partner integration: Flight booking engine.</p>
-                </a>
-
-                <a href="/nestedtableexample1.html" class="demo-card">
-                    <h3>Financial Statement</h3>
-                    <p>Detailed ledger and reporting view.</p>
-                </a>
-                <a href="/nestedtableexample.html" class="demo-card">
-                    <h3>Portfolio Dashboard</h3>
-                    <p>Advanced asset and wealth management.</p>
-                </a>
-                <a href="/guicardexample.html" class="demo-card">
-                    <h3>Financial Dashboard</h3>
-                    <p>Card-based financial overview UI.</p>
-                </a>
-
-                <a href="/flow-demo.html" class="demo-card">
-                    <h3>Process Flow</h3>
-                    <p>Visualization of transaction workflows.</p>
-                </a>
-                <a href="/sv-user-profile.html" class="demo-card">
-                    <h3>SV Query Directory</h3>
-                    <p>Virtual Service SQL directory management.</p>
-                </a>
-                <a href="/sv-profile.html" class="demo-card">
-                    <h3>SV Query Profile</h3>
-                    <p>SQL profiling and service virtualization.</p>
-                </a>
-            </div>
-
-            <div class="tomcat-info">
-                Server Instance: <%= application.getServerInfo() %>
+                <a href="https://blazedemo.com" class="demo-card"><h3>Travel WebSite</h3><p>Partner Integration: Flight Booking.</p></a>
+                <a href="/query.html" class="demo-card"><h3>Database Demo</h3><p>Back-end data tools.</p></a>
+                <a href="/guicardexample.html" class="demo-card"><h3>Dashboard</h3><p>Card-based UI overview.</p></a>
+				<a href="/nestedtableexample1.html" class="demo-card"><h3>Financial Statement</h3><p>Detailed Ledger and Reporting.</p></a>
+				<a href="/nestedtableexample.html" class="demo-card"><h3>Portfolio Dashboard</h3><p>Advanced Asset and Wealth.</p></a>
+				<a href="/flow-demo.html" class="demo-card"><h3>Process Flow</h3><p>Process Visualization.</p></a>
+				<a href="/sv-user-profile.html" class="demo-card"><h3>SV Query Directory</h3><p>Virtual Service SQL query example.</p></a>
+				<a href="/sv-profile.html" class="demo-card"><h3>SV Query Profile</h3><p>SQL Profiling.</p></a>
+				<div class="tomcat-info">
+				    Server Instance: <%= application.getServerInfo() %>
+				</div>
             </div>
         </div>
     </div>
 
     <script>
-        function openModal() {
-            document.getElementById("demoModal").style.display = "block";
+        // Hamburger Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.getElementById('hamburger');
+            menu.classList.toggle('active');
+            
+            // Optional: Animate hamburger to X
+            hamburger.children[0].style.transform = menu.classList.contains('active') ? 'rotate(45deg) translate(5px, 6px)' : 'none';
+            hamburger.children[1].style.opacity = menu.classList.contains('active') ? '0' : '1';
+            hamburger.children[2].style.transform = menu.classList.contains('active') ? 'rotate(-45deg) translate(5px, -6px)' : 'none';
         }
-        function closeModal() {
-            document.getElementById("demoModal").style.display = "none";
-        }
-        // Close modal if user clicks outside of it
-        window.onclick = function(event) {
-            let modal = document.getElementById("demoModal");
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+
+        // Carousel Logic
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 5000);
+
+        // Modal Logic
+        function openModal() { document.getElementById("demoModal").style.display = "block"; }
+        function closeModal() { document.getElementById("demoModal").style.display = "none"; }
+        window.onclick = (e) => { if(e.target == document.getElementById("demoModal")) closeModal(); }
     </script>
 
 </body>

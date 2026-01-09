@@ -311,18 +311,25 @@ public class AccountService {
 	 */
 	public Account createNewAccount (Account newAccount) {
 				
-		// 1. Fetch the unique number from our new table
-	    Long nextAccNum = accountRepository.getNextAccountNumber();
-	    
-	    // 2. Assign it to the object
-	    newAccount.setAccountNumber(nextAccNum);
-	    
-	    // 3. Increment the DB counter so the NEXT account doesn't get '1'
-	    accountRepository.incrementAccountNumber();
-	    
-	    // 4. Log it so you can see it in the console
-	    LOG.info("Creating account with Number: " + nextAccNum);		
-		    
+		Long nextAccNum;
+	    boolean isDuplicate = true;
+
+	    // Keep trying until we find a number not in the account table
+	    while (isDuplicate) {
+	        nextAccNum = accountRepository.getNextAccountNumber();
+	        
+	        // Check if this number is actually in use in the 'account' table
+	        if (accountRepository.findByAccountNumber(nextAccNum) == null) {
+	            newAccount.setAccountNumber(nextAccNum);
+	            isDuplicate = false;
+	            LOG.info("Creating account with verified Number: " + nextAccNum);
+	        } else {
+	            LOG.warn("Sequence gave " + nextAccNum + " but it exists in DB. Skipping...");
+	        }
+	        
+	        // Always increment so we don't get the same number next loop
+	        accountRepository.incrementAccountNumber();
+	    }  
 			
 		// Set Account Details
 		newAccount.setCurrentBalance(newAccount.getOpeningBalance());
@@ -425,11 +432,26 @@ public class AccountService {
 		account.setAccountTransactionList(atl);
 		
 
-	    
-	    // Fetch and Increment the manual sequence
-	    Long nextTranNum = accountTransactionRepository.getNextTransactionNumber();
-	    accountTransaction.setTransactionNumber(nextTranNum); // Now this will work!
-	    accountTransactionRepository.incrementTransactionNumber();
+		// Logic to find a non-duplicate transaction number
+		Long nextTranNum;
+		boolean isDuplicate = true;
+
+		while (isDuplicate) {
+		    nextTranNum = accountTransactionRepository.getNextTransactionNumber();
+		    
+		    // Check if this transaction number is already in the table
+		    if (accountTransactionRepository.findByTransactionNumber(nextTranNum) == null) {
+		        accountTransaction.setTransactionNumber(nextTranNum);
+		        isDuplicate = false;
+		        LOG.debug("Verified Transaction Number: " + nextTranNum);
+		    } else {
+		        LOG.warn("Sequence gave Transaction " + nextTranNum + " but it exists. Skipping...");
+		    }
+		    
+		    // Increment the sequence in the DB
+		    accountTransactionRepository.incrementTransactionNumber();
+		}
+		
 	    // Update Account
 	    accountRepository.save(account);
 		
