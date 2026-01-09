@@ -15,12 +15,15 @@ import io.digisic.bank.model.TransactionCategory;
 
 public interface AccountTransactionRepository extends CrudRepository<AccountTransaction, Long> {
 	
-	@Query(value = "SELECT next_val FROM transaction_number_seq", nativeQuery = true)
-	Long getNextTransactionNumber();
+//	@Query(value = "SELECT next_val FROM transaction_number_seq", nativeQuery = true)
+//	Long getNextTransactionNumber();
 
-	@Modifying
-	@Query(value = "UPDATE transaction_number_seq SET next_val = next_val + 1", nativeQuery = true)
-	void incrementTransactionNumber();
+//	@Modifying
+//	@Query(value = "UPDATE transaction_number_seq SET next_val = next_val + 1", nativeQuery = true)
+//	void incrementTransactionNumber();
+	
+	@Query("SELECT MAX(t.transactionNumber) FROM AccountTransaction t")
+    Long findMaxTransactionNumber();
 
 	AccountTransaction findByTransactionNumber(Long transactionNumber);
 	

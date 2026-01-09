@@ -31,7 +31,7 @@ import io.digisic.bank.model.security.Users;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id; // Primary key, auto-generated
 
     

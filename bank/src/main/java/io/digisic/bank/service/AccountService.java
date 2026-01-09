@@ -309,27 +309,40 @@ public class AccountService {
 	/*
 	 * Create a new account
 	 */
+	@Transactional
 	public Account createNewAccount (Account newAccount) {
-				
-		Long nextAccNum;
-	    boolean isDuplicate = true;
+
+		// Check if the account number is already set (e.g., from a form)
+	    // If not, we generate it.
+	    if (newAccount.getAccountNumber() == null) {
+	        // Optimization: Get the current max and add 1
+	        // This works on H2, MySQL, Postgres, and MSSQL
+	        Long maxNum = accountRepository.findMaxAccountNumber();
+	        newAccount.setAccountNumber(maxNum == null ? 1000001L : maxNum + 1);
+	    }
+		
+		
+		
+		
+//		Long nextAccNum;
+//	    boolean isDuplicate = true;
 
 	    // Keep trying until we find a number not in the account table
-	    while (isDuplicate) {
-	        nextAccNum = accountRepository.getNextAccountNumber();
+//	    while (isDuplicate) {
+//	        nextAccNum = accountRepository.getNextAccountNumber();
 	        
 	        // Check if this number is actually in use in the 'account' table
-	        if (accountRepository.findByAccountNumber(nextAccNum) == null) {
-	            newAccount.setAccountNumber(nextAccNum);
-	            isDuplicate = false;
-	            LOG.info("Creating account with verified Number: " + nextAccNum);
-	        } else {
-	            LOG.warn("Sequence gave " + nextAccNum + " but it exists in DB. Skipping...");
-	        }
+//	        if (accountRepository.findByAccountNumber(nextAccNum) == null) {
+//	            newAccount.setAccountNumber(nextAccNum);
+//	            isDuplicate = false;
+//	            LOG.info("Creating account with verified Number: " + nextAccNum);
+//	        } else {
+//	            LOG.warn("Sequence gave " + nextAccNum + " but it exists in DB. Skipping...");
+//	        }
 	        
-	        // Always increment so we don't get the same number next loop
-	        accountRepository.incrementAccountNumber();
-	    }  
+//	        // Always increment so we don't get the same number next loop
+//	        accountRepository.incrementAccountNumber();
+//	    }  
 			
 		// Set Account Details
 		newAccount.setCurrentBalance(newAccount.getOpeningBalance());
@@ -431,26 +444,32 @@ public class AccountService {
 		atl.add(accountTransaction);
 		account.setAccountTransactionList(atl);
 		
-
+		// DATABASE AGNOSTIC TRANSACTION NUMBERING
+	    if (accountTransaction.getTransactionNumber() == null) {
+	        Long maxTran = accountTransactionRepository.findMaxTransactionNumber();
+	        // Start at 5000001 if the table is empty, otherwise take MAX + 1
+	        accountTransaction.setTransactionNumber(maxTran == null ? 5000001L : maxTran + 1);
+	    }
+	    
 		// Logic to find a non-duplicate transaction number
-		Long nextTranNum;
-		boolean isDuplicate = true;
+		//Long nextTranNum;
+		//boolean isDuplicate = true;
 
-		while (isDuplicate) {
-		    nextTranNum = accountTransactionRepository.getNextTransactionNumber();
+//		while (isDuplicate) {/
+//		    nextTranNum = accountTransactionRepository.getNextTransactionNumber();
 		    
 		    // Check if this transaction number is already in the table
-		    if (accountTransactionRepository.findByTransactionNumber(nextTranNum) == null) {
-		        accountTransaction.setTransactionNumber(nextTranNum);
-		        isDuplicate = false;
-		        LOG.debug("Verified Transaction Number: " + nextTranNum);
-		    } else {
-		        LOG.warn("Sequence gave Transaction " + nextTranNum + " but it exists. Skipping...");
-		    }
+//		    if (accountTransactionRepository.findByTransactionNumber(nextTranNum) == null) {
+//		        accountTransaction.setTransactionNumber(nextTranNum);
+//		        isDuplicate = false;
+//		        LOG.debug("Verified Transaction Number: " + nextTranNum);
+//		    } else {
+//		        LOG.warn("Sequence gave Transaction " + nextTranNum + " but it exists. Skipping...");
+//		    }
 		    
 		    // Increment the sequence in the DB
-		    accountTransactionRepository.incrementTransactionNumber();
-		}
+//		    accountTransactionRepository.incrementTransactionNumber();
+//		}
 		
 	    // Update Account
 	    accountRepository.save(account);
@@ -514,7 +533,12 @@ public class AccountService {
 		atl.add(accountTransaction);
 		
 		account.setAccountTransactionList(atl);
-		
+
+		AccountTransaction overTrans = new AccountTransaction();
+	    // Use the same logic here
+	    Long maxTran = accountTransactionRepository.findMaxTransactionNumber();
+	    overTrans.setTransactionNumber(maxTran + 1);
+	    
 		// Update Account
 		accountRepository.save(account);
 		
