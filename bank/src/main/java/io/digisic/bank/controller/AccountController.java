@@ -316,7 +316,7 @@ public class AccountController extends CommonController {
 			}
 		}
 		
-		return ResponseEntity.ok(account.getAcountTransactionList());
+		return ResponseEntity.ok(account.getAccountTransactionList());
 	}
 	
 	/*

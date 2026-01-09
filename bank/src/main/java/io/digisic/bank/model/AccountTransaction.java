@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.TableGenerator;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -33,11 +34,12 @@ public class AccountTransaction {
 	private BigDecimal amount;
 	private BigDecimal runningBalance;
 	
-	@OneToOne (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "transaction_number")
-	@JsonProperty (access = Access.READ_ONLY)
-	private TransactionNumberSeq transactionNumber;
-
+	public void setTransactionNumber(Long transactionNumber) {
+        this.transactionNumber = transactionNumber;
+    }
+	
+	@Column(unique = true)
+	private Long transactionNumber;
 	
 	@JsonFormat(pattern="yyyy-MM-dd'T'hh:mm")
 	@DateTimeFormat(pattern="yyyy-MM-dd'T'hh:mm")
@@ -61,7 +63,7 @@ public class AccountTransaction {
 	 * Constructor
 	 */
 	public AccountTransaction () {
-		transactionNumber = new TransactionNumberSeq();
+	
 	}
 	
 	/**
@@ -182,7 +184,7 @@ public class AccountTransaction {
 	 * @return the transactionNumber
 	 */
 	public Long getTransactionNumber() {
-		return transactionNumber.getId();
+		return transactionNumber;
 	}
 
 	/**

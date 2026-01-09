@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import jakarta.persistence.*;
 import io.digisic.bank.model.Account;
 import io.digisic.bank.model.AccountStanding;
 import io.digisic.bank.model.AccountTransaction;
@@ -60,10 +60,11 @@ public class AccountService {
 	@Autowired 
 	private AccountTransactionRepository accountTransactionRepository;
 	
+	
 	@Autowired
 	private TransactionCategoryRepository transactionCategoryRepository;
 	
-	
+
 	/*
 	 * Get Transactions By Category Summary Data
 	 */
@@ -310,6 +311,19 @@ public class AccountService {
 	 */
 	public Account createNewAccount (Account newAccount) {
 				
+		// 1. Fetch the unique number from our new table
+	    Long nextAccNum = accountRepository.getNextAccountNumber();
+	    
+	    // 2. Assign it to the object
+	    newAccount.setAccountNumber(nextAccNum);
+	    
+	    // 3. Increment the DB counter so the NEXT account doesn't get '1'
+	    accountRepository.incrementAccountNumber();
+	    
+	    // 4. Log it so you can see it in the console
+	    LOG.info("Creating account with Number: " + nextAccNum);		
+		    
+			
 		// Set Account Details
 		newAccount.setCurrentBalance(newAccount.getOpeningBalance());
 		newAccount.setInterestRate(newAccount.getAccountType().getInterestRate());
@@ -381,7 +395,7 @@ public class AccountService {
 		
 		account = this.getAccountById(account.getId());
 		BigDecimal balance = account.getCurrentBalance();
-		List<AccountTransaction> atl = account.getAcountTransactionList();
+		List<AccountTransaction> atl = account.getAccountTransactionList();
 		
 		// if the list is null, then its the first transaction
 		if (atl == null) {
@@ -408,10 +422,16 @@ public class AccountService {
 		accountTransaction.setTransactionState(transactionStateRepository.findByCode(Constants.ACCT_TRAN_ST_COMP_CODE));
 		accountTransaction.setAccount(account);
 		atl.add(accountTransaction);
-		account.setAcountTransactionList(atl);
+		account.setAccountTransactionList(atl);
 		
-		// Update Account
-		accountRepository.save(account);
+
+	    
+	    // Fetch and Increment the manual sequence
+	    Long nextTranNum = accountTransactionRepository.getNextTransactionNumber();
+	    accountTransaction.setTransactionNumber(nextTranNum); // Now this will work!
+	    accountTransactionRepository.incrementTransactionNumber();
+	    // Update Account
+	    accountRepository.save(account);
 		
 		LOG.debug("Credit Transaction to Account: New Number of Transactions: ->" + atl.size());
 		LOG.debug("Credit Transaction to Account: Account Updated.");
@@ -438,7 +458,7 @@ public class AccountService {
 		
 		account = this.getAccountById(account.getId());
 		
-		List<AccountTransaction> atl = account.getAcountTransactionList();
+		List<AccountTransaction> atl = account.getAccountTransactionList();
 		
 		BigDecimal balance = account.getCurrentBalance();
 		BigDecimal amount = accountTransaction.getAmount();
@@ -471,7 +491,7 @@ public class AccountService {
 		accountTransaction.setAccount(account);
 		atl.add(accountTransaction);
 		
-		account.setAcountTransactionList(atl);
+		account.setAccountTransactionList(atl);
 		
 		// Update Account
 		accountRepository.save(account);
@@ -545,7 +565,7 @@ public class AccountService {
 	 * Get Account Type by Account Type Code
 	 */
 	public AccountType getAccoutTypeByCode (String code) {
-		return accountTypeRepository.findByCode(code);
+		return accountTypeRepository.findByCode(code);/**/
 	}
 	
 	/*
@@ -707,7 +727,7 @@ public class AccountService {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(offender.getTransactionDate());
 		calendar.add(Calendar.SECOND, seconds);
-		List<AccountTransaction> transList = account.getAcountTransactionList();
+		List<AccountTransaction> transList = account.getAccountTransactionList();
 		
 		AccountTransaction overTrans = new AccountTransaction();
 		BigDecimal overFee = account.getAccountType().getOverdraftFee();
@@ -730,7 +750,7 @@ public class AccountService {
 		overTrans.setAccount(account);
 		transList.add(overTrans);
 		
-		account.setAcountTransactionList(transList);
+		account.setAccountTransactionList(transList);
 		
 		// Update Account
 		accountRepository.save(account);

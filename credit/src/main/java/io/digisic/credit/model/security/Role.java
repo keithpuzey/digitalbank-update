@@ -26,7 +26,7 @@ public class Role {
 	private Long id;
 	private String name;
   
-	@OneToMany(mappedBy="role", cascade={javax.persistence.CascadeType.ALL}, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="role", cascade={jakarta.persistence.CascadeType.ALL}, fetch=FetchType.LAZY)
 	private Set<UserRole> userRoles = new HashSet<>();
 
 	// default constructor

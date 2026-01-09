@@ -231,7 +231,7 @@ public class WebAccountController extends WebCommonController {
 		
 		if (accountList.size() > 0) {
 			
-			List<AccountTransaction> transactionList  = accountList.get(0).getAcountTransactionList();
+			List<AccountTransaction> transactionList  = accountList.get(0).getAccountTransactionList();
 			selectId = accountList.get(0).getId();
 			
 			if (selectSwitch.size() > 0) {
@@ -248,7 +248,7 @@ public class WebAccountController extends WebCommonController {
 						
 						LOG.debug("GETTING TRANSACTIONS FOR ID: -> " + accountList.get(i).getId());
 						
-						transactionList = accountList.get(i).getAcountTransactionList();
+						transactionList = accountList.get(i).getAccountTransactionList();
 					}
 				} // end for
 			} // end if a selected switch
@@ -289,7 +289,7 @@ public class WebAccountController extends WebCommonController {
 		
 		if (accountList.size() > 0) {
 			
-			List<AccountTransaction> transactionList  = accountList.get(0).getAcountTransactionList();
+			List<AccountTransaction> transactionList  = accountList.get(0).getAccountTransactionList();
 			selectId = accountList.get(0).getId();
 			
 			if (selectSwitch.size() > 0) {
@@ -306,7 +306,7 @@ public class WebAccountController extends WebCommonController {
 						
 						LOG.debug("GETTING TRANSACTIONS FOR ID: -> " + accountList.get(i).getId());
 						
-						transactionList = accountList.get(i).getAcountTransactionList();
+						transactionList = accountList.get(i).getAccountTransactionList();
 					}
 				} // end for
 			} // end if a selected switch

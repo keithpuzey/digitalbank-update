@@ -16,6 +16,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.OrderBy;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.TableGenerator;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,9 +34,11 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // Primary key, auto-generated
 
+    
     @Column(name = "account_number", unique = true, nullable = false)
-    private Long accountNumber; // Will be generated in code, not by DB
-
+    private Long accountNumber;
+    
+    
     private String name;
     private BigDecimal currentBalance;
     private BigDecimal openingBalance;
@@ -41,15 +46,20 @@ public class Account {
     private double paymentAmount;
     private int paymentTerm;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "account_type_id", unique = false) // Add this
     private AccountType accountType;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ownership_type_id", unique = false) // Add this
     private OwnershipType ownershipType;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "account_standing_id", unique = false) // Add this
     private AccountStanding accountStanding;
-
+    
+    
     @JsonFormat(pattern="yyyy-MM-dd'T'hh:mm")
     @DateTimeFormat(pattern="yyyy-MM-dd'T'hh:mm")
     private Date dateOpened;
@@ -82,6 +92,7 @@ public class Account {
     public void setId(Long id) { this.id = id; }
 
     public Long getAccountNumber() { return accountNumber; }
+    
     public void setAccountNumber(Long accountNumber) { this.accountNumber = accountNumber; }
 
     public String getName() { return name; }
