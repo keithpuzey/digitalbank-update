@@ -1,76 +1,166 @@
 <!DOCTYPE html>
+<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
+<head>
+    <div th:replace="~{common/sections :: header-css}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #003366;
+            --accent-blue: #007bff;
+            --text-dark: #1a1a1a;
+        }
 
-<head th:replace="~{common/sections :: header-css}"/>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Background Image Integration */
+            background-image: linear-gradient(rgba(0, 51, 102, 0.7), rgba(0, 0, 0, 0.8)), 
+                              url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
 
-<body class="bg-dark">
+        .login-wrapper {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+            z-index: 1;
+        }
 
-    <div class="sufee-login d-flex align-content-center flex-wrap">
-        <div class="container">
-            <div class="login-content">
-                <div class="login-logo">
-                    <a th:href="@{/home}">
-                        <img class="align-content" th:src="@{/images/logo.png}" alt="">
-                    </a>
+        .login-card {
+            background: rgba(255, 255, 255, 0.95); /* Slight transparency */
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            /* Glassmorphism effect */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            background: #fff;
+        }
+
+        .btn-login {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+        }
+
+        .register-link a {
+            color: var(--accent-blue);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* Alert styling for high visibility */
+        .alert {
+            border: none;
+            border-left: 4px solid #dc3545;
+            background: #fff5f5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-wrapper">
+        <div class="login-card">
+            
+            <div class="logo-section">
+                <a th:href="@{/home}" class="logo-text">Digital Bank</a>
+                <p style="color: #666; margin-top: 5px;">Secure Client Access</p>
+            </div>
+
+            <div class="alert alert-danger alert-dismissible fade show" th:if="${param.error}">
+                <strong>Login Failed:</strong> Invalid credentials.
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+
+            <div class="alert alert-success alert-dismissible fade show" th:if="${param.logout}">
+                Successfully logged out.
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+            
+            <div class="alert alert-success alert-dismissible fade show" th:if="${successMsg}">
+                <span th:text="${successMsg}"></span>
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <label>User Name</label>
+                    <input type="text" class="form-control" name="username" id="username" 
+                           th:field="${user.username}" placeholder="Enter User Name" required/>
                 </div>
-                
-                
-                <div class="login-form">
-                
-                <!-- Begin Alerts -->
-                
-                	<div class="sufee-alert alert with-close alert-danger alert-dismissible fade show" th:if="${param.error}">
-                       <span class="badge badge-pill badge-danger">Error</span>
-                           Invalid credentials or access not granted due to user account status or an existing user session.
-                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                           <span aria-hidden="true">&times;</span>
-                       </button>
-                   </div>
-                	<div class="sufee-alert alert with-close alert-success alert-dismissible fade show" th:if="${param.logout}">
-                       <span class="badge badge-pill badge-success">Success</span>
-                           Logout completed.
-                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                           <span aria-hidden="true">&times;</span>
-                       </button>
-                   </div>
-                   <div class="sufee-alert alert with-close alert-success alert-dismissible fade show" th:if="${successMsg}">
-                       <span class="badge badge-pill badge-success">Success</span>
-                           <span th:text="${successMsg}"></span>
-                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                           <span aria-hidden="true">&times;</span>
-                       </button>
-                   </div>
-                   <!-- End Alerts -->
-                   
-                   <!-- Begin Form -->
-                   <form th:action="@{/login}" method="post">
-	                   <div class="form-group">
-	                       <label><strong>User Name</strong></label>
-	                       <input type="text" class="form-control" name="username" id="username" th:field="${user.username}" placeholder="Enter User Name"/>
-	                   </div>
-                       <div class="form-group">
-                           <label><strong>Password</strong></label>
-                           <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password"/>
-                       </div>
-                       <div class="checkbox">
-                           <label>
-                               <input type="checkbox" name="remember-me" id="remember-me"/> Remember Me
-                           </label>
-                       </div>
-                       <button type="submit" id= "submit" class="btn btn-success btn-flat m-b-30 m-t-30">Sign in</button>
-                       <div class="register-link m-t-15 text-center">
-                           <p>Don't have account ? <a th:href="@{/signup}"> Sign Up Here</a></p>
-                       </div>
-                   </form>
-                   
-                   <!-- End Form -->
-                </div> <!--  End Login Form -->
-            </div> <!--  End Login Content -->
-        </div> <!-- End Container -->
-    </div> <!-- End Sufee -->
 
-	<div th:replace="~{common/sections :: footer-scripts}"></div>
+                <div class="form-group mt-3">
+                    <label>Password</label>
+                    <input type="password" class="form-control" name="password" id="password" 
+                           placeholder="Enter Password" required/>
+                </div>
+
+                <div class="checkbox mt-3">
+                    <label style="font-weight: 400; cursor: pointer;">
+                        <input type="checkbox" name="remember-me" id="remember-me"/> Remember Me
+                    </label>
+                </div>
+
+                <button type="submit" id="submit" class="btn-login">Sign in</button>
+
+                <div class="register-link mt-4 text-center">
+                    <p>New to Digital Bank? <a th:href="@{/signup}">Open an Account</a></p>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div th:replace="~{common/sections :: footer-scripts}"></div>
 
 </body>
 </html>
