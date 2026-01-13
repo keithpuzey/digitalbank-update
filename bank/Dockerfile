@@ -1,6 +1,6 @@
 FROM tomcat:11.0.15-jdk17-temurin
 # Environment variables
-ENV CATALINA_HOME /usr/local/tomcat
+ENV CATALINA_HOME=/usr/local/tomcat
 EXPOSE 8080
 EXPOSE 8443
 # Install OpenJDK 17 or any necessary packages

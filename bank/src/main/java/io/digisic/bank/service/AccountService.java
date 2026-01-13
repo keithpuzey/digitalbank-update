@@ -409,151 +409,107 @@ public class AccountService {
 	 * 		- Transaction Type
 	 * 		- Transaction Description
 	 */
-	public void creditTransaction(Account account, AccountTransaction accountTransaction) {
-		
-		LOG.debug("Credit Transaction to Account:");
-		
-		account = this.getAccountById(account.getId());
-		BigDecimal balance = account.getCurrentBalance();
-		List<AccountTransaction> atl = account.getAccountTransactionList();
-		
-		// if the list is null, then its the first transaction
-		if (atl == null) {
-			atl = new ArrayList<AccountTransaction>();
-		}
-		else { // else we are adding another transaction to the list so calculate the new update
-			balance = balance.add(accountTransaction.getAmount());
-			account.setCurrentBalance(balance);
-		}
-		
-		LOG.debug("Credit Transaction to Account: Current Number of Transactions: ->" + atl.size());
 
-		// if Category was not set, default to MISC
-		if (accountTransaction.getTransactionCategory() == null) {
-			accountTransaction.setTransactionCategory(transactionCategoryRepository.findByCode(Constants.ACCT_TRAN_CAT_INC_CODE));
-		}
-		
-		// Check if the date was already set, if not set to current date time.
-		if (accountTransaction.getTransactionDate() == null) {
-			accountTransaction.setTransactionDate(new Date());
-		}
-		
-		accountTransaction.setRunningBalance(balance);
-		accountTransaction.setTransactionState(transactionStateRepository.findByCode(Constants.ACCT_TRAN_ST_COMP_CODE));
-		accountTransaction.setAccount(account);
-		atl.add(accountTransaction);
-		account.setAccountTransactionList(atl);
-		
-		// DATABASE AGNOSTIC TRANSACTION NUMBERING
-	    if (accountTransaction.getTransactionNumber() == null) {
-	        Long maxTran = accountTransactionRepository.findMaxTransactionNumber();
-	        // Start at 5000001 if the table is empty, otherwise take MAX + 1
-	        accountTransaction.setTransactionNumber(maxTran == null ? 5000001L : maxTran + 1);
-	    }
-	    
-		// Logic to find a non-duplicate transaction number
-		//Long nextTranNum;
-		//boolean isDuplicate = true;
+public void creditTransaction(Account account, AccountTransaction accountTransaction) {
+    LOG.debug("Credit Transaction to Account:");
 
-//		while (isDuplicate) {/
-//		    nextTranNum = accountTransactionRepository.getNextTransactionNumber();
-		    
-		    // Check if this transaction number is already in the table
-//		    if (accountTransactionRepository.findByTransactionNumber(nextTranNum) == null) {
-//		        accountTransaction.setTransactionNumber(nextTranNum);
-//		        isDuplicate = false;
-//		        LOG.debug("Verified Transaction Number: " + nextTranNum);
-//		    } else {
-//		        LOG.warn("Sequence gave Transaction " + nextTranNum + " but it exists. Skipping...");
-//		    }
-		    
-		    // Increment the sequence in the DB
-//		    accountTransactionRepository.incrementTransactionNumber();
-//		}
-		
-	    // Update Account
-	    accountRepository.save(account);
-		
-		LOG.debug("Credit Transaction to Account: New Number of Transactions: ->" + atl.size());
-		LOG.debug("Credit Transaction to Account: Account Updated.");
-		
-	}
-	
-	/*
-	 * Add a new transaction that will apply a debit to the account.
-	 * 
-	 * The Account passed in is expected to be a full Account object. With that said
-	 * the account object is fetched to make sure.
-	 * 
-	 * The AccountTransation is expect to be a partial object. However,
-	 * 		the AccountTransaction should have the following values already defined 
-	 * 		within the object.
-	 * 
-	 * 		- Amount of transaction
-	 * 		- Transaction Type
-	 * 		- Transaction Description
-	 */
-	public void debitTransaction(Account account, AccountTransaction accountTransaction) {
-		
-		LOG.debug("Debit Transaction from Account:");
-		
-		account = this.getAccountById(account.getId());
-		
-		List<AccountTransaction> atl = account.getAccountTransactionList();
-		
-		BigDecimal balance = account.getCurrentBalance();
-		BigDecimal amount = accountTransaction.getAmount();
-		boolean overdraft = false;
-		
-		// if the withdraw is greater than the balance, charge a fee
-		if (amount.compareTo(balance) == 1) {
-			overdraft = true;
-		}
-		
-		// Convert amount to a negative number since it is a withdraw
-		BigDecimal negOne = new BigDecimal(-1);
-		amount = amount.multiply(negOne);	
-		balance = balance.add(amount);
-		account.setCurrentBalance(balance);
-		
-		// if Category was not set, default to MISC
-		if (accountTransaction.getTransactionCategory() == null) {
-			accountTransaction.setTransactionCategory(transactionCategoryRepository.findByCode(Constants.ACCT_TRAN_CAT_MISC_CODE));
-		}
-		
-		// Check if the date was already set, if not set to current date time.
-		if (accountTransaction.getTransactionDate() == null) {
-			accountTransaction.setTransactionDate(new Date());
-		}
-		
-		accountTransaction.setRunningBalance(balance);
-		accountTransaction.setAmount(amount);
-		accountTransaction.setTransactionState(transactionStateRepository.findByCode(Constants.ACCT_TRAN_ST_COMP_CODE));
-		accountTransaction.setAccount(account);
-		atl.add(accountTransaction);
-		
-		account.setAccountTransactionList(atl);
+    // 1. GET THE NEXT NUMBER FIRST 
+    Long nextTranNum = accountTransactionRepository.findMaxTransactionNumber();
+    nextTranNum = (nextTranNum == null) ? 5000001L : nextTranNum + 1;
+    accountTransaction.setTransactionNumber(nextTranNum);
+    
+    // 2. Refresh the account from the DB
+    account = this.getAccountById(account.getId());
+    BigDecimal balance = account.getCurrentBalance();
+    List<AccountTransaction> atl = account.getAccountTransactionList();
+    
+    // FIX: Initialize list if null and attach it to the account
+    if (atl == null) {
+        atl = new ArrayList<AccountTransaction>();
+        account.setAccountTransactionList(atl); 
+    }
 
-		AccountTransaction overTrans = new AccountTransaction();
-	    // Use the same logic here
-	    Long maxTran = accountTransactionRepository.findMaxTransactionNumber();
-	    overTrans.setTransactionNumber(maxTran + 1);
-	    
-		// Update Account
-		accountRepository.save(account);
-		
-		
-		
-		// if there is a fee, then add that transaction
-		if (overdraft) {
-			
-			this.overdraftCharge(account, accountTransaction);
-		}
-	
-		
-		LOG.debug("Debit Transaction from Account: Account Updated.");
-		
-	}
+    // 3. Update balance logic
+    balance = balance.add(accountTransaction.getAmount());
+    account.setCurrentBalance(balance);
+    
+    // 4. Set Category and Date if missing
+    if (accountTransaction.getTransactionCategory() == null) {
+        accountTransaction.setTransactionCategory(transactionCategoryRepository.findByCode(Constants.ACCT_TRAN_CAT_INC_CODE));
+    }
+    
+    if (accountTransaction.getTransactionDate() == null) {
+        accountTransaction.setTransactionDate(new Date());
+    }
+    
+    // 5. Finalize the transaction object details
+    accountTransaction.setRunningBalance(balance);
+    accountTransaction.setTransactionState(transactionStateRepository.findByCode(Constants.ACCT_TRAN_ST_COMP_CODE));
+    accountTransaction.setAccount(account);
+    
+    // 6. Link the transaction to the account list
+    atl.add(accountTransaction);
+    
+    // 7. Save
+    accountRepository.save(account);
+    
+    LOG.debug("Credit Transaction to Account: New Number of Transactions: ->" + atl.size());
+}
+
+public void debitTransaction(Account account, AccountTransaction accountTransaction) {
+    LOG.debug("Debit Transaction from Account:");
+
+    // 1. GET THE NEXT NUMBER FIRST
+    Long nextTranNum = accountTransactionRepository.findMaxTransactionNumber();
+    nextTranNum = (nextTranNum == null) ? 5000001L : nextTranNum + 1;
+    accountTransaction.setTransactionNumber(nextTranNum);
+
+    // 2. Refresh objects
+    account = this.getAccountById(account.getId());
+    List<AccountTransaction> atl = account.getAccountTransactionList();
+    
+    // FIX: Initialize list if null so .add() doesn't crash
+    if (atl == null) {
+        atl = new ArrayList<AccountTransaction>();
+        account.setAccountTransactionList(atl);
+    }
+
+    BigDecimal balance = account.getCurrentBalance();
+    BigDecimal amount = accountTransaction.getAmount();
+    boolean overdraft = amount.compareTo(balance) > 0;
+
+    // 3. Balance Calculation
+    BigDecimal negOne = new BigDecimal(-1);
+    BigDecimal negativeAmount = amount.multiply(negOne);   
+    balance = balance.add(negativeAmount);
+    account.setCurrentBalance(balance);
+    
+    // 4. Setup Main Transaction
+    if (accountTransaction.getTransactionCategory() == null) {
+        accountTransaction.setTransactionCategory(transactionCategoryRepository.findByCode(Constants.ACCT_TRAN_CAT_MISC_CODE));
+    }
+    if (accountTransaction.getTransactionDate() == null) {
+        accountTransaction.setTransactionDate(new Date());
+    }
+    
+    accountTransaction.setRunningBalance(balance);
+    accountTransaction.setAmount(negativeAmount);
+    accountTransaction.setTransactionState(transactionStateRepository.findByCode(Constants.ACCT_TRAN_ST_COMP_CODE));
+    accountTransaction.setAccount(account);
+    
+    // 5. Add to list
+    atl.add(accountTransaction);
+
+    // 6. SAVE
+    accountRepository.save(account);
+    
+    // 7. Handle Overdraft
+    if (overdraft) {
+        this.overdraftCharge(account, accountTransaction);
+    }
+    
+    LOG.debug("Debit Transaction from Account: Account Updated.");
+}
 	
 	/*
 	 * Transfer amount between two accounts
@@ -767,7 +723,12 @@ public class AccountService {
 	private void overdraftCharge (Account account, AccountTransaction offender) {
 		
 		LOG.debug("Overdraft Charge: Charge fee for overdraft.");
-		
+		AccountTransaction overTrans = new AccountTransaction();
+	    
+		// Use the same logic here
+	    Long maxTran = accountTransactionRepository.findMaxTransactionNumber();
+	    overTrans.setTransactionNumber(maxTran + 1);
+	    
 		// Add seconds to current date/time to differentiate transactions on sort
 		int seconds = 15;
 		Calendar calendar = Calendar.getInstance();
@@ -775,7 +736,6 @@ public class AccountService {
 		calendar.add(Calendar.SECOND, seconds);
 		List<AccountTransaction> transList = account.getAccountTransactionList();
 		
-		AccountTransaction overTrans = new AccountTransaction();
 		BigDecimal overFee = account.getAccountType().getOverdraftFee();
 		
 		// Convert amount to a negative number since it is a debit
