@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="common/sections :: header-css"></head>
+<head th:replace="~{common/sections :: header-css}"></head>
 <body>
 
     <!-- Left Panel -->
-    <aside th:replace="common/menus :: left-panel"></aside>
+    <aside th:replace="~{common/menus :: left-panel}"></aside>
 
     <!-- Right Panel -->
     <div id="right-panel" class="right-panel">
 
-        <header th:replace="common/menus :: rp-header"></header>
-        <div th:replace="common/menus :: rp-breadcrumbs (pageTitle='Advanced Portfolio Dashboard')"></div>
+        <header th:replace="~{common/menus :: rp-header}"></header>
+        <div th:replace="~{common/menus :: rp-breadcrumbs (pageTitle='Advanced Portfolio Dashboard')}"></div>
 
         <!-- Original Content Starts -->
         <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8 space-y-6">

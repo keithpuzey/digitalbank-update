@@ -8,14 +8,14 @@
 
 
 	<!-- Left Panel -->
-	<aside th:replace="common/menus :: left-panel"></aside>
+	<aside th:replace="~{common/menus :: left-panel}"></aside>
 
     <!-- Right Panel -->
 	<div id="right-panel" class="right-panel">
 	
-		<header th:replace="common/menus :: rp-header"/>
+		<header th:replace="~{common/menus :: rp-header}"/>
 		
-		<div th:replace="common/menus :: rp-breadcrumbs (pageTitle='Dashboard')"/>
+		<div th:replace="~{common/menus :: rp-breadcrumbs (pageTitle='Dashboard')}"/>
     
     	<!-- Page Content Begin -->
     
