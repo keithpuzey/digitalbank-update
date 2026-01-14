@@ -1,198 +1,194 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <div th:replace="~{common/sections :: header-css}"/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-blue: #003366;
-            --accent-blue: #007bff;
-            --text-dark: #1a1a1a;
-            --bg-gray: #f4f7f9;
-        }
+<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
 
-        /* Carousel Styles */
-        .carousel-container { 
-            position: relative; 
-            height: 60vh; /* Adjusted for dashboard view */
-            overflow: hidden; 
-            background: #000; 
-            border-radius: 15px;
-            margin-bottom: 25px;
-            touch-action: pan-y;
-        }
-        
-        .slide {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0; 
-            transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out; 
-            display: flex; align-items: center; padding: 0 8%;
-            background-size: cover; background-position: center;
-            transform: scale(1.05);
-        }
-        
-        .slide.active { opacity: 1; transform: scale(1); z-index: 1; }
-        .slide:nth-child(1) { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2070'); }
-        .slide:nth-child(2) { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?auto=format&fit=crop&q=80&w=2070'); }
-        .slide-content { color: white; max-width: 600px; z-index: 2; }
-        .slide-content h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 15px; font-weight: 700; }
-
-        /* Modal Styles */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); }
-        .modal-content { background: #fff; margin: 5% auto; padding: 35px; width: 90%; max-width: 850px; border-radius: 15px; position: relative; }
-        .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
-        .demo-card { background: #f8fafc; padding: 15px; border-radius: 10px; text-decoration: none; color: inherit; border-left: 5px solid var(--accent-blue); transition: 0.2s; }
-        .demo-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        
-        .nav-btn { background: rgba(255,255,255,0.2); color: white; border: none; padding: 10px; cursor: pointer; border-radius: 50%; }
-        .carousel-indicators { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10; }
-        .dot { width: 10px; height: 10px; background: rgba(255,255,255,0.3); border-radius: 50%; cursor: pointer; }
-        .dot.active { background: #fff; width: 25px; border-radius: 10px; }
-    </style>
-</head>
+<head th:replace="~{common/sections :: header-css}"/>
 
 <body>
 
-    <aside th:replace="~{common/menus :: left-panel}"></aside>
 
-    <div id="right-panel" class="right-panel">
+	<!-- Left Panel -->
+	<aside th:replace="~{common/menus :: left-panel}"></aside>
+
+    <!-- Right Panel -->
+	<div id="right-panel" class="right-panel">
+	
+		<header th:replace="~{common/menus :: rp-header}"/>
+		
+		<div th:replace="~{common/menus :: rp-breadcrumbs (pageTitle='Dashboard')}"/>
     
-        <header th:replace="~{common/menus :: rp-header}"/>
-        
-        <div th:replace="~{common/menus :: rp-breadcrumbs (pageTitle='Dashboard')}"/>
+    	<!-- Page Content Begin -->
     
-        <div class="content mt-3">
-            <div class="animated fadeIn">
-
-                <section class="carousel-container" id="mainCarousel">
-                    <div class="slide active">
-                        <div class="slide-content">
-                            <h1>Banking Without Borders.</h1>
-                            <p>Next-gen financial freedom with global access.</p>
-                            <button onclick="openModal()" class="btn btn-primary">Demo Directory</button>
-                        </div>
-                    </div>
-                    <div class="slide">
-                        <div class="slide-content">
-                            <h1>Secure by Design.</h1>
-                            <p>Biometric security and real-time monitoring.</p>
-                            <a href="/bank/signup" class="btn btn-success">Open Secure Account</a>
-                        </div>
-                    </div>
-                    <div class="carousel-indicators">
-                        <div class="dot active" onclick="setSlide(0)"></div>
-                        <div class="dot" onclick="setSlide(1)"></div>
-                    </div>
-                </section>
-
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="mb-3">Account Balance Summary</h4>
-                                <canvas id="balanceSummary"></canvas>
+	    	<div class="content mt-3">
+	            <div class="animated fadeIn">
+	                
+	                <div class="row">
+	                
+	                	<!-- Begin Chart -->
+						<div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="mb-3">Account Balance Summary</h4>
+                                    <canvas id="balanceSummary"></canvas>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="mb-3">Deposit vs. Withdraw (Last 3 Months)</h4>
-                                <canvas id="depositVsWithdraw"></canvas>
+                        </div><!-- End Chart-->	 
+                        
+                        <!-- Begin Chart -->
+						<div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="mb-3">Deposit vs. Withdraw (Last 3 Months)</h4>
+                                    <canvas id="depositVsWithdraw"></canvas>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="mb-3">Withdraw By Category (Last 3 Months)</h4>
-                                <canvas id="withdrawByCategory"></canvas>
+                        </div><!-- End Chart-->	 
+                        
+                        <!-- Begin Chart -->
+						<div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="mb-3">Withdraw By Category (Last 3 Months)</h4>
+                                    <canvas id="withdrawByCategory"></canvas>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="mb-3">Deposit By Category (Last 3 Months)</h4>
-                                <canvas id="depositByCategory"></canvas>
+                        </div><!-- End Chart-->	   
+                        
+                        <!-- Begin Chart -->
+						<div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="mb-3">Deposit By Category (Last 3 Months)</h4>
+                                    <canvas id="depositByCategory"></canvas>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </div><!-- End Chart-->	                       
+	                
+	    			</div><!-- End Row -->
 
-            </div>
-        </div>
-    </div> 
-
-    <div id="demoModal" class="modal">
-        <div class="modal-content">
-            <span style="position:absolute; right:25px; top:20px; cursor:pointer; font-size:2rem;" onclick="closeModal()">&times;</span>
-            <h2 style="color: var(--primary-blue);">Demo Directory</h2>
-            <div class="demo-grid">
-                <a href="https://blazedemo.com" class="demo-card"><h3>Travel</h3><p>Flight Booking</p></a>
-                <a href="/query.html" class="demo-card"><h3>Database</h3><p>Back-end tools</p></a>
-                <a href="/guicardexample.html" class="demo-card"><h3>Dashboard</h3><p>UI Overview</p></a>
-                <a href="/nestedtableexample1.html" class="demo-card"><h3>Financials</h3><p>Reports</p></a>
-            </div>
-        </div>
-    </div>
-
-    <div th:replace="~{common/sections :: footer-scripts}"></div>
+	    			
+	            </div><!-- .animated -->
+	        </div><!-- .content -->
+	       
+	    <!-- Page Content End -->
+	    
+	</div> <!-- End right panel -->
     
-    <script th:inline="javascript">
-    /*<![CDATA[*/
-        (function($) {
-            "use strict";
+	<!-- Footer -->
+	<div th:replace="~{common/sections :: footer-scripts}"></div>
+	<script th:inline="javascript"> /*<![CDATA[*/
+	
+		( function ( $ ) {
+		    
+			// Balance Summary Bar Chart
+			var ctx = document.getElementById( "balanceSummary" );
+		    ctx.height = 100;
+		    var myChart = new Chart( ctx, {
+		        type: 'bar',
+		        data: {
+		            labels: /*[[${accountBalanceSummary[0]}]]*/ [ ],
+		            datasets: [
+		                {
+		                    label: "Account Balance",
+		                    data: /*[[${accountBalanceSummary[1]}]]*/ [ ],
+		                    borderColor: "rgba(0, 123, 255, 0.9)",
+		                    borderWidth: "0",
+		                    backgroundColor: "rgba(0, 123, 255, 0.5)"
+		                            }
+		                        ]
+		        },
+		        options: {
+		            scales: {
+		                yAxes: [ {
+		                    ticks: {
+		                        beginAtZero: true
+		                    }
+		                                } ]
+		            }
+		        }
+		    } ); 
+		    // End Balance Summary Chart
+		    
+		    // Deposit vs. Withdraw Bar Chart
+		    var ctx = document.getElementById( "depositVsWithdraw" );
+		    ctx.height = 100;
+		    var myChart = new Chart( ctx, {
+		        type: 'bar',
+		        data: {
+		            labels: /*[[${creditVsDebit[0]}]]*/ [ ],
+		            datasets: [
+		                {
+		                    label: "Deposit",
+		                    data: /*[[${creditVsDebit[1]}]]*/ [ ],
+		                    borderColor: "rgba(2, 89, 40, 0.9)", // "rgba(0, 123, 255, 0.9)"
+		                    borderWidth: "0",
+		                    backgroundColor: "rgba(2, 89, 40, 0.5)" // "rgba(0, 123, 255, 0.5)"
+		                            },
+		                {
+		                    label: "Withdraw",
+		                    data: /*[[${creditVsDebit[2]}]]*/ [ ],
+		                    borderColor: "rgba(217,103,4,0.9)",  // "rgba(0,0,0,0.09)"
+		                    borderWidth: "0",
+		                    backgroundColor: "rgba(217,103,4,0.5)" // "rgba(0,0,0,0.07)"
+		                            }
+		                        ]
+		        },
+		        options: {
+		            scales: {
+		                yAxes: [ {
+		                    ticks: {
+		                        beginAtZero: true
+		                    }
+		                                } ]
+		            }
+		        }
+		    } );
+		    // End Balance Summary Chart
+		    
+		    
+		  	// Withdraw By Category
+		    var ctx = document.getElementById( "withdrawByCategory" );
+		    ctx.height = 150;
+		    var myChart = new Chart( ctx, {
+		        type: 'pie',
+		        data: {
+		            datasets: [ {
+		                data: /*[[${transactionByCategory[1]}]]*/ [ ],
+		                backgroundColor: /*[[${transactionByCategory[2]}]]*/ [ ],
+		                hoverBackgroundColor: /*[[${transactionByCategory[2]}]]*/ [ ]
 
-            // --- Existing Chart Logic ---
-            var ctx1 = document.getElementById("balanceSummary");
-            new Chart(ctx1, {
-                type: 'bar',
-                data: {
-                    labels: /*[[${accountBalanceSummary[0]}]]*/ [],
-                    datasets: [{
-                        label: "Account Balance",
-                        data: /*[[${accountBalanceSummary[1]}]]*/ [],
-                        backgroundColor: "rgba(0, 123, 255, 0.5)"
-                    }]
-                }
-            });
+		                            } ],
+		            labels: /*[[${transactionByCategory[0]}]]*/ [ ]
+		        },
+		        options: {
+		            responsive: true
+		        }
+		    } );
+		    
+		 	// Deposit By Category
+		    var ctx = document.getElementById( "depositByCategory" );
+		    ctx.height = 150;
+		    var myChart = new Chart( ctx, {
+		        type: 'pie',
+		        data: {
+		            datasets: [ {
+		                data: /*[[${transactionByCategory[4]}]]*/ [ ],
+		                backgroundColor: /*[[${transactionByCategory[5]}]]*/ [ ],
+		                hoverBackgroundColor: /*[[${transactionByCategory[5]}]]*/ [ ]
 
-            var ctx2 = document.getElementById("depositVsWithdraw");
-            new Chart(ctx2, {
-                type: 'bar',
-                data: {
-                    labels: /*[[${creditVsDebit[0]}]]*/ [],
-                    datasets: [
-                        { label: "Deposit", data: /*[[${creditVsDebit[1]}]]*/ [], backgroundColor: "rgba(2, 89, 40, 0.5)" },
-                        { label: "Withdraw", data: /*[[${creditVsDebit[2]}]]*/ [], backgroundColor: "rgba(217,103,4,0.5)" }
-                    ]
-                }
-            });
+		                            } ],
+		            labels: /*[[${transactionByCategory[3]}]]*/ [ ]
+		        },
+		        options: {
+		            responsive: true
+		        }
+		    } );
+			
+			
+	
+		} )( jQuery );
+		/*]]>*/
+	</script>
 
-            // --- Carousel Logic ---
-            let currentIndex = 0;
-            const slides = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.dot');
-            
-            window.setSlide = function(index) {
-                currentIndex = index;
-                slides.forEach((s, i) => s.classList.toggle('active', i === index));
-                dots.forEach((d, i) => d.classList.toggle('active', i === index));
-            };
-
-            setInterval(() => {
-                currentIndex = (currentIndex + 1) % slides.length;
-                setSlide(currentIndex);
-            }, 7000);
-
-            // --- Modal Logic ---
-            window.openModal = function() { $("#demoModal").fadeIn(); };
-            window.closeModal = function() { $("#demoModal").fadeOut(); };
-
-        })(jQuery);
-    /*]]>*/
-    </script>
 </body>
 </html>
