@@ -29,15 +29,20 @@ services:
 # Digital Broker Service Configuration
 # =====================================================================
   broker:
-    image: digisic/digitalbroker:latest
+    image: keithpuzey/digitalbroker:jan26
     container_name: broker
     hostname: broker
+    environment:
+      ARTEMIS_USER: admin
+      ARTEMIS_PASSWORD: admin
+      ANONYMOUS_LOGIN: "false"
     ports:
       - "8161:8161"
       - "61616:61616"
     networks:
       - digitalnet
     restart: unless-stopped
+
 
 # =====================================================================
 # Digital Credit Service Configuration
@@ -140,20 +145,26 @@ services:
       IO_DIGISIC_BANK_OBP_PORT:
 
 
-		# Database Query Configuration~
+		  # Database Query Configuration~
       DB_TYPE: mysql
-	  DB_HOST: 172.17.0.1
-	  DB_PORT: 3309
-	  DB_NAME: digitalbank
-	  DB_USER: root
-	  DB_PASSWORD: CAdemo123    
+      DB_HOST: 172.17.0.1
+      DB_PORT: 3306
+      DB_NAME: digitalbank
+      DB_USER: root
+      DB_PASSWORD: CAdemo123    
 		
       # Database Configuration
       SPRING_DATASOURCE_PLATFORM: mysql
-      SPRING_DATASOURCE_USERNAME: digitaluser
-      SPRING_DATASOURCE_PASSWORD: Demo123!
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/digitalbank?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: CAdemo123
+      SPRING_DATASOURCE_URL: jdbc:mysql://172.17.0.1:3306/digitalbank?useSSL=false&allowPublicKeyRetrieval=true
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_SQL_INIT_MODE: always
+      SPRING_SQL_INIT_CONTINUE-ON-ERROR: 'true'
+      SPRING_JPA_DEFER-DATASOURCE-INITIALIZATION: 'true'
+      SPRING_JPA_OPEN-IN-VIEW: 'false'
 
     ports:
       - "8080:8080" # HTTP
@@ -177,4 +188,3 @@ volumes:
   digitalcredit:
   digitalbank:
   mysqldata:
-

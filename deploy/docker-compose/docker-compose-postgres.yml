@@ -24,9 +24,14 @@ services:
 # Digital Broker Service Configuration
 # =====================================================================
   broker:
-    image: digisic/digitalbroker:latest
+    image: keithpuzey/digitalbroker:jan26
     container_name: broker
     hostname: broker
+    environment:
+      ARTEMIS_USER: admin
+      ARTEMIS_PASSWORD: admin
+      ANONYMOUS_LOGIN: "false"
+
     ports:
       - "8161:8161"
       - "61616:61616"
@@ -102,6 +107,9 @@ services:
       SPRING_ARTEMIS_PORT: 61616
       SPRING_ARTEMIS_USER: admin
       SPRING_ARTEMIS_PASSWORD: admin
+      SPRING_ARTEMIS_BROKER_URL: tcp://broker:61616
+      SPRING_JMS_ARTEMIS_BROKER_URL: tcp://broker:61616
+
 
       # Digital Credit Connection
       IO_DIGISIC_CREDIT_ENABLED: 'true'
@@ -134,12 +142,26 @@ services:
       IO_DIGISIC_BANK_OBP_HOST:
       IO_DIGISIC_BANK_OBP_PORT:
 
+
+      # Database Query Configuration
+      DB_TYPE: postgresql
+      DB_HOST: 10.160.1.74
+      DB_PORT: 6432
+      DB_NAME: digitalbank
+      DB_USER: postgres
+      DB_PASSWORD: Delphix_123!
+
       # Database Configuration
       SPRING_DATASOURCE_PLATFORM: postgres
-      SPRING_DATASOURCE_USERNAME: digitaluser
-      SPRING_DATASOURCE_PASSWORD: Demo123!
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/digitalbank
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: Delphix_123!
+      SPRING_DATASOURCE_URL: jdbc:postgresql://10.160.1.74:6432/digitalbank
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_SQL_INIT_MODE: always
+      SPRING_SQL_INIT_CONTINUE-ON-ERROR: 'true'
+      SPRING_JPA_DEFER-DATASOURCE-INITIALIZATION: 'true'                                                                                                                                                                    
 
     ports:
       - "8080:8080" # HTTP
@@ -163,4 +185,3 @@ volumes:
   digitalcredit:
   digitalbank:
   postgresdata:
-
