@@ -4,26 +4,31 @@
 <head th:replace="~{common/sections :: header-css}"/>
 <body>
 
-<!-- Sidebar -->
 <aside th:replace="~{common/menus :: left-panel}"></aside>
 
-<!-- Main panel -->
 <div id="right-panel" class="right-panel">
 
     <header th:replace="~{common/menus :: rp-header}"/>
     <div th:replace="~{common/menus :: rp-breadcrumbs (pageTitle='Registered Users')}"/>
 
-    <!-- Page Content -->
     <div class="content mt-3">
         <div class="animated fadeIn">
-            <div class="card">
-                <div class="card-header bg-flat-color-2 text-white">
-                    <strong>Registered Users</strong>
+            <div class="card report-card">
+                <div class="card-header theme-card-header text-white">
+                    <strong class="header-title">Registered Users</strong>
                 </div>
                 <div class="card-body">
-                    <form id="queryForm" onsubmit="fetchData(event)">
-                        <button class="btn btn-primary btn-sm">Refresh</button>
-                    </form>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <form id="queryForm" onsubmit="fetchData(event)">
+                                <button class="btn btn-primary btn-sm btn-theme">Refresh Report</button>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" id="tableSearch" class="form-control form-control-sm search-input" 
+                                   placeholder="Search users..." onkeyup="filterTable()">
+                        </div>
+                    </div>
                     <hr />
                     <div id="results" class="ajax-table-container"></div>
                 </div>
@@ -31,40 +36,114 @@
         </div>
     </div>
 
-</div> <!-- End right-panel -->
+</div>
 
 <div th:replace="~{common/sections :: footer-scripts}"></div>
 
 <style>
-    /* Table container */
+    /* Card & Header Styling */
+    .report-card {
+        background: #ffffff !important;
+        border: 1px solid #c0c0c0 !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+        border-radius: 12px !important;
+    }
+
+    .theme-card-header {
+        background-color: #002244 !important;
+        border-bottom: 2px solid #00aaff !important;
+        padding: 15px 20px !important;
+    }
+
+    .header-title {
+        color: #ffffff !important;
+        font-size: 1.1rem !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Search Input Styling */
+    .search-input {
+        border: 2px solid #ced4da !important;
+        border-radius: 6px !important;
+        color: #000 !important;
+        font-weight: 600 !important;
+    }
+    
+    .search-input:focus {
+        border-color: #00aaff !important;
+        box-shadow: 0 0 5px rgba(0,170,255,0.5) !important;
+    }
+
+    .btn-theme {
+        background-color: #007bff !important;
+        border: none !important;
+        font-weight: 700 !important;
+        padding: 8px 20px !important;
+        border-radius: 6px !important;
+    }
+
+    /* Table Styling (High Contrast) */
     .ajax-table-container { overflow-x:auto; margin-top:10px; }
 
-    /* Table styling */
-    table.userTable { width:100%; border-collapse: collapse; min-width:800px; }
-    table.userTable th, table.userTable td { border:1px solid #ddd; padding:8px; text-align:left; }
-    table.userTable th { background:#4CAF50; color:white; cursor:pointer; }
-    table.userTable tr:nth-child(even) { background:#f2f2f2; }
-    table.userTable tr:hover { background:#e0f7fa; }
-    .last-update { color:#4CAF50; font-weight:bold; margin-top:10px; display:block; }
+    table.userTable { width:100%; border-collapse: collapse; min-width:800px; background: #ffffff; }
+
+    table.userTable th { 
+        background: #002244 !important; 
+        color: #ffffff !important; 
+        padding: 12px 15px !important;
+        text-align: left;
+        font-weight: 700 !important;
+        border-bottom: 3px solid #00aaff !important;
+        cursor: pointer;
+    }
+
+    table.userTable td { 
+        border-bottom: 1px solid #eef2f7 !important; 
+        padding: 12px 15px !important; 
+        color: #000000 !important; /* Solid Black */
+        font-weight: 600 !important; /* Sharp contrast */
+    }
+
+    table.userTable tr:nth-child(even) { background: #f8faff; }
+    table.userTable tr:hover { background: #eef6ff; }
 </style>
 
 <script th:inline="javascript">
     function fetchData(event) {
         if(event) event.preventDefault();
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", /*[[@{/queryDatabase}]]*/, true);
+        xhr.open("GET", [[@{/queryDatabase}]], true);
         xhr.onload = function () {
             if(xhr.status >= 200 && xhr.status < 300){
                 document.getElementById('results').innerHTML = xhr.responseText;
                 makeTableSortable('userTable');
             } else {
-                document.getElementById('results').innerHTML = "Error fetching data.";
+                document.getElementById('results').innerHTML = "<div class='alert alert-danger'>Error fetching data.</div>";
             }
         };
-        xhr.onerror = function () {
-            document.getElementById('results').innerHTML = "Network error.";
-        };
         xhr.send();
+    }
+
+    // Filter Logic
+    function filterTable() {
+        const input = document.getElementById("tableSearch");
+        const filter = input.value.toLowerCase();
+        const table = document.getElementById("userTable");
+        if (!table) return;
+        const rows = table.getElementsByTagName("tr");
+
+        for (let i = 1; i < rows.length; i++) { // Skip header
+            let visible = false;
+            const cells = rows[i].getElementsByTagName("td");
+            for (let j = 0; j < cells.length; j++) {
+                if (cells[j].innerText.toLowerCase().indexOf(filter) > -1) {
+                    visible = true;
+                    break;
+                }
+            }
+            rows[i].style.display = visible ? "" : "none";
+        }
     }
 
     function makeTableSortable(tableId) {
@@ -74,18 +153,16 @@
         headers.forEach((th,index)=>{
             th.onclick = function(){
                 const tbody = table.querySelector('tbody');
-                Array.from(tbody.querySelectorAll('tr'))
-                    .sort((a,b)=>{
-                        const valA = a.children[index].innerText.toLowerCase();
-                        const valB = b.children[index].innerText.toLowerCase();
-                        return valA.localeCompare(valB);
-                    })
-                    .forEach(tr=>tbody.appendChild(tr));
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+                rows.sort((a,b)=>{
+                    const valA = a.children[index].innerText.toLowerCase();
+                    const valB = b.children[index].innerText.toLowerCase();
+                    return valA.localeCompare(valB);
+                }).forEach(tr=>tbody.appendChild(tr));
             };
         });
     }
 
-    // Load table automatically on page load
     window.addEventListener('DOMContentLoaded', fetchData);
 </script>
 

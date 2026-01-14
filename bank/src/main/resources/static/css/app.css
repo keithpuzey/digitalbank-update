@@ -1,0 +1,141 @@
+/* =========================================================
+   Digital Bank – Unified App Theme (High-Contrast v4.0)
+   Fixes: Greyed-out text, Widget Titles, Sidebar Color, and Table Theme
+   ========================================================= */
+
+/* -------------------------
+   Design Tokens
+   ------------------------- */
+:root {
+    --primary-blue: #003366;
+    --midnight-blue: #001a33;
+    --accent-blue: #007bff;
+    --pure-black: #000000;
+    --table-header-dark: #002244;
+}
+
+/* -------------------------
+   Base Page Styling
+   ------------------------- */
+body {
+    font-family: 'Inter', sans-serif;
+    background-image: 
+        linear-gradient(rgba(0, 51, 102, 0.75), rgba(0, 0, 0, 0.85)),
+        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* -------------------------
+   Left Panel (Sidebar) 
+   ------------------------- */
+#left-panel, 
+aside.left-panel {
+    background: var(--midnight-blue) !important;
+    background-color: var(--midnight-blue) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+    width: 280px;
+}
+
+.navbar-brand img {
+    max-height: 60px !important; 
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+.left-panel .nav li a {
+    color: #ffffff !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    opacity: 1 !important;
+}
+
+.left-panel .nav li.active > a,
+.left-panel .nav li a:hover {
+    background: rgba(0, 170, 255, 0.3) !important;
+    color: #ffffff !important;
+    border-left: 5px solid #00aaff !important;
+}
+
+/* -------------------------
+   Account Widgets (The White Cards)
+   ------------------------- */
+.card, .account-card {
+    background: #ffffff !important;
+    border: 1px solid #c0c0c0 !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+    opacity: 1 !important;
+}
+
+/* Titles (Individual Checking, etc.) */
+.card h4, 
+.card .card-title, 
+.card .stat-heading {
+    color: var(--pure-black) !important; 
+    font-weight: 900 !important; 
+    font-size: 1.3rem !important;
+    opacity: 1 !important;
+}
+
+/* Account Details */
+.card-body, .card-body div, .card-body p, .card-body span, .card-body small {
+    color: var(--pure-black) !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+}
+
+/* Balance Text */
+.card .stat-text, .card .balance {
+    color: var(--primary-blue) !important;
+    font-weight: 900 !important;
+    font-size: 1.6rem !important;
+    opacity: 1 !important;
+}
+
+/* -------------------------
+   Dark-Themed Transaction Table
+   ------------------------- */
+.table-responsive {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.table {
+    background: #ffffff !important;
+    margin-bottom: 0 !important;
+}
+
+/* Table Header - Dark Navy */
+.table thead th {
+    background-color: var(--table-header-dark) !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none !important;
+    padding: 15px !important;
+}
+
+/* Table Rows */
+.table tbody td {
+    color: var(--pure-black) !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    padding: 12px 15px !important;
+    border-bottom: 1px solid #eef2f7 !important;
+    vertical-align: middle !important;
+}
+
+/* Row Hover Effect */
+.table tbody tr:hover {
+    background-color: #f8faff !important;
+}
+
+/* -------------------------
+   Header & Search 
+   ------------------------- */
+#header, .header {
+    background: rgba(255, 255, 255, 0.98) !important;
+    border-bottom: 2px solid var(--primary-blue) !important;
+}

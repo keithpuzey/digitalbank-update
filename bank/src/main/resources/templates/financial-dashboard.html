@@ -4,54 +4,123 @@
 <head th:replace="~{common/sections :: header-css}"></head>
 <body>
 
-    <!-- Left Panel -->
     <aside th:replace="~{common/menus :: left-panel}"></aside>
 
-    <!-- Right Panel -->
     <div id="right-panel" class="right-panel">
 
         <header th:replace="~{common/menus :: rp-header}"></header>
         <div th:replace="~{common/menus :: rp-breadcrumbs (pageTitle='Financial Dashboard')}"></div>
 
-        <!-- Original Content Starts -->
-        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8 space-y-6">
-            <h2 class="text-3xl font-bold text-center text-gray-800">Financial Dashboard</h2>
+        <div class="content mt-3">
+            <div class="animated fadeIn">
+                
+                <div class="card dashboard-card-main">
+                    <div class="card-header theme-header-navy">
+                        <strong class="text-white uppercase tracking-wider">Financial Portfolio Overview</strong>
+                    </div>
+                    
+                    <div class="card-body bg-white p-4">
+                        <div class="high-contrast-content">
+                            <div th:replace="~{fragments/dashboard :: dashboard-cards}"></div>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- Here, we include your fragment content -->
-            <div th:replace="~{fragments/dashboard :: dashboard-cards}"></div>
-
+            </div>
         </div>
-        <!-- Original Content Ends -->
 
-    </div> <!-- End right panel -->
+    </div> <div th:replace="~{common/sections :: footer-scripts}"></div>
 
-    <!-- Footer -->
-    <div th:replace="~{common/sections :: footer-scripts}"></div>
+    <style>
+        /* -------------------------
+           Main Dashboard Container
+           ------------------------- */
+        .dashboard-card-main {
+            border: 1px solid #c0c0c0 !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+            border-radius: 12px !important;
+            overflow: hidden;
+            background: #fff !important;
+        }
 
-    <!-- Page-specific JS -->
+        .theme-header-navy {
+            background-color: #002244 !important; /* Midnight Navy */
+            border-bottom: 3px solid #00aaff !important;
+            padding: 15px 20px !important;
+        }
+
+        /* -------------------------
+           FRAGMENT OVERRIDES (Fixes "Greyed Out" look)
+           This forces all text inside your fragment to be Solid Black
+           ------------------------- */
+        .high-contrast-content * {
+            color: #000000 !important; /* Pure Black */
+            opacity: 1 !important;
+            text-shadow: none !important;
+        }
+
+        /* Headers inside the fragment (Checking Account, Portfolio Summary) */
+        .high-contrast-content h2, 
+        .high-contrast-content h3,
+        .high-contrast-content .h3 {
+            color: #003366 !important; /* Deep Navy */
+            font-weight: 850 !important;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        /* -------------------------
+           Collapsible & Detailed Data
+           ------------------------- */
+        .collapsible { 
+            cursor: pointer; 
+            background-color: #f8faff !important; 
+            border: 1px solid #dee2e6 !important;
+            padding: 10px !important;
+            font-weight: 700 !important;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .collapsible:hover { background-color: #eef6ff !important; }
+        
+        .nested { 
+            display: none; 
+            padding: 15px; 
+            background: #ffffff;
+            border: 1px solid #eee;
+            border-top: none;
+        }
+
+        /* Sub-tables inside the dashboard */
+        .inner-table { width: 100%; border-collapse: collapse; }
+        .inner-table th { 
+            background-color: #003366 !important; 
+            color: #ffffff !important; 
+            padding: 10px !important;
+            font-weight: 700 !important;
+        }
+        .inner-table td { 
+            padding: 10px !important; 
+            border-bottom: 1px solid #eee !important;
+            font-weight: 600 !important; 
+        }
+
+        /* Performance Indicators */
+        .gain { color: #28a745 !important; font-weight: 800 !important; }
+        .loss { color: #dc3545 !important; font-weight: 800 !important; }
+        .totals { font-weight: 900 !important; background-color: #f1f4f9 !important; }
+    </style>
+
     <script th:inline="javascript">
-        /*<![CDATA[*/
         function toggleDetails(id) {
             const details = document.getElementById(id);
-            if (details.style.display === "none" || details.style.display === "") {
-                details.style.display = "block"; // Show the details
-            } else {
-                details.style.display = "none"; // Hide the details
+            if (details) {
+                details.style.display = (details.style.display === "none" || details.style.display === "") ? "block" : "none";
             }
         }
-        /*]]>*/
     </script>
-
-    <!-- Page-specific CSS -->
-    <style>
-        .gain { color: green; }
-        .loss { color: red; }
-        .totals { font-weight: bold; background-color: #f9f9f9; }
-        .collapsible { cursor: pointer; background-color: #f7f7f7; }
-        .collapsible:hover { background-color: #e2e2e2; }
-        .nested { display: none; }
-        .inner-table th { background-color: #d9edf7; }
-    </style>
 
 </body>
 </html>

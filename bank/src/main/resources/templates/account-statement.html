@@ -4,127 +4,197 @@
 <head th:replace="~{common/sections :: header-css}"></head>
 <body>
 
-    <!-- Left Panel -->
     <aside th:replace="~{common/menus :: left-panel}"></aside>
 
-    <!-- Right Panel -->
     <div id="right-panel" class="right-panel">
 
         <header th:replace="~{common/menus :: rp-header}"></header>
-        <div th:replace="~{common/menus :: rp-breadcrumbs (pageTitle='Advanced Portfolio Dashboard')}"></div>
+        <div th:replace="~{common/menus :: rp-breadcrumbs (pageTitle='Account Statement')}"></div>
 
-        <!-- Original Content Starts -->
-        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8 space-y-6">
-            <h2 class="text-3xl font-bold text-center text-gray-800">My Account Statement</h2>
+        <div class="content mt-3">
+            <div class="animated fadeIn">
+                <div class="card statement-card">
+                    <div class="card-header theme-card-header">
+                        <strong class="header-title text-white">My Account Statement</strong>
+                    </div>
 
-			<div class="overflow-x-auto">
-			    <table class="w-full table-auto border-collapse account-table">
-			        <thead>
-			            <tr class="bg-gray-200">
-			                <th class="px-4 py-3 text-left font-semibold text-gray-700">Account</th>
-			                <th class="px-4 py-3 text-left font-semibold text-gray-700">Month</th>
-			                <th class="px-4 py-3 text-left font-semibold text-gray-700">Transactions</th>
-			            </tr>
-			        </thead>
-			        <tbody>
-			            <!-- Checking Account -->
-			            <tr>
-			                <td class="px-4 py-3 border-b border-gray-200 rounded-tl-lg">Checking</td>
-			                <td class="px-4 py-3 border-b border-gray-200">September 2025</td>
-			                <td class="px-4 py-3 border-b border-gray-200 rounded-tr-lg">
-			                    <table class="w-full table-auto inner-account-table">
-			                        <thead>
-			                            <tr class="bg-blue-100">
-			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Date</th>
-			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Description</th>
-			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Amount</th>
-			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Balance</th>
-			                            </tr>
-			                        </thead>
-			                        <tbody>
-			                            <tr>
-			                                <td class="px-4 py-2 border-b border-blue-200">01/09/2025</td>
-			                                <td class="px-4 py-2 border-b border-blue-200">Deposit</td>
-			                                <td class="px-4 py-2 border-b border-blue-200 text-green-600 font-medium">$1,500</td>
-			                                <td class="px-4 py-2 border-b border-blue-200">$1,500</td>
-			                            </tr>
-			                            <tr>
-			                                <td class="px-4 py-2 border-b border-blue-200">03/09/2025</td>
-			                                <td class="px-4 py-2 border-b border-blue-200">Grocery Store</td>
-			                                <td class="px-4 py-2 border-b border-blue-200 text-red-600 font-medium">-$120</td>
-			                                <td class="px-4 py-2 border-b border-blue-200">$1,380</td>
-			                            </tr>
-			                            <tr>
-			                                <td class="px-4 py-2 border-b border-blue-200">10/09/2025</td>
-			                                <td class="px-4 py-2 border-b border-blue-200">Electric Bill</td>
-			                                <td class="px-4 py-2 border-b border-blue-200 text-red-600 font-medium">-$80</td>
-			                                <td class="px-4 py-2 border-b border-blue-200">$1,300</td>
-			                            </tr>
-			                        </tbody>
-			                    </table>
-			                </td>
-			            </tr>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table statement-table">
+                                <thead>
+                                    <tr>
+                                        <th>Account Type</th>
+                                        <th>Statement Period</th>
+                                        <th>Transaction Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="account-type-cell">Checking</td>
+                                        <td>September 2025</td>
+                                        <td>
+                                            <table class="inner-transaction-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Description</th>
+                                                        <th>Amount</th>
+                                                        <th>Balance</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>01/09/2025</td>
+                                                        <td>Deposit</td>
+                                                        <td class="gain">+$1,500.00</td>
+                                                        <td>$1,500.00</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>03/09/2025</td>
+                                                        <td>Grocery Store</td>
+                                                        <td class="loss">-$120.00</td>
+                                                        <td>$1,380.00</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>10/09/2025</td>
+                                                        <td>Electric Bill</td>
+                                                        <td class="loss">-$80.00</td>
+                                                        <td>$1,300.00</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
 
-			            <!-- Savings Account -->
-			            <tr>
-			                <td class="px-4 py-3 border-b border-gray-200">Savings</td>
-			                <td class="px-4 py-3 border-b border-gray-200">September 2025</td>
-			                <td class="px-4 py-3 border-b border-gray-200">
-			                    <table class="w-full table-auto inner-account-table">
-			                        <thead>
-			                            <tr class="bg-blue-100">
-			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Date</th>
-			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Description</th>
-			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Amount</th>
-			                                <th class="px-4 py-2 text-left text-blue-800 font-semibold">Balance</th>
-			                            </tr>
-			                        </thead>
-			                        <tbody>
-			                            <tr>
-			                                <td class="px-4 py-2 border-b border-blue-200">01/09/2025</td>
-			                                <td class="px-4 py-2 border-b border-blue-200">Initial Deposit</td>
-			                                <td class="px-4 py-2 border-b border-blue-200 text-green-600 font-medium">$5,000</td>
-			                                <td class="px-4 py-2 border-b border-blue-200">$5,000</td>
-			                            </tr>
-			                            <tr>
-			                                <td class="px-4 py-2 border-b border-blue-200">15/09/2025</td>
-			                                <td class="px-4 py-2 border-b border-blue-200">Interest</td>
-			                                <td class="px-4 py-2 border-b border-blue-200 text-green-600 font-medium">$15</td>
-			                                <td class="px-4 py-2 border-b border-blue-200">$5,015</td>
-			                            </tr>
-			                        </tbody>
-			                    </table>
-			                </td>
-			            </tr>
-			        </tbody>
-			    </table>
-			</div>
-        <!-- Original Content Ends -->
+                                    <tr>
+                                        <td class="account-type-cell">Savings</td>
+                                        <td>September 2025</td>
+                                        <td>
+                                            <table class="inner-transaction-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Description</th>
+                                                        <th>Amount</th>
+                                                        <th>Balance</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>01/09/2025</td>
+                                                        <td>Initial Deposit</td>
+                                                        <td class="gain">+$5,000.00</td>
+                                                        <td>$5,000.00</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>15/09/2025</td>
+                                                        <td>Interest Credit</td>
+                                                        <td class="gain">+$15.00</td>
+                                                        <td>$5,015.00</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    </div> <!-- End right panel -->
+    </div> <div th:replace="~{common/sections :: footer-scripts}"></div>
 
-    <!-- Footer -->
-    <div th:replace="~{common/sections :: footer-scripts}"></div>
-
-    <!-- Page-specific JS -->
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        function toggle(id) {
-            const row = document.getElementById(id);
-            row.style.display = (row.style.display === "table-row") ? "none" : "table-row";
-        }
-        /*]]>*/
-    </script>
-
-    <!-- Page-specific CSS -->
     <style>
-        .gain { color: green; }
-        .loss { color: red; }
-        .totals { font-weight: bold; background-color: #f9f9f9; }
-        .collapsible { cursor: pointer; background-color: #f7f7f7; }
-        .collapsible:hover { background-color: #e2e2e2; }
-        .nested { display: none; }
-        .inner-table th { background-color: #d9edf7; }
+        /* -------------------------
+           Main Card & Layout
+           ------------------------- */
+        .statement-card {
+            background: #ffffff !important;
+            border: 1px solid #c0c0c0 !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+            border-radius: 12px !important;
+            margin: 0 15px;
+        }
+
+        .theme-card-header {
+            background-color: #002244 !important; /* Midnight Navy */
+            border-bottom: 3px solid #00aaff !important;
+            padding: 15px 20px !important;
+        }
+
+        .header-title {
+            font-size: 1.2rem !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700 !important;
+        }
+
+        /* -------------------------
+           Primary Table Styling
+           ------------------------- */
+        .statement-table th {
+            background-color: #f1f4f9 !important;
+            color: #003366 !important;
+            font-weight: 800 !important;
+            text-transform: uppercase;
+            font-size: 13px;
+            border-bottom: 2px solid #dee2e6 !important;
+        }
+
+        .account-type-cell {
+            font-weight: 800 !important;
+            color: #003366 !important;
+            font-size: 1.1rem !important;
+        }
+
+        .statement-table td {
+            color: #000000 !important; /* Solid Black */
+            font-weight: 600 !important;
+            vertical-align: top !important;
+            padding: 15px !important;
+        }
+
+        /* -------------------------
+           Nested Transaction Table
+           ------------------------- */
+        .inner-transaction-table {
+            width: 100%;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .inner-transaction-table th {
+            background-color: #003366 !important; /* Solid Navy Header */
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            padding: 8px 12px !important;
+            font-size: 12px;
+        }
+
+        .inner-transaction-table td {
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #eee !important;
+            font-size: 13px !important;
+            padding: 8px 12px !important;
+        }
+
+        /* Financial Indicators */
+        .gain { 
+            color: #28a745 !important; 
+            font-weight: 800 !important; 
+        }
+        .loss { 
+            color: #dc3545 !important; 
+            font-weight: 800 !important; 
+        }
+
+        /* Hover effect for the main rows */
+        .statement-table tbody tr:hover {
+            background-color: #fcfdfe;
+        }
     </style>
 
 </body>
