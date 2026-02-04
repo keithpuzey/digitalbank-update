@@ -55,7 +55,7 @@ public class DatabaseServlet extends HttpServlet {
                 out.println("</tr></thead><tbody>");
 
                 String userQuery = "SELECT u.id, p.title, p.first_name, p.last_name, u.username, " +
-                                   "DATE(p.dob) AS dob, p.ssn, p.address, p.postal_code, p.region, p.mobile_phone " +
+                                   "p.dob AS dob, p.ssn, p.address, p.postal_code, p.region, p.mobile_phone " +
                                    "FROM users u " +
                                    "LEFT JOIN user_profile p ON u.profile_id = p.id " +
                                    "ORDER BY u.id DESC LIMIT 30";

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlazeMeter Test Results Summary and Recommendations</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1, h2 { color: #333; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .pass { color: green; }
+        .fail { color: red; }
+        .warning { color: orange; }
+    </style>
+</head>
+<body>
+    <h1>BlazeMeter Test Execution Summary</h1>
+    <p><strong>Execution ID:</strong> 80873392</p>
+    <p><strong>Test Name:</strong> Registration Perf</p>
+    <p><strong>Status:</strong> <span class="pass">Pass</span></p>
+    <p><strong>Duration:</strong> 434 seconds (~7.2 minutes)</p>
+    <p><strong>Concurrency:</strong> 50 users</p>
+    <p><strong>Total Hits:</strong> 1482</p>
+    <p><strong>Average Response Time:</strong> 1874 ms</p>
+    <p><strong>90th Percentile Response Time:</strong> 4239 ms</p>
+    <p><strong>Errors:</strong> 0 (0% error rate)</p>
+
+    <h2>Request Statistics</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Label</th>
+                <th>Samples</th>
+                <th>Avg Response Time (ms)</th>
+                <th>90% Line (ms)</th>
+                <th>Errors</th>
+                <th>Throughput (req/sec)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>http://dbankdemo.com/bank/logout</td>
+                <td>309</td>
+                <td>953</td>
+                <td>1676</td>
+                <td>0</td>
+                <td>0.85</td>
+            </tr>
+            <tr>
+                <td>http://dbankdemo.com/bank/login</td>
+                <td>313</td>
+                <td>2181</td>
+                <td>3563</td>
+                <td>0</td>
+                <td>0.87</td>
+            </tr>
+            <tr>
+                <td>http://dbankdemo.com/bank/signup</td>
+                <td>597</td>
+                <td>862</td>
+                <td>1536</td>
+                <td>0</td>
+                <td>1.40</td>
+            </tr>
+            <tr>
+                <td>Test</td>
+                <td>263</td>
+                <td class="warning">4886</td>
+                <td>8271</td>
+                <td>0</td>
+                <td>0.81</td>
+            </tr>
+            <tr>
+                <td><strong>ALL</strong></td>
+                <td><strong>1482</strong></td>
+                <td><strong>1874</strong></td>
+                <td><strong>4239</strong></td>
+                <td><strong>0</strong></td>
+                <td><strong>3.41</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Recommendations</h2>
+    <ul>
+        <li><strong>Overall Performance:</strong> The test passed with no errors and reasonable response times. The average response time of 1874 ms is acceptable for most web applications, but monitor for improvements.</li>
+        <li><strong>High Response Time on 'Test' Label:</strong> The 'Test' request has an average response time of 4886 ms, which is significantly higher than others. Investigate the backend logic or database queries for this endpoint to optimize performance.</li>
+        <li><strong>Login Endpoint:</strong> The login request averages 2181 ms. Consider caching user sessions or optimizing authentication processes to reduce this time.</li>
+        <li><strong>Scalability:</strong> With 50 concurrent users, the system handled the load well. Consider testing with higher concurrency (e.g., 100 users) to identify potential bottlenecks.</li>
+        <li><strong>Throughput:</strong> The overall throughput of 3.41 requests/second is moderate. Ensure server resources (CPU, memory, database connections) are sufficient for expected production load.</li>
+        <li><strong>Error Handling:</strong> No errors occurred, which is excellent. However, implement proper error handling in the application to maintain this in production.</li>
+        <li><strong>Monitoring:</strong> Set up continuous monitoring for key metrics like response times and error rates in production.</li>
+        <li><strong>Further Testing:</strong> Run tests with failure criteria enabled (e.g., fail if error rate > 1% or response time > 5000 ms) to automate pass/fail decisions.</li>
+    </ul>
+
+    <p><em>Report generated on January 21, 2026</em></p>
+</body>
+</html>

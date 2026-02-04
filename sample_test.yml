@@ -1,0 +1,7 @@
+execution:
+- scenario: simple
+
+scenarios:
+  simple:
+    requests:
+    - url: http://blazedemo.com

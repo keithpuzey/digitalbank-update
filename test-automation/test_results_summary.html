@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlazeMeter Test Results Summary - Registration Perf</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+        .container { max-width: 1200px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .summary { background-color: #e8f4fd; padding: 15px; border-left: 5px solid #2196F3; margin: 20px 0; }
+        .recommendations { background-color: #fff3cd; padding: 15px; border-left: 5px solid #ffc107; margin: 20px 0; }
+        .error-rate { color: green; font-weight: bold; }
+        .high-response { color: orange; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BlazeMeter Performance Test Results Summary</h1>
+        <h2>Test: Registration Perf (Execution ID: 80871104)</h2>
+        
+        <div class="summary">
+            <h3>Test Overview</h3>
+            <ul>
+                <li><strong>Duration:</strong> 430 seconds (configured for 300 seconds)</li>
+                <li><strong>Max Concurrent Users:</strong> 50</li>
+                <li><strong>Total Requests:</strong> 1,329</li>
+                <li><strong>Average Response Time:</strong> 4,582 ms</li>
+                <li><strong>90th Percentile Response Time:</strong> 11,703 ms</li>
+                <li><strong>Error Rate:</strong> <span class="error-rate">0.38%</span> (below 1% threshold)</li>
+                <li><strong>Throughput:</strong> 3.09 requests/second</li>
+                <li><strong>Locations:</strong> Paris (33%), Sydney (33%), Vancouver (34%)</li>
+            </ul>
+        </div>
+
+        <h3>Detailed Request Statistics</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Request Label</th>
+                    <th>Samples</th>
+                    <th>Avg Response Time (ms)</th>
+                    <th>90th Percentile (ms)</th>
+                    <th>Error Rate (%)</th>
+                    <th>Throughput (req/sec)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Login</td>
+                    <td>282</td>
+                    <td class="high-response">7,706</td>
+                    <td>10,751</td>
+                    <td>0.35</td>
+                    <td>0.79</td>
+                </tr>
+                <tr>
+                    <td>Logout</td>
+                    <td>281</td>
+                    <td>878</td>
+                    <td>1,658</td>
+                    <td>1.07</td>
+                    <td>0.79</td>
+                </tr>
+                <tr>
+                    <td>Test</td>
+                    <td>232</td>
+                    <td class="high-response">12,217</td>
+                    <td>17,087</td>
+                    <td>0.00</td>
+                    <td>0.71</td>
+                </tr>
+                <tr>
+                    <td>Signup</td>
+                    <td>534</td>
+                    <td>1,565</td>
+                    <td>3,245</td>
+                    <td>0.19</td>
+                    <td>1.30</td>
+                </tr>
+                <tr>
+                    <td><strong>Overall</strong></td>
+                    <td><strong>1,329</strong></td>
+                    <td><strong>4,582</strong></td>
+                    <td><strong>11,703</strong></td>
+                    <td><strong>0.38</strong></td>
+                    <td><strong>3.09</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Error Analysis</h3>
+        <p>The test encountered 5 errors (0.38% error rate), primarily consisting of socket connection issues:</p>
+        <ul>
+            <li><strong>Socket Closed Exceptions:</strong> 5 occurrences across login, logout, and embedded resources</li>
+            <li><strong>Affected URLs:</strong> JavaScript files (jquery, plugins, vector map)</li>
+            <li><strong>Root Cause:</strong> Likely server overload, network issues, or connection timeouts under load</li>
+        </ul>
+
+        <div class="recommendations">
+            <h3>Recommendations</h3>
+            <ol>
+                <li><strong>Optimize Login Performance:</strong> The login request shows high response times (7.7s average). Investigate database queries, authentication logic, and potential bottlenecks in the login process.</li>
+                <li><strong>Address Socket Connection Issues:</strong> The socket closed errors suggest the server may be dropping connections under load. Consider increasing server connection limits, implementing connection pooling, or optimizing network configuration.</li>
+                <li><strong>Improve Test Request Performance:</strong> The "Test" request has the highest response time (12.2s average). Review the test logic and ensure it's not performing unnecessary operations.</li>
+                <li><strong>Monitor Server Resources:</strong> Check CPU, memory, and database performance during load tests. The high response times may indicate resource constraints.</li>
+                <li><strong>Implement Caching:</strong> For static resources like JavaScript files, implement proper caching headers and CDN usage to reduce load on the application server.</li>
+                <li><strong>Set Up Failure Criteria:</strong> As requested, configure failure criteria in BlazeMeter UI to automatically fail tests if error rate exceeds 1%.</li>
+                <li><strong>Consider Load Balancing:</strong> With multi-location testing, ensure your infrastructure can handle distributed load effectively.</li>
+                <li><strong>Further Testing:</strong> Run additional tests with varying user loads to identify the breaking point and optimal performance thresholds.</li>
+            </ol>
+        </div>
+
+        <p><em>Report generated on January 21, 2026. Test execution completed successfully with error rate below threshold.</em></p>
+    </div>
+</body>
+</html></content>
+<parameter name="filePath">/Users/keithpuzey/github/Demo/digitalbank-update/test-automation/test_results_summary.html

@@ -1,7 +1,7 @@
 ---
 settings:
     env:
-      BASE_URL: http://localhost:8080/bank
+      BASE_URL: http://dev.dbankdemo.com/bank
 reporting:
   - module: junit-xml
     filename: result.xml
