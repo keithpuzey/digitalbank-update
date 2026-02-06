@@ -15,94 +15,147 @@ public class UserReportServlet extends HttpServlet {
 
     @Override
     public void init() {
-        dbType = System.getenv("DB_TYPE");
+    dbType = System.getenv("DB_TYPE");
+    dbUser = System.getenv("DB_USER");
+    dbPassword = System.getenv("DB_PASSWORD");
+
+    if ("h2".equalsIgnoreCase(dbType)) {
+        // MUST match Spring datasource exactly
+        bankUrl = "jdbc:h2:mem:digitalbank;MODE=MySQL;DB_CLOSE_DELAY=-1";
+
+        // Optional: reuse same DB for credit in H2
+        creditUrl = bankUrl;
+    } else {
         dbHost = System.getenv("DB_HOST");
         dbPort = System.getenv("DB_PORT");
-        dbUser = System.getenv("DB_USER");
-        dbPassword = System.getenv("DB_PASSWORD");
 
-        bankUrl   = "jdbc:" + normalizeDbType(dbType) + "://" + dbHost + ":" + dbPort + "/digitalbank";
-        creditUrl = "jdbc:" + normalizeDbType(dbType) + "://" + dbHost + ":" + dbPort + "/digitalcredit";
+        bankUrl =
+            "jdbc:" + normalizeDbType(dbType) + "://" +
+            dbHost + ":" + dbPort + "/digitalbank";
+
+        creditUrl =
+            "jdbc:" + normalizeDbType(dbType) + "://" +
+            dbHost + ":" + dbPort + "/digitalcredit";
     }
+}
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String type = request.getParameter("type");
-        if (type == null) type = "registered";
+@Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    response.setContentType("text/html;charset=UTF-8");
+    String type = request.getParameter("type");
+    if (type == null) type = "registered";
 
-        try (PrintWriter out = response.getWriter()) {
-            loadJDBCDriver(dbType);
+    try (PrintWriter out = response.getWriter()) {
+        loadJDBCDriver(dbType);
 
-            Map<String, String[]> bankUsers;
-            Map<String, String[]> creditUsers = null;
+        Map<String, String[]> bankUsers;
+        Map<String, String[]> creditUsers = null;
 
-            // Load DigitalBank users
+        // Load DigitalBank users
+        try {
+            bankUsers = loadUsers(bankUrl);
+        } catch (SQLException e) {
+            out.println("<h3 style='color:red;'>DigitalBank database is not available: " + e.getMessage() + "</h3>");
+            return;
+        }
+
+        // Load DigitalCredit users only for common/inconsistent reports
+        if ("common".equals(type) || "inconsistent".equals(type)) {
             try {
-                bankUsers = loadUsers(bankUrl);
+                creditUsers = loadUsers(creditUrl);
             } catch (SQLException e) {
-                out.println("<h3 style='color:red;'>DigitalBank database is not available: " + e.getMessage() + "</h3>");
+                out.println("<h3 style='color:red;'>DigitalCredit database is not available: " + e.getMessage() + "</h3>");
                 return;
             }
+        }
 
-            // Load DigitalCredit users only for common/inconsistent reports
-            if ("common".equals(type) || "inconsistent".equals(type)) {
-                try {
-                    creditUsers = loadUsers(creditUrl);
-                } catch (SQLException e) {
-                    out.println("<h3 style='color:red;'>DigitalCredit database is not available: " + e.getMessage() + "</h3>");
-                    return;
+        out.println("<div class='ajax-table-container'>");
+
+        switch (type) {
+            case "registered":
+                renderRegisteredUsers(out, bankUsers);
+                break;
+            case "common":
+                renderCommonUsers(out, bankUsers, creditUsers);
+                break;
+            case "inconsistent":
+                renderInconsistentUsers(out, bankUsers, creditUsers);
+                break;
+            default:
+                out.println("<p>Unknown report type.</p>");
+        }
+
+        // --- Add Database Type and Last Update ---
+        try (Connection conn = DriverManager.getConnection(bankUrl, dbUser, dbPassword);
+             Statement stmt = conn.createStatement()) {
+
+            // Get last transaction date
+            String lastUpdateQuery = "SELECT MAX(transaction_date) AS last_update FROM account_transaction";
+            String lastUpdate = null;
+            try (ResultSet rs = stmt.executeQuery(lastUpdateQuery)) {
+                if (rs.next()) {
+                    lastUpdate = rs.getString("last_update");
                 }
             }
 
-            out.println("<div class='ajax-table-container'>");
+            out.println("<hr>");
+            out.println("<h3>Database Info</h3>");
+            out.println("<p>Database Type: <strong>" + dbType + "</strong></p>");
+            out.println("<p>Last Database Update: <strong>" + 
+                        (lastUpdate != null ? lastUpdate : "No data available") + 
+                        "</strong></p>");
+                        // Add user count
+            String userCount = "0";
+            String countQuery = "SELECT COUNT(*) AS total_users FROM users";
+            try (ResultSet rsCount = stmt.executeQuery(countQuery)) {
+                if (rsCount.next()) {
+                    int total = rsCount.getInt("total_users"); // get as int
+                    total = total - 1; // subtract 1
+                    userCount = Integer.toString(total); // convert back to string
+                }
+}
+            out.println("<p>Total Users: <strong>" + userCount + "</strong></p>");
 
-            switch (type) {
-                case "registered":
-                    renderRegisteredUsers(out, bankUsers);
-                    break;
-                case "common":
-                    renderCommonUsers(out, bankUsers, creditUsers);
-                    break;
-                case "inconsistent":
-                    renderInconsistentUsers(out, bankUsers, creditUsers);
-                    break;
-                default:
-                    out.println("<p>Unknown report type.</p>");
-            }
+        } catch (SQLException e) {
+            out.println("<p style='color:red;'>Could not fetch last update: " + e.getMessage() + "</p>");
+        }
 
-            out.println("</div>");
+        out.println("</div>"); // ajax-table-container
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.getWriter().println("<h3 style='color:red;'>Error: " + e.getMessage() + "</h3>");
+    } catch (Exception e) {
+        e.printStackTrace();
+        response.getWriter().println("<h3 style='color:red;'>Error: " + e.getMessage() + "</h3>");
+    }
+}
+
+private Map<String, String[]> loadUsers(String url) throws SQLException {
+    Map<String, String[]> users = new LinkedHashMap<>(); // preserves insertion order
+    String query = "SELECT u.id, p.title, p.first_name, p.last_name, u.username, " +
+                   "CAST(p.dob AS DATE) AS dob, p.ssn, p.address, p.postal_code, p.region, p.mobile_phone " +
+                   "FROM users u " +
+                   "LEFT JOIN user_profile p ON u.profile_id = p.id " +
+                   "WHERE u.username <> 'admin@demo.io' " +
+                   "ORDER BY u.id DESC " +
+                   "LIMIT 20";
+
+    try (Connection conn = DriverManager.getConnection(url, dbUser, dbPassword);
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(query)) {
+
+        while (rs.next()) {
+            users.put(rs.getString("username"),
+                      new String[]{
+                          rs.getString("first_name"),
+                          rs.getString("last_name"),
+                          rs.getString("ssn"),
+                          rs.getString("dob"),
+                          rs.getString("region"),
+                          rs.getString("postal_code")
+                      });
         }
     }
-
-    private Map<String, String[]> loadUsers(String url) throws SQLException {
-        Map<String, String[]> users = new HashMap<>();
-        String query = "SELECT email_address, first_name, last_name, ssn, dob, region, postal_code " +
-                "FROM user_profile " +
-                "WHERE email_address NOT IN ('jsmith@demo.io', 'nsmith@demo.io', 'admin@demo.io')";
-
-        try (Connection conn = DriverManager.getConnection(url, dbUser, dbPassword);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            while (rs.next()) {
-                users.put(rs.getString("email_address"),
-                        new String[]{
-                                rs.getString("first_name"),
-                                rs.getString("last_name"),
-                                rs.getString("ssn"),
-                                rs.getString("dob"),
-                                rs.getString("region"),
-                                rs.getString("postal_code")
-                        });
-            }
-        }
-        return users;
-    }
+    return users;
+}
 
     private void renderRegisteredUsers(PrintWriter out, Map<String, String[]> bankUsers) {
         out.println("<h2>Registered Users (DigitalBank)</h2>");

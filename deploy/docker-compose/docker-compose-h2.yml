@@ -8,6 +8,10 @@
       image: keithpuzey/digitalbroker:jan26
       container_name: broker
       hostname: broker
+      environment:
+        ARTEMIS_USER: admin
+        ARTEMIS_PASSWORD: admin
+        ANONYMOUS_LOGIN: "false"
       ports:
         - "8161:8161"
         - "61616:61616"
@@ -70,11 +74,14 @@
         LOGGING_LEVEL_IO_DIGISIC_BANK: INFO
         
         # Digital Broker connection
-        SPRING_ARTEMIS_MODE: native
-        SPRING_ARTEMIS_HOST: broker
-        SPRING_ARTEMIS_PORT: 61616
-        SPRING_ARTEMIS_USER: admin
-        SPRING_ARTEMIS_PASSWORD: admin
+        SPRING_JMS_ARTEMIS_MODE: native
+        SPRING_JMS_ARTEMIS_HOST: broker
+        SPRING_JMS_ARTEMIS_PORT: 61616
+        SPRING_JMS_ARTEMIS_USER: admin
+        SPRING_JMS_ARTEMIS_PASSWORD: admin
+        SPRING_ARTEMIS_BROKER_URL: tcp://broker:61616
+        SPRING_JMS_ARTEMIS_BROKER_URL: tcp://broker:61616
+
 
         # Digital Credit Connection
         IO_DIGISIC_CREDIT_ENABLED: 'true'
@@ -107,17 +114,23 @@
         IO_DIGISIC_BANK_OBP_HOST: openbankingservices.io
         IO_DIGISIC_BANK_OBP_PORT:
 
-        # Database Query Configuration
-        DB_TYPE: h2
-        DB_HOST: localhost
-        DB_PORT: 0
-        DB_NAME: testdb
-        DB_USER: SA
-        DB_PASSWORD:
 
-        SPRING_SQL_INIT_MODE: never
-        spring.datasource.url: jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1
+      SPRING_PROFILES_ACTIVE: 'default'
+      SPRING_DATASOURCE_URL: 'jdbc:h2:mem:digitalbank;MODE=MySQL;DB_CLOSE_DELAY=-1'
+      SPRING_DATASOURCE_USERNAME: 'sa'
+      SPRING_DATASOURCE_PASSWORD: ''
+      SPRING_H2_CONSOLE_ENABLED: "true"
+      SPRING_SQL_INIT_MODE: always
+      SPRING_DATASOURCE_PLATFORM: h2  # or postgres, mysql, mssql
+      SPRING_H2_CONSOLE_SETTINGS_WEB_ALLOW_OTHERS: "true"
+      SPRING_H2_CONSOLE_PATH: /h2-console
 
+      # Database Query Configuration
+      DB_TYPE: h2
+      DB_HOST: localhost
+      DB_PORT: 0
+      DB_USER: sa
+      DB_PASSWORD: ""
 
       ports:
         - "8080:8080"

@@ -1,29 +1,6 @@
 version: "3.5"
 services:
 
-# =====================================================================
-# Database Service: MySQL Server
-# =====================================================================
-  mysql:
-    image: mysql:latest
-    container_name: mysql
-    hostname: mysql
-    privileged: true
-    environment:
-      MYSQL_ROOT_PASSWORD: Demo123!
-      MYSQL_USER: digitaluser
-      MYSQL_PASSWORD: Demo123!
-      MYSQL_DATABASE: digitalbank
-    ports:
-      - "3306:3306"
-    networks:
-      - digitalnet
-    volumes:
-      - ./scripts/mysql:/docker-entrypoint-initdb.d
-      - mysqldata:/var/lib/mysql
-    cap_add:
-      - SYS_NICE
-    restart: unless-stopped
 
 # =====================================================================
 # Digital Broker Service Configuration
@@ -43,7 +20,6 @@ services:
     networks:
       - digitalnet
     restart: unless-stopped
-
 
 # =====================================================================
 # Digital Credit Service Configuration
@@ -73,11 +49,18 @@ services:
       IO_DIGISIC_PARTNER_CREDIT_APP_RESPONSE: CREDIT.APP.RESPONSE
 
       # Database Configuration
-      SPRING_DATASOURCE_PLATFORM: mysql
-      SPRING_DATASOURCE_USERNAME: digitaluser
+      
+      DB_TYPE: postgres
+      DB_HOST: 172.17.0.1
+      DB_PORT: 5432
+      DB_NAME: digitalcredit
+      DB_USER: postgres
+      DB_PASSWORD: Demo123!
+      SPRING_DATASOURCE_PLATFORM: postgres
+      SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: Demo123!
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/digitalcredit?useSSL=false&allowPublicKeyRetrieval=true
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      SPRING_DATASOURCE_URL: jdbc:postgresql://172.17.0.1:5432/digitalcredit
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
 
     ports:
       - "3500:8080" # HTTP
@@ -87,7 +70,6 @@ services:
     volumes:
       - digitalcredit:/usr/local/tomcat/conf
     depends_on:
-      - mysql
       - broker
     restart: unless-stopped
 
@@ -108,13 +90,14 @@ services:
       LOGGING_LEVEL_IO_DIGISIC_BANK: INFO
       
       # Digital Broker connection
-      SPRING_JMS_ARTEMIS_MODE: native
-      SPRING_JMS_ARTEMIS_HOST: broker
-      SPRING_JMS_ARTEMIS_PORT: 61616
-      SPRING_JMS_ARTEMIS_USER: admin
-      SPRING_JMS_ARTEMIS_PASSWORD: admin
+      SPRING_ARTEMIS_MODE: native
+      SPRING_ARTEMIS_HOST: broker
+      SPRING_ARTEMIS_PORT: 61616
+      SPRING_ARTEMIS_USER: admin
+      SPRING_ARTEMIS_PASSWORD: admin
       SPRING_ARTEMIS_BROKER_URL: tcp://broker:61616
       SPRING_JMS_ARTEMIS_BROKER_URL: tcp://broker:61616
+
 
       # Digital Credit Connection
       IO_DIGISIC_CREDIT_ENABLED: 'true'
@@ -146,26 +129,27 @@ services:
       IO_DIGISIC_BANK_OBP_PROTOCOL: https
       IO_DIGISIC_BANK_OBP_HOST:
       IO_DIGISIC_BANK_OBP_PORT:
-		  # Database Query Configuration~
-      DB_TYPE: mysql
-      DB_HOST: mysql
+
+
+      # Database Query Configuration
+      DB_TYPE: postgresql
+      DB_HOST: 10.160.1.74
       DB_PORT: 3306
       DB_NAME: digitalbank
       DB_USER: root
-      DB_PASSWORD: CAdemo123    
-		
+      DB_PASSWORD: Delphix_123!
+
       # Database Configuration
-      SPRING_DATASOURCE_PLATFORM: mysql
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: CAdemo123
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/digitalbank?useSSL=false&allowPublicKeyRetrieval=true
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
-      
+      SPRING_DATASOURCE_PLATFORM: postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: Delphix_123!
+      SPRING_DATASOURCE_URL: jdbc:postgresql://10.160.1.74:3306/digitalbank
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_SQL_INIT_MODE: always
       SPRING_SQL_INIT_CONTINUE-ON-ERROR: 'true'
-      SPRING_JPA_DEFER-DATASOURCE-INITIALIZATION: 'true'
-      SPRING_JPA_OPEN-IN-VIEW: 'false'
+      SPRING_JPA_DEFER-DATASOURCE-INITIALIZATION: 'true'                                                                                                                                                                    
 
     ports:
       - "8080:8080" # HTTP
@@ -175,7 +159,6 @@ services:
     volumes:
       - digitalbank:/usr/local/tomcat/conf
     depends_on:
-      - mysql
       - broker
       - credit
     restart: unless-stopped
@@ -188,4 +171,3 @@ networks:
 volumes:
   digitalcredit:
   digitalbank:
-  mysqldata:

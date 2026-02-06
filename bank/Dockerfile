@@ -35,3 +35,5 @@ COPY /target/classes/templates/sv-profile.html /usr/local/tomcat/webapps/ROOT/sv
 COPY /target/classes/templates/sv-profile.js /usr/local/tomcat/webapps/ROOT/sv-profile.js
 # Copy the entire images folder into the webapps ROOT
 COPY /target/classes/static/images/ /usr/local/tomcat/webapps/ROOT/images/
+ADD https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-jasper/11.0.18/tomcat-jasper-11.0.18.jar /usr/local/tomcat/lib/
+ADD https://repo1.maven.org/maven2/jakarta/servlet/jsp/jakarta.servlet.jsp-api/3.1.1/jakarta.servlet.jsp-api-3.1.1.jar /usr/local/tomcat/lib/

@@ -43,7 +43,7 @@ services:
 # Digital Credit Service Configuration
 # =====================================================================    
   credit:
-    image: digisic/digitalcredit:latest
+    image: keithpuzey/digitalcredit:sep24
     container_name: credit
     hostname: credit
     environment:
@@ -67,8 +67,15 @@ services:
       IO_DIGISIC_PARTNER_CREDIT_APP_RESPONSE: CREDIT.APP.RESPONSE
 
       # Database Configuration
+      DB_TYPE: postgresql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: digitalcredit
+      DB_USER: postgres
+      DB_PASSWORD: Demo123!
       SPRING_DATASOURCE_PLATFORM: postgres
-      SPRING_DATASOURCE_USERNAME: digitaluser
+      
+      SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: Demo123!
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/digitalcredit
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
@@ -89,7 +96,7 @@ services:
 # Digital Bank Service Configuration
 # =====================================================================
   bank:
-    image: digisic/digitalbank:latest
+    image: keithpuzey/digitalbank:feb26
     container_name: bank
     hostname: bank
     environment:
@@ -144,9 +151,9 @@ services:
 
 
       # Database Query Configuration
-      DB_TYPE: postgresql
-      DB_HOST: 10.160.1.74
-      DB_PORT: 6432
+      DB_TYPE: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
       DB_NAME: digitalbank
       DB_USER: postgres
       DB_PASSWORD: Delphix_123!
@@ -155,7 +162,7 @@ services:
       SPRING_DATASOURCE_PLATFORM: postgres
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: Delphix_123!
-      SPRING_DATASOURCE_URL: jdbc:postgresql://10.160.1.74:6432/digitalbank
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/digitalbank
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
 
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
