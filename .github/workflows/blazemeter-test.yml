@@ -20,7 +20,7 @@ jobs:
           apiSecret: ${{ secrets.BZM_API_SECRET }}
           
           # Test Configuration
-          testID: "12345678" # <--- Replace with your BlazeMeter Test ID
+          testID: "15364873" # <--- BlazeMeter Test ID
           
           # Execution Settings
           continuePipeline: "false" # Job waits and fails if BlazeMeter SLAs fail
