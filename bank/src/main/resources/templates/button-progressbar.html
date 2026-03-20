@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Progress with Reset</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+
+        .card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 380px;
+        }
+
+        h2 { margin: 0 0 10px 0; color: #1c1e21; }
+        p { color: #606770; margin-bottom: 25px; }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        button {
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #downloadBtn {
+            background-color: #0084ff;
+            color: white;
+        }
+
+        #downloadBtn:disabled {
+            background-color: #ebedf0;
+            color: #bcc0c4;
+            cursor: not-allowed;
+        }
+
+        #resetBtn {
+            background-color: transparent;
+            color: #65676b;
+            text-decoration: underline;
+            font-size: 14px;
+            display: none; /* Hidden by default */
+        }
+
+        #resetBtn:hover {
+            color: #1c1e21;
+        }
+
+        #progressContainer {
+            visibility: hidden; /* Use visibility to prevent layout jump */
+            margin-top: 20px;
+            background-color: #e4e6eb;
+            border-radius: 10px;
+            height: 8px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #progressBar {
+            height: 100%;
+            width: 0%;
+            background-color: #42b72a;
+            transition: width 0.1s linear;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Software Update</h2>
+    <p>Version 2.0.4 is ready for installation.</p>
+    
+    <div class="btn-group">
+        <button id="downloadBtn" onclick="startDownload()">Download Now</button>
+        <button id="resetBtn" onclick="resetUI()">Reset and try again</button>
+    </div>
+
+    <div id="progressContainer">
+        <div id="progressBar"></div>
+    </div>
+</div>
+
+<script>
+    let interval; // Store interval globally so we can clear it if needed
+
+    function startDownload() {
+        const btn = document.getElementById('downloadBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const container = document.getElementById('progressContainer');
+        const bar = document.getElementById('progressBar');
+        
+        // Setup UI
+        btn.disabled = true;
+        btn.innerText = "Downloading...";
+        container.style.visibility = "visible";
+        resetBtn.style.display = "none";
+
+        let width = 0;
+        const duration = 15000; 
+        const intervalTime = 100;
+        const increment = (intervalTime / duration) * 100;
+
+        interval = setInterval(() => {
+            if (width >= 100) {
+                clearInterval(interval);
+                btn.innerText = "Downloaded";
+                btn.style.backgroundColor = "#42b72a";
+                btn.style.color = "white";
+                // Show reset button when finished
+                resetBtn.style.display = "inline-block";
+            } else {
+                width += increment;
+                bar.style.width = width + "%";
+            }
+        }, intervalTime);
+    }
+
+    function resetUI() {
+        const btn = document.getElementById('downloadBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const container = document.getElementById('progressContainer');
+        const bar = document.getElementById('progressBar');
+
+        // Reset everything to initial state
+        clearInterval(interval);
+        btn.disabled = false;
+        btn.innerText = "Download Now";
+        btn.style.backgroundColor = "#0084ff";
+        
+        container.style.visibility = "hidden";
+        bar.style.width = "0%";
+        resetBtn.style.display = "none";
+    }
+</script>
+
+</body>
+</html>

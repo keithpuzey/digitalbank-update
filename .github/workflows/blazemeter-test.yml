@@ -1,0 +1,27 @@
+name: Execute BlazeMeter Test
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: # Allows you to run this manually from the Actions tab
+
+jobs:
+  performance-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: BlazeMeter Action
+        uses: Blazemeter/github-action@v8
+        with:
+          # Credentials from GitHub Secrets
+          apiKey: ${{ secrets.BZM_API_KEY }}
+          apiSecret: ${{ secrets.BZM_API_SECRET }}
+          
+          # Test Configuration
+          testID: "12345678" # <--- Replace with your BlazeMeter Test ID
+          
+          # Execution Settings
+          continuePipeline: "false" # Job waits and fails if BlazeMeter SLAs fail
+          showTailLog: "true"      # Shows real-time test progress in GitHub logs

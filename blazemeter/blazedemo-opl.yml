@@ -1,0 +1,19 @@
+---
+version: 1
+
+description: |
+  Simple OPL/Taurus script to load test BlazeDemo home page.
+
+execution:
+  - concurrency: 10        # 10 virtual users
+    ramp-up: 30s          # reach full load in 30 seconds
+    hold-for: 1m          # keep full load for 1 minute
+    scenario: blazedemo
+
+scenarios:
+  blazedemo:
+    default-address: http://blazedemo.com
+    requests:
+      - url: "/"
+        method: GET
+        label: "BlazeDemo Home"

@@ -32,6 +32,7 @@ COPY /target/classes/templates/sv-user-profile.html /usr/local/tomcat/webapps/RO
 COPY /target/classes/templates/sv-user-profile.js /usr/local/tomcat/webapps/ROOT/sv-user-profile.js
 COPY /target/classes/templates/flow-demo.html /usr/local/tomcat/webapps/ROOT/flow-demo.html
 COPY /target/classes/templates/sv-profile.html /usr/local/tomcat/webapps/ROOT/sv-profile.html
+COPY /target/classes/templates/button-progressbar.html /usr/local/tomcat/webapps/ROOT/button-progeressbar.html
 COPY /target/classes/templates/sv-profile.js /usr/local/tomcat/webapps/ROOT/sv-profile.js
 # Copy the entire images folder into the webapps ROOT
 COPY /target/classes/static/images/ /usr/local/tomcat/webapps/ROOT/images/

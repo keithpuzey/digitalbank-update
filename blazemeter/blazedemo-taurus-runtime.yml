@@ -1,0 +1,17 @@
+---
+version: 1
+
+description: |
+  Taurus script for BlazeDemo that relies on BlazeMeter
+  load configuration to control number of users at runtime.
+
+execution:
+  - scenario: blazedemo   # concurrency & duration controlled from BlazeMeter UI
+
+scenarios:
+  blazedemo:
+    default-address: http://blazedemo.com
+    requests:
+      - url: "/"
+        method: GET
+        label: "BlazeDemo Home"
