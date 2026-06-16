@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, Arial;
+  background: #eef2f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Card */
+.phone {
+  width: 360px;
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+/* Inputs */
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  background: #0b5ed7;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: #222;
+}
+
+.hidden {
+  display: none;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="phone">
+
+  <!-- LOGIN FORM -->
+  <div id="loginForm">
+    <h2>Secure Demo Access</h2>
+    <p>Enter your credentials</p>
+
+    <input id="user" placeholder="Username">
+    <input id="pass" type="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+
+    <div class="error" id="error"></div>
+  </div>
+
+  <!-- VERSION SELECTION -->
+  <div id="versionSelect" class="hidden">
+    <h2>Select Version</h2>
+    <p>Choose which demo to launch</p>
+
+    <button onclick="goToV1()">Launch Version 1</button>
+    <button class="secondary" onclick="goToV2()">Launch Version 2</button>
+  </div>
+
+</div>
+
+<script>
+
+function login() {
+  const u = document.getElementById('user').value;
+  const p = document.getElementById('pass').value;
+
+  if (u === "PerforceDemo" && p === "P4D3mo!") {
+    sessionStorage.setItem('loggedIn', 'true');
+
+    // hide login, show version choice
+    document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('versionSelect').classList.remove('hidden');
+
+  } else {
+    document.getElementById('error').innerText = "Invalid username or password";
+  }
+}
+
+/* Navigation functions */
+function goToV1(){
+  window.location.href = "index-v1.html";
+}
+
+function goToV2(){
+  window.location.href = "index-v2.html";
+}
+
+</script>
+
+</body>
+</html>

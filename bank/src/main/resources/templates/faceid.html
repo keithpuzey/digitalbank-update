@@ -1,0 +1,38 @@
+<!doctype html><html lang="en"><head>
+
+<script>
+if (!sessionStorage.getItem('loggedIn')) {
+  if (window.location.pathname.indexOf('login.html') === -1) {
+    window.location.href = 'login.html';
+  }
+}
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Enable Face ID</title><link rel="stylesheet" href="styles.css"></head><body><div class="app-shell"><main class="phone"><section class="screen">
+<div class="top-status">
+  <div>9:41</div>
+  <div class="top-right">
+    <div class="icon-dot"><span></span><span></span><span></span><span></span></div>
+    <div class="icon-wifi"></div>
+    <div class="icon-cell"></div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-left">
+    <button class="circle-btn" aria-label="Back" onclick="location.href='pin.html'">&#8592;</button>
+  </div>
+  <button class="info-btn" aria-label="Information">i</button>
+</div>
+
+<div class="progress"><div style="width:62%"></div></div>
+<div class="face-icon"><div class="face-inner"></div><div class="face-smile"></div></div>
+<h1 class="hero-title center">Enable Face ID</h1>
+<p class="subtext center">Use Face ID for faster, secure sign-in. If it's unavailable, your PIN will be used as a fallback.</p>
+<div class="bullet-list">
+  <div class="bullet"><span class="tick">✓</span><span>Sign in quickly with Face ID</span></div>
+  <div class="bullet"><span class="tick">✓</span><span>No need to type your password each time</span></div>
+  <div class="bullet"><span class="tick">✓</span><span>PIN used as backup on restart or failure</span></div>
+</div>
+<button class="btn" data-testid="enable-faceid" onclick="location.href='success.html'">Enable Face ID</button>
+<a class="small-link" href="success.html" data-testid="skip-faceid">Skip for now</a>
+</section></main></div></body></html>

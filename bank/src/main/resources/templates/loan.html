@@ -1,0 +1,152 @@
+<!doctype html><html lang="en"><head>
+
+<script>
+if (!sessionStorage.getItem('loggedIn')) {
+  if (window.location.pathname.indexOf('login.html') === -1) {
+    window.location.href = 'login.html';
+  }
+}
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Configure your loan</title><link rel="stylesheet" href="styles.css"></head><body><div class="app-shell"><main class="phone"><section class="screen">
+<div class="top-status">
+  <div>9:41</div>
+  <div class="top-right">
+    <div class="icon-dot"><span></span><span></span><span></span><span></span></div>
+    <div class="icon-wifi"></div>
+    <div class="icon-cell"></div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-left">
+    <button class="circle-btn" aria-label="Back" onclick="location.href='index.html'">&#8592;</button>
+  </div>
+  <button class="info-btn" aria-label="Information">i</button>
+</div>
+
+<div class="progress"><div style="width:50%"></div></div>
+<h1 class="hero-title">Configure your loan</h1>
+<p class="subtext">Adjust the amount and term based on your business needs.</p>
+<div class="quote-card" data-testid="quote-card">
+  <div class="quote-badge">Your Quote</div>
+  <div class="quote-amount" id="quoteAmount" data-testid="quote-amount">£35,000</div>
+  <div class="quote-meta"><span id="quoteTermText" data-testid="quote-term">36 months</span> · <span id="quoteApr" data-testid="quote-apr">6.2% APR</span> · fixed rate</div>
+  <div class="quote-rule"></div>
+  <div class="quote-grid">
+    <div><div class="label">Monthly</div><div class="value" id="monthlyPayment" data-testid="monthly-payment">£0.00</div></div>
+    <div><div class="label">Total repayable</div><div class="value" id="totalRepayable" data-testid="total-repayable">£0.00</div></div>
+    <div><div class="label">Total interest</div><div class="value" id="totalInterest" data-testid="total-interest">£0.00</div></div>
+  </div>
+</div>
+<div class="input-label">Loan amount</div>
+<input class="text-input" id="amountInput" data-testid="loan-amount-input" inputmode="numeric" value="35000" />
+<div class="range-wrap">
+  <input type="range" class="slider" id="amountSlider" data-testid="loan-slider" min="10000" max="75000" step="1000" value="35000">
+  <div class="range-head"><span>£10K</span><span>Your max £75K</span></div>
+</div>
+<div class="input-label">Loan term</div>
+<div class="term-row" id="termRow" data-testid="term-row">
+  <button class="term-chip" data-term="12">12m</button>
+  <button class="term-chip" data-term="24">24m</button>
+  <button class="term-chip active" data-term="36">36m</button>
+  <button class="term-chip" data-term="48">48m</button>
+  <button class="term-chip" data-term="60">60m</button>
+</div>
+<div class="afford-card" data-testid="affordability-card">
+  <div class="afford-top"><span id="affordabilityState">Within affordable range</span><span>⊙</span></div>
+  <div class="meter"><div id="affordMeter"></div></div>
+  <div class="afford-big" id="affordMonthly" data-testid="afford-monthly">£0.00 / mo</div>
+  <div class="afford-small" id="headroomText" data-testid="headroom-text">Affordable headroom: £0 / mo</div>
+</div>
+<div class="info-card">
+  <div class="info-icon">i</div>
+  <div>
+    <h4>Locking in your amount</h4>
+    <p>Locking this amount means changes to your loan terms will delay your application. Your quote is valid for 7 days; after that, you'll need a new application.</p>
+  </div>
+</div>
+<button class="btn mt-24" data-testid="lock-amount">Lock in this amount</button>
+<script>
+const apr = 0.062;
+const loanCapacity = 3257.94; // internal affordability ceiling for simulation
+let selectedTerm = 36;
+const amountInput = document.getElementById('amountInput');
+const amountSlider = document.getElementById('amountSlider');
+const amountEl = document.getElementById('quoteAmount');
+const termText = document.getElementById('quoteTermText');
+const monthlyEl = document.getElementById('monthlyPayment');
+const repayableEl = document.getElementById('totalRepayable');
+const interestEl = document.getElementById('totalInterest');
+const affordMonthlyEl = document.getElementById('affordMonthly');
+const headroomText = document.getElementById('headroomText');
+const stateText = document.getElementById('affordabilityState');
+const affordMeter = document.getElementById('affordMeter');
+function clamp(val, min, max){ return Math.min(max, Math.max(min, val)); }
+function fmtCurrency(value){
+  return new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',minimumFractionDigits:2,maximumFractionDigits:2}).format(value);
+}
+function fmtWhole(value){
+  return new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',minimumFractionDigits:0,maximumFractionDigits:0}).format(value);
+}
+function amortizedMonthly(principal, annualRate, termMonths){
+  const r = annualRate / 12;
+  return principal * (r / (1 - Math.pow(1 + r, -termMonths)));
+}
+function updateFill(){
+  const min = Number(amountSlider.min), max = Number(amountSlider.max), value = Number(amountSlider.value);
+  const pct = ((value-min)/(max-min))*100;
+  amountSlider.style.setProperty('--fill', pct + '%');
+}
+function updateQuote(){
+  const principal = clamp(parseInt(String(amountInput.value).replace(/[^\d]/g,'')) || 0, 10000, 75000);
+  amountInput.value = principal;
+  amountSlider.value = principal;
+  updateFill();
+  const monthly = amortizedMonthly(principal, apr, selectedTerm);
+  const totalRepayable = monthly * selectedTerm;
+  const totalInterest = totalRepayable - principal;
+  const headroom = loanCapacity - monthly;
+  amountEl.textContent = fmtWhole(principal);
+  termText.textContent = selectedTerm + ' months';
+  monthlyEl.textContent = fmtCurrency(monthly);
+  repayableEl.textContent = fmtCurrency(totalRepayable);
+  interestEl.textContent = fmtCurrency(totalInterest);
+  affordMonthlyEl.textContent = fmtCurrency(monthly) + ' / mo';
+  const ratio = Math.min(monthly / loanCapacity, 1.25);
+  affordMeter.style.width = Math.min(ratio*100, 100) + '%';
+  if(headroom >= 0){
+    stateText.textContent = 'Within affordable range';
+    headroomText.textContent = 'Affordable headroom: ' + fmtCurrency(headroom) + ' / mo';
+    document.querySelector('.afford-card').style.background = '#e3f5e8';
+    document.querySelector('.afford-card').style.borderColor = '#23c65b';
+  } else {
+    stateText.textContent = 'Outside affordable range';
+    headroomText.textContent = 'Over by ' + fmtCurrency(Math.abs(headroom)) + ' / mo';
+    document.querySelector('.afford-card').style.background = '#fde8e8';
+    document.querySelector('.afford-card').style.borderColor = '#ef4444';
+  }
+}
+amountSlider.addEventListener('input', ()=>{ amountInput.value = amountSlider.value; updateQuote(); });
+amountInput.addEventListener('input', updateQuote);
+document.querySelectorAll('.term-chip').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.term-chip').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedTerm = Number(btn.dataset.term);
+    updateQuote();
+  });
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.querySelector('[data-testid="lock-amount"]');
+
+  if (btn) {
+    btn.addEventListener('click', () => {
+      window.location.href = 'loan-success.html';
+    });
+  } else {
+    console.log('Lock button not found');
+  }
+});
+
+updateQuote();
+</script></section></main></div></body></html>

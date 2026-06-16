@@ -1,0 +1,41 @@
+<!doctype html><html lang="en"><head>
+
+<script>
+if (!sessionStorage.getItem('loggedIn')) {
+  if (window.location.pathname.indexOf('login.html') === -1) {
+    window.location.href = 'login.html';
+  }
+}
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>International Payments</title><link rel="stylesheet" href="styles-v2.css"></head><body><div class="app-shell"><main class="phone"><section class="screen">
+<div class="top-status">
+  <div>9:41</div>
+  <div class="top-right">
+    <div class="icon-dot"><span></span><span></span><span></span><span></span></div>
+    <div class="icon-wifi"></div>
+    <div class="icon-cell"></div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-left">
+    <button class="circle-btn" aria-label="Back" onclick="location.href='employees-v2.html'">&#8592;</button>
+  </div>
+  <button class="info-btn" aria-label="Information">i</button>
+</div>
+
+<div class="progress"><div style="width:80%"></div></div>
+<div class="helper" style="color:#2f60bf;font-weight:700;margin-bottom:6px">Profiled</div>
+<h2 class="hero-title" style="font-size:22px">International Payments</h2>
+<p class="subtext">Does your business send or receive payments from outside the UK?</p>
+<div class="yes-no">
+  <button class="toggle-btn active" data-testid="intl-yes" onclick="setSelected(this)">Yes</button>
+  <button class="toggle-btn" data-testid="intl-no" onclick="setSelected(this)">No</button>
+</div>
+<button class="btn mt-24" data-testid="payments-continue" onclick="location.href='revenue-v2.html'">Continue</button>
+<script>
+function setSelected(btn){
+  document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script></section></main></div></body></html>

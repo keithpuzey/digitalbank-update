@@ -1,0 +1,2690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlazeMeter Workspace Usage Report</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --red:    #e74c3c;
+    --orange: #e67e22;
+    --green:  #27ae60;
+    --blue:   #2980b9;
+    --grey:   #95a5a6;
+    --dark:   #2c3e50;
+    --light:  #ecf0f1;
+    --bg:     #f5f7fa;
+    --card:   #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+         background: var(--bg); color: var(--dark); font-size: 13px; }
+  header { background: var(--dark); color: #fff; padding: 20px 32px; display:flex; align-items:center; justify-content:space-between; }
+  header h1 { font-size: 20px; font-weight:600; }
+  header .sub { font-size:12px; color:#aaa; margin-top:4px; }
+  .kpi-bar { display:flex; gap:16px; padding:20px 32px; flex-wrap:wrap; }
+  .kpi { background:var(--card); border-radius:8px; padding:16px 24px; flex:1; min-width:140px;
+          box-shadow:0 1px 4px rgba(0,0,0,.08); border-top:4px solid var(--blue); }
+  .kpi.red   { border-color: var(--red); }
+  .kpi.green { border-color: var(--green); }
+  .kpi.orange{ border-color: var(--orange); }
+  .kpi .val  { font-size:32px; font-weight:700; margin-bottom:4px; }
+  .kpi .lbl  { font-size:11px; color:#888; text-transform:uppercase; letter-spacing:.5px; }
+  .chart-row { display:flex; gap:16px; padding:0 32px 20px; flex-wrap:wrap; }
+  .chart-card { background:var(--card); border-radius:8px; padding:16px; flex:1; min-width:300px;
+                 box-shadow:0 1px 4px rgba(0,0,0,.08); }
+  .chart-card h3 { font-size:13px; font-weight:600; margin-bottom:12px; color:#555; }
+  .section { padding: 0 32px 32px; }
+  .section h2 { font-size:15px; font-weight:600; margin-bottom:12px; }
+  .controls { display:flex; gap:10px; margin-bottom:12px; flex-wrap:wrap; align-items:center; }
+  .controls input { padding:7px 12px; border:1px solid #ddd; border-radius:6px; font-size:12px; width:280px; }
+  .controls select { padding:7px 12px; border:1px solid #ddd; border-radius:6px; font-size:12px; }
+  .controls label { font-size:12px; color:#666; display:flex; align-items:center; gap:6px; }
+  table { width:100%; border-collapse:collapse; background:var(--card); border-radius:8px;
+           overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,.08); }
+  thead tr { background: var(--dark); color:#fff; }
+  th { padding:10px 12px; text-align:left; font-size:11px; font-weight:600;
+        text-transform:uppercase; letter-spacing:.5px; white-space:nowrap; cursor:pointer; }
+  th:hover { background:#3d5166; }
+  td { padding:9px 12px; border-bottom:1px solid #f0f0f0; vertical-align:top; }
+  tr:last-child td { border-bottom:none; }
+  .inactive-row { background: #fff8f8; }
+  .inactive-row:hover { background: #ffeaea; }
+  .active-row:hover { background: #f5faff; }
+  .disabled-ws td { opacity:.65; }
+  .ws-name { font-weight:500; }
+  .ws-id { color:#aaa; font-size:11px; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:10px;
+            font-weight:600; text-transform:uppercase; letter-spacing:.4px; margin:1px; }
+  .badge-active   { background:#d4edda; color:#155724; }
+  .badge-inactive { background:#f8d7da; color:#721c24; }
+  .badge-disabled { background:#e2e3e5; color:#383d41; }
+  .num { text-align:right; font-variant-numeric:tabular-nums; }
+  .warning-banner { background:#fff3cd; border:1px solid #ffc107; border-radius:8px;
+    padding:12px 16px; margin-bottom:16px; font-size:12px; color:#856404; }
+  .warning-banner strong { font-size:13px; }
+  footer { text-align:center; padding:20px; color:#aaa; font-size:11px; border-top:1px solid #e0e0e0; margin-top:16px; }
+  .dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:4px; }
+  .dot-red   { background:var(--red); }
+  .dot-green { background:var(--green); }
+  @media(max-width:768px) {
+    .chart-row, .kpi-bar { padding: 0 16px 16px; }
+    .section { padding: 0 16px 24px; }
+    header { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>BlazeMeter Workspace Usage Report</h1>
+    <div class="sub">Account: 1961586 &nbsp;|&nbsp; Report period: Oct 2025 – Apr 2026 &nbsp;|&nbsp; Generated: 2026-04-08</div>
+  </div>
+</header>
+
+<!-- KPI Bar -->
+<div class="kpi-bar">
+  <div class="kpi"><div class="val">176</div><div class="lbl">Total Workspaces</div></div>
+  <div class="kpi green"><div class="val">100</div><div class="lbl">Active (have runs)</div></div>
+  <div class="kpi red"><div class="val">76</div><div class="lbl">No Activity</div></div>
+  <div class="kpi orange"><div class="val">5</div><div class="lbl">Disabled</div></div>
+  <div class="kpi"><div class="val">6,335</div><div class="lbl">Total Test Runs</div></div>
+  <div class="kpi"><div class="val">43%</div><div class="lbl">Unused Rate</div></div>
+</div>
+
+<!-- Charts -->
+<div class="chart-row">
+  <div class="chart-card" style="max-width:320px">
+    <h3>Workspace Activity Distribution</h3>
+    <canvas id="pieChart" height="200"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>Top 10 Most Active Workspaces (by run count)</h3>
+    <canvas id="barChart" height="140"></canvas>
+  </div>
+</div>
+
+<!-- Warning Banner -->
+<div class="section">
+  <div class="warning-banner">
+    <strong>⚠ 76 workspaces have zero test executions</strong> in the report period.
+    These workspaces are highlighted in red below and may be candidates for archiving, consolidation, or decommissioning.
+    Additionally, 5 workspace(s) are currently <strong>disabled</strong>.
+  </div>
+
+  <h2>All Workspaces (176)</h2>
+  <div class="controls">
+    <input type="text" id="searchBox" oninput="filterTable()" placeholder="Search by name or ID…">
+    <select id="statusFilter" onchange="filterTable()">
+      <option value="all">All statuses</option>
+      <option value="active">Active only</option>
+      <option value="inactive">No activity only</option>
+      <option value="disabled">Disabled only</option>
+    </select>
+    <label><span class="dot dot-red"></span>No activity</label>
+    <label><span class="dot dot-green"></span>Active</label>
+  </div>
+
+  <table id="wsTable">
+    <thead>
+      <tr>
+        <th onclick="sortTable(0)">Workspace ↕</th>
+        <th onclick="sortTable(1)">Status ↕</th>
+        <th onclick="sortTable(2)" style="text-align:right">Runs ↕</th>
+        <th onclick="sortTable(3)">First Run ↕</th>
+        <th onclick="sortTable(4)">Last Run ↕</th>
+        <th onclick="sortTable(5)" style="text-align:right">Total VUs ↕</th>
+        <th onclick="sortTable(6)">Total Duration ↕</th>
+        <th onclick="sortTable(7)">Test Types</th>
+        <th onclick="sortTable(8)">Users</th>
+        <th onclick="sortTable(9)">Created ↕</th>
+        <th onclick="sortTable(10)">Ded. IPs</th>
+        <th onclick="sortTable(11)">Priv. Loc</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+
+    <tr class="inactive-row">
+      <td><span class="ws-name">10103_MetLife Process Manager (BizFlow)</span><br><small class="ws-id">ID: 2140121</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">1027_Atlas</span><br><small class="ws-id">ID: 2196168</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-04-17</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row disabled-ws">
+      <td><span class="ws-name">1027_Atlas(Duplicate)</span><br><small class="ws-id">ID: 2196141</small></td>
+      <td><span class="badge badge-inactive">No Activity</span><span class="badge badge-disabled">Disabled</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-04-17</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">10285_OnlinePrinterController-Mexico</span><br><small class="ws-id">ID: 2167879</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-01-22</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">10411_FileNet(API's)</span><br><small class="ws-id">ID: 2239111</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-09-22</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">10444_PeopleSoft 9.2-LatAm</span><br><small class="ws-id">ID: 2140106</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">10643_Document Management Framework(DMF)</span><br><small class="ws-id">ID: 2139202</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">1072_CBS</span><br><small class="ws-id">ID: 2236701</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-09-10</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">10826_Dental Management Application(DMA)</span><br><small class="ws-id">ID: 2140124</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">10942_API Management Platform(APIM)-MX</span><br><small class="ws-id">ID: 2153218</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-12-05</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">11034_Turkey Servicing Platform (TR)</span><br><small class="ws-id">ID: 2180962</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-03-03</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">1134_Critical Illness</span><br><small class="ws-id">ID: 2196147</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-04-17</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">11483_Orchestration for Manual Underwriting-Mexico</span><br><small class="ws-id">ID: 2183833</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-03-12</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">11538_GVWB Informatica Service</span><br><small class="ws-id">ID: 2196152</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-04-17</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">11606_UIS Extension Maintenance</span><br><small class="ws-id">ID: 2140126</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">11626_ID DataWeb</span><br><small class="ws-id">ID: 2196153</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-04-17</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">11658_Enterprise Online Store(EOS) API's</span><br><small class="ws-id">ID: 2139186</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">1174_Data Quality Services</span><br><small class="ws-id">ID: 2152365</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-12-03</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">11885_Omni Docker to AKS Migration</span><br><small class="ws-id">ID: 2140127</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">1189_eBizReporting</span><br><small class="ws-id">ID: 2140101</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">11908_AzDO Platform</span><br><small class="ws-id">ID: 2206357</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-05-20</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">11919_RIS Enhanced Data Store(RDS)</span><br><small class="ws-id">ID: 2140107</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">12074_BizFlow Platform - LatAm</span><br><small class="ws-id">ID: 2140128</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">12075_MetLife Identity Service (MIS)</span><br><small class="ws-id">ID: 2140129</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">12410_Pet Internal</span><br><small class="ws-id">ID: 2139204</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">12411_Pet Claims</span><br><small class="ws-id">ID: 2139205</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">12495_Iseries gate-Mexico</span><br><small class="ws-id">ID: 2213965</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-06-13</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">12947_USD Login</span><br><small class="ws-id">ID: 2193158</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-04-08</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">1295_GroupFacts(GFAX)</span><br><small class="ws-id">ID: 2225328</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-07-15</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">12963_FINEOS Leave Intake</span><br><small class="ws-id">ID: 2157800</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-12-20</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13064_eReporting webServices</span><br><small class="ws-id">ID: 2152446</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-12-03</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">1312_Enterprise KMS Calligo(Livelink)</span><br><small class="ws-id">ID: 2140109</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row disabled-ws">
+      <td><span class="ws-name">1315_Group Universal Life (GUL)</span><br><small class="ws-id">ID: 2196169</small></td>
+      <td><span class="badge badge-inactive">No Activity</span><span class="badge badge-disabled">Disabled</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-04-17</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13171_Pet Quote Funnel(PetQF)</span><br><small class="ws-id">ID: 2139187</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13236_Disability Plan Master Services</span><br><small class="ws-id">ID: 2152363</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-12-03</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13239_Latam Data Hub-Brazil</span><br><small class="ws-id">ID: 2148670</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-11-22</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13263_Sitio web de ProVida</span><br><small class="ws-id">ID: 2231513</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-08-13</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">1334_Individual Disability Income (IDIMSR)</span><br><small class="ws-id">ID: 2255406</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-12-16</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13491_Digital Payment Center (DPC)</span><br><small class="ws-id">ID: 2152442</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-12-03</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13522_Dental OverJet</span><br><small class="ws-id">ID: 2152440</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-12-03</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13561_Rewards360-BD</span><br><small class="ws-id">ID: 2142507</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-11-05</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13638_RIS Broker Case Link</span><br><small class="ws-id">ID: 2140131</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13687_V3locity Annuitant Portal</span><br><small class="ws-id">ID: 2155030</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-12-11</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13747_Digital Payments-CL</span><br><small class="ws-id">ID: 2151976</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-12-02</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13760_Connected_Benefits</span><br><small class="ws-id">ID: 2170526</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-01-30</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13882_MetIQ</span><br><small class="ws-id">ID: 2202198</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-05-07</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13900_Quote In a Box (QIB2)</span><br><small class="ws-id">ID: 2142923</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-11-06</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13909_MetIPaQs</span><br><small class="ws-id">ID: 2188654</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-03-25</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13917_MetLifeOneAUS</span><br><small class="ws-id">ID: 2135391</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-15</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">13961_MetLife Agency Recruitment System(MARS)-NP</span><br><small class="ws-id">ID: 2139129</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">14215_RIS Hyperscience</span><br><small class="ws-id">ID: 2219588</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-06-25</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">14441_CloudLab</span><br><small class="ws-id">ID: 2253414</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-12-04</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">1668_EZ Service Portal</span><br><small class="ws-id">ID: 2140110</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">1713_Unified Inforce System (UIS)</span><br><small class="ws-id">ID: 2178643</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-02-24</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">1726_MetLife Legal Plans(MLP)</span><br><small class="ws-id">ID: 2152447</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-12-03</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row disabled-ws">
+      <td><span class="ws-name">1754_Group Life Web Site(Duplicate)</span><br><small class="ws-id">ID: 2196170</small></td>
+      <td><span class="badge badge-inactive">No Activity</span><span class="badge badge-disabled">Disabled</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-04-17</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">1902_Reservas RV-Chile</span><br><small class="ws-id">ID: 2261500</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2026-02-09</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">2393_BOBR Liberty Migration</span><br><small class="ws-id">ID: 2140111</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">2468_Consolidated Disbursements Init(CDI)</span><br><small class="ws-id">ID: 2140112</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">2903_Enterprise Funds Admin (EFA)</span><br><small class="ws-id">ID: 2140113</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">2942_Individual Business Security and Entitlements</span><br><small class="ws-id">ID: 2196148</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-04-17</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">4340_AGENCY OFFICE CASHIERING (AOC)</span><br><small class="ws-id">ID: 2199408</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-04-28</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">4400_SmartApp</span><br><small class="ws-id">ID: 2140103</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">5639_Pensions Work Bench (API)</span><br><small class="ws-id">ID: 2140115</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">5646_Enterprise Accounting System(EAS)</span><br><small class="ws-id">ID: 2140104</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">6546_Underwriting Platform(IMPAQS)</span><br><small class="ws-id">ID: 2140116</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">6896_Docucorp_MetPAC Plus</span><br><small class="ws-id">ID: 2223956</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-07-10</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">7286_Archer Smart Suite</span><br><small class="ws-id">ID: 2140118</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">7538_AgentsAdministrationSystem-Mexico </span><br><small class="ws-id">ID: 2234108</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-08-27</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">8112_MetLife Check Processing Application(Metcheck)</span><br><small class="ws-id">ID: 2140120</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">9482_Portal Clientes Privado(Chile)</span><br><small class="ws-id">ID: 2231512</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-08-13</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">9658_Comprobante Fiscal Digital</span><br><small class="ws-id">ID: 2211058</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2025-06-04</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">9768_Metlife Automated Renewal System(MARS)</span><br><small class="ws-id">ID: 2139201</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row">
+      <td><span class="ws-name">SVL_MockServices</span><br><small class="ws-id">ID: 2138424</small></td>
+      <td><span class="badge badge-inactive">No Activity</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-10-23</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="inactive-row disabled-ws">
+      <td><span class="ws-name">Workspace-Public</span><br><small class="ws-id">ID: 2073235</small></td>
+      <td><span class="badge badge-inactive">No Activity</span><span class="badge badge-disabled">Disabled</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2024-05-28</td>
+      <td>–</td>
+      <td>–</td>
+    </tr>
+    <tr class="inactive-row disabled-ws">
+      <td><span class="ws-name">oneTest</span><br><small class="ws-id">ID: 2262649</small></td>
+      <td><span class="badge badge-inactive">No Activity</span><span class="badge badge-disabled">Disabled</span></td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td>–</td>
+      <td class="num">–</td>
+      <td>–</td>
+      <td><small>–</small></td>
+      <td><small>–</small></td>
+      <td>2026-02-18</td>
+      <td>–</td>
+      <td>–</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13197_GSSP-JPN (eMirai2.0)</span><br><small class="ws-id">ID: 2135803</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">1090</td>
+      <td>2025-10-01</td>
+      <td>2026-03-24</td>
+      <td class="num">75,831</td>
+      <td>4539d 2h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>anguluri.saiakhil@metlife.co.jp<br>anusha.karre@metlife.co.jp<br>chanuvala.mahendarreddy@metlife.co.jp<br>galiveeti.thirumalreddy@metlife.co.jp<br>karri.nagendrakumar@metlife.co.jp<br>maneesha.pidugu@metlife.co.jp<br>palvai.pravalika@metlife.co.jp<br>palvai.pravalika@metlife.com<br>reddy.nukalashekar@metlife.co.jp<br>reddy.nukalashekar@metlife.com<br>subbarayudu.jadala@metlife.co.jp</small></td>
+      <td>2024-10-16</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">12402_Need Analysis Tool(NAT-Banca)-JPN</span><br><small class="ws-id">ID: 2135805</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">482</td>
+      <td>2025-10-06</td>
+      <td>2026-04-07</td>
+      <td class="num">31,797</td>
+      <td>1439d 0h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>anguluri.saiakhil@metlife.co.jp<br>anusha.karre@metlife.co.jp<br>chanuvala.mahendarreddy@metlife.co.jp<br>galiveeti.thirumalreddy@metlife.co.jp<br>maneesha.pidugu@metlife.co.jp<br>reddy.nukalashekar@metlife.co.jp<br>reddy.nukalashekar@metlife.com</small></td>
+      <td>2024-10-16</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">8244_GVWB Messaging</span><br><small class="ws-id">ID: 2139198</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">391</td>
+      <td>2025-10-02</td>
+      <td>2026-03-26</td>
+      <td class="num">6,892</td>
+      <td>3225d 15h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>ananya.agarwal@metlife.com<br>bhoomika.ss@metlife.com<br>gudepu.shekar@metlife.com<br>maddirala.dhanalaxmi@metlife.com<br>megha.mourey@metlife.com<br>rajesh.miryala@metlife.com<br>rajesh.nichenametla1@metlife.com<br>salony.khare@metlife.com<br>satish.gubbala@metlife.com</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">7966_Enterprise Integration Platform</span><br><small class="ws-id">ID: 2182409</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">345</td>
+      <td>2025-10-01</td>
+      <td>2026-04-08</td>
+      <td class="num">7,452</td>
+      <td>2323d 2h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>ananya.agarwal@metlife.com<br>bhoomika.ss@metlife.com<br>gudepu.shekar@metlife.com<br>megha.mourey@metlife.com<br>salony.khare@metlife.com<br>satish.gubbala@metlife.com</small></td>
+      <td>2025-03-07</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">14647_RIS UKL Quoting Portal</span><br><small class="ws-id">ID: 2261503</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">262</td>
+      <td>2026-03-12</td>
+      <td>2026-04-08</td>
+      <td class="num">273</td>
+      <td>14952d 8h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>abhirup.nandi@metlife.com</small></td>
+      <td>2026-02-09</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13401_ER Digital Experience</span><br><small class="ws-id">ID: 2152438</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">259</td>
+      <td>2025-10-03</td>
+      <td>2026-04-06</td>
+      <td class="num">11,840</td>
+      <td>13696d 12h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>avinashkumar.padapu@metlife.com<br>maddirala.dhanalaxmi@metlife.com<br>manisha.kant@metlife.com<br>mugdha.mukundkale@metlife.com<br>nagakavya.matta@metlife.com<br>spoorthi.bc@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2024-12-03</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">12932_Digital Portal-JPN</span><br><small class="ws-id">ID: 2135811</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">212</td>
+      <td>2025-12-16</td>
+      <td>2026-04-08</td>
+      <td class="num">4,904</td>
+      <td>4914d 1h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>anguluri.saiakhil@metlife.co.jp<br>anusha.karre@metlife.co.jp<br>chanuvala.mahendarreddy@metlife.co.jp<br>karri.nagendrakumar@metlife.com<br>maneesha.pidugu@metlife.co.jp<br>subbarayudu.jadala@metlife.co.jp</small></td>
+      <td>2024-10-16</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13399_EE Digital Experience</span><br><small class="ws-id">ID: 2152437</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">208</td>
+      <td>2025-10-03</td>
+      <td>2026-04-01</td>
+      <td class="num">11,443</td>
+      <td>1092d 16h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>katta.naveen@metlife.com<br>manisha.kant@metlife.com<br>mugdha.mukundkale@metlife.com<br>pavithra.bhaskaran@metlife.com<br>sivaranjani.ramasamynagalakshmi@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2024-12-03</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">Training_Workspace</span><br><small class="ws-id">ID: 2035507</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">191</td>
+      <td>2025-10-02</td>
+      <td>2026-04-06</td>
+      <td class="num">5,303</td>
+      <td>1307d 7h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>anahi.martinezrubio@metlifeexternos.com.mx<br>avinash.suresh@metlife.com<br>bruno.alvesribeirodesousa@metlife.com<br>diegoarmando.gomez@provida.cl<br>dinesh.gadewal1@metlife.com<br>emmanuel.espinozasales@metlifeexternos.com.mx<br>gudepu.shekar@metlife.com<br>jenny.camelo@metlife.com.co<br>josemanuel.avellanedaalfaro@metlife.com.mx<br>lobsang.e.paz@metlife.cl<br>mariana.montenegro@metlife.com.ar<br>mayraselene.olguinarias@metlifeexternos.com.mx<br>mdkawsar.hasan@metlife.com.bd<br>miguel.h.cabra@metlife.com.co<br>nishanth.juturuchinna@metlife.com<br>pinaki.pal@metlife.com<br>polumahanthi.saibhavanapratyusha@metlife.com<br>raid.contrerasdelvalle@metlifeexternos.com.mx<br>rajesh.nichenametla1@metlife.com<br>rodrigo.l.bravo@metlife.cl<br>senthilraja.palaniappan2@metlife.com<br>sivaranjani.ramasamynagalakshmi@metlife.com<br>ujjwal.raj@metlife.com<br>vignesh.krishnamoorthi@metlife.com<br>vijayanand.kuppurao@metlife.com<br>xochitlquetzally.castillorodriguez@metlifeexternos.com.mx</small></td>
+      <td>2024-03-22</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">11835_Catalyst (FINEOS)</span><br><small class="ws-id">ID: 2165831</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">156</td>
+      <td>2025-10-03</td>
+      <td>2026-04-08</td>
+      <td class="num">9,213</td>
+      <td>2630d 2h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>aratrika.bhaumik@metlife.com<br>dhamodharan.ravi@metlife.com<br>moulimita.maiti@metlife.com<br>obinaboina.vengaiah@metlife.com<br>rajesh.nichenametla1@metlife.com<br>shravya.kalal@metlife.com<br>vijayanand.kuppurao@metlife.com</small></td>
+      <td>2025-01-16</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">7573_Retail Messaging Services</span><br><small class="ws-id">ID: 2139196</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">114</td>
+      <td>2025-10-01</td>
+      <td>2026-04-08</td>
+      <td class="num">3,245</td>
+      <td>1130d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>ananya.agarwal@metlife.com<br>bhoomika.ss@metlife.com<br>megha.mourey@metlife.com<br>satish.gubbala@metlife.com</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">7970_Global Product System(GPS)</span><br><small class="ws-id">ID: 2139197</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">101</td>
+      <td>2025-10-13</td>
+      <td>2025-12-04</td>
+      <td class="num">717</td>
+      <td>255d 17h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>kpuzey@perforce.com<br>maneesha.kondadi@metlife.com<br>rajesh.nichenametla1@metlife.com<br>vijayanand.kuppurao@metlife.com</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">14319_GroupLifeWebsite</span><br><small class="ws-id">ID: 2235782</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">87</td>
+      <td>2025-10-01</td>
+      <td>2026-04-08</td>
+      <td class="num">1,914</td>
+      <td>3088d 3h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>derek.m.jennings@metlife.com<br>katta.naveen@metlife.com<br>mugdha.mukundkale@metlife.com<br>nagakavya.matta@metlife.com<br>pavithra.bhaskaran@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2025-09-05</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">10829_Salesforce.com Insight</span><br><small class="ws-id">ID: 2170525</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">86</td>
+      <td>2025-10-06</td>
+      <td>2026-04-08</td>
+      <td class="num">2,966</td>
+      <td>5100d 10h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>avinashkumar.padapu@metlife.com<br>nagakavya.matta@metlife.com<br>rajesh.nichenametla1@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2025-01-30</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">11388_Metlife Group insurance</span><br><small class="ws-id">ID: 2130494</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">86</td>
+      <td>2025-10-03</td>
+      <td>2026-04-02</td>
+      <td class="num">3,684</td>
+      <td>5160d 0h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>pettugani.venkatajyothirmayi@metlife.com<br>rajesh.nichenametla1@metlife.com<br>vasanthi.thumma@metlife.com</small></td>
+      <td>2024-10-02</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">1744_Web Services Interface(HWSI)</span><br><small class="ws-id">ID: 2139189</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">82</td>
+      <td>2025-12-18</td>
+      <td>2026-04-08</td>
+      <td class="num">4,761</td>
+      <td>922d 11h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>avinash.suresh@metlife.com<br>katta.naveen@metlife.com<br>nishanth.juturuchinna@metlife.com<br>salony.khare@metlife.com<br>sivaranjani.ramasamynagalakshmi@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">11544_Mobile Sales App-Mexico</span><br><small class="ws-id">ID: 2179805</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">81</td>
+      <td>2025-10-28</td>
+      <td>2026-01-28</td>
+      <td class="num">1,240</td>
+      <td>75d 7h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>josemanuel.avellanedaalfaro@metlife.com.mx<br>raid.contrerasdelvalle@metlifeexternos.com.mx<br>xochitlquetzally.castillorodriguez@metlifeexternos.com.mx</small></td>
+      <td>2025-02-27</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13912_ProducerConnectDataServices</span><br><small class="ws-id">ID: 2199433</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">77</td>
+      <td>2025-10-02</td>
+      <td>2026-04-07</td>
+      <td class="num">9,442</td>
+      <td>47d 11h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>gudepu.shekar@metlife.com<br>vijayanand.kuppurao@metlife.com</small></td>
+      <td>2025-04-28</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">7351_Absence Management</span><br><small class="ws-id">ID: 2140119</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">76</td>
+      <td>2025-10-09</td>
+      <td>2026-03-24</td>
+      <td class="num">19,810</td>
+      <td>2084d 4h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>nagakavya.matta@metlife.com<br>pavithra.bhaskaran@metlife.com<br>spoorthi.bc@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">14264_LifeLines Plus (Bangladesh)</span><br><small class="ws-id">ID: 2235386</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">70</td>
+      <td>2025-10-05</td>
+      <td>2026-01-28</td>
+      <td class="num">17,540</td>
+      <td>2241d 6h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>jannatulferdous.katha@metlife.com.bd<br>sanjida.akter@metlife.com.bd</small></td>
+      <td>2025-09-03</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">Admin_WS</span><br><small class="ws-id">ID: 2073236</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">69</td>
+      <td>2025-10-21</td>
+      <td>2026-03-31</td>
+      <td class="num">226</td>
+      <td>3661d 21h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>avinash.suresh@metlife.com<br>rajesh.nichenametla1@metlife.com</small></td>
+      <td>2024-05-28</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">6981_Portal Individual Policies-Mexico</span><br><small class="ws-id">ID: 2181754</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">67</td>
+      <td>2025-10-13</td>
+      <td>2026-03-09</td>
+      <td class="num">1,127</td>
+      <td>376d 0h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>emmanuel.espinozasales@metlifeexternos.com.mx<br>josemanuel.avellanedaalfaro@metlife.com.mx<br>juanpablo.resendizsanchez@metlifeexternos.com.mx<br>xochitlquetzally.castillorodriguez@metlifeexternos.com.mx</small></td>
+      <td>2025-03-05</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">14370_ControlFunctionsSearchPlatform</span><br><small class="ws-id">ID: 2251119</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">64</td>
+      <td>2025-12-09</td>
+      <td>2026-01-16</td>
+      <td class="num">805</td>
+      <td>2522d 8h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>polumahanthi.saibhavanapratyusha@metlife.com<br>roshan.kr@metlife.com<br>vignesh.krishnamoorthi@metlife.com</small></td>
+      <td>2025-11-21</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13632_Quadient Inspire-TR</span><br><small class="ws-id">ID: 2163660</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">63</td>
+      <td>2025-10-06</td>
+      <td>2026-01-30</td>
+      <td class="num">6,155</td>
+      <td>2096d 11h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>josemanuel.avellanedaalfaro@metlife.com.mx<br>mireli.m.bustamante@metlife.com.mx<br>rajesh.nichenametla1@metlife.com</small></td>
+      <td>2025-01-09</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">6525_Disability Process Automation</span><br><small class="ws-id">ID: 2140105</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">62</td>
+      <td>2025-10-07</td>
+      <td>2026-04-07</td>
+      <td class="num">9,290</td>
+      <td>3662d 12h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>katta.naveen@metlife.com<br>maddirala.dhanalaxmi@metlife.com<br>pavithra.bhaskaran@metlife.com<br>spoorthi.bc@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2024-10-28</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">11622_Claim and Leave Intake(CALI)</span><br><small class="ws-id">ID: 2139203</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">60</td>
+      <td>2025-11-27</td>
+      <td>2026-04-02</td>
+      <td class="num">7,301</td>
+      <td>3427d 12h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>avinashkumar.padapu@metlife.com<br>katta.naveen@metlife.com<br>nagakavya.matta@metlife.com<br>pavithra.bhaskaran@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">10969_Reserve Calculator-México</span><br><small class="ws-id">ID: 2213646</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">59</td>
+      <td>2025-10-01</td>
+      <td>2025-11-26</td>
+      <td class="num">1,050</td>
+      <td>117d 12h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>xochitlquetzally.castillorodriguez@metlifeexternos.com.mx</small></td>
+      <td>2025-06-12</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">1748_Mybenefits</span><br><small class="ws-id">ID: 2139191</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">59</td>
+      <td>2025-10-14</td>
+      <td>2026-04-01</td>
+      <td class="num">924</td>
+      <td>1292d 12h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>nagakavya.matta@metlife.com<br>nishanth.juturuchinna@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">5089_Metlink Employer</span><br><small class="ws-id">ID: 2139193</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">58</td>
+      <td>2025-10-03</td>
+      <td>2026-03-31</td>
+      <td class="num">5,628</td>
+      <td>1815d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>katta.naveen@metlife.com<br>maddirala.dhanalaxmi@metlife.com<br>spoorthi.bc@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">11596_Portfolio Leads Public-Mexico</span><br><small class="ws-id">ID: 2173967</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">56</td>
+      <td>2026-01-09</td>
+      <td>2026-04-02</td>
+      <td class="num">557</td>
+      <td>690d 0h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>xochitlquetzally.castillorodriguez@metlifeexternos.com.mx</small></td>
+      <td>2025-02-10</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">11512_Channel API for Americas</span><br><small class="ws-id">ID: 2151725</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">53</td>
+      <td>2025-11-06</td>
+      <td>2026-03-26</td>
+      <td class="num">2,577</td>
+      <td>132d 17h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>katta.naveen@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2024-12-02</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">14340_Accident and Health(AnH)</span><br><small class="ws-id">ID: 2251104</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">48</td>
+      <td>2026-01-07</td>
+      <td>2026-04-08</td>
+      <td class="num">1,929</td>
+      <td>120d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>manisha.kant@metlife.com</small></td>
+      <td>2025-11-21</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">10415_MXICUCE(MDM)-Mexico</span><br><small class="ws-id">ID: 2254230</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">45</td>
+      <td>2025-12-23</td>
+      <td>2026-03-26</td>
+      <td class="num">5,328</td>
+      <td>271d 22h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>mayraselene.olguinarias@metlifeexternos.com.mx<br>natalia.sanchez-sanchez@metlife.com.mx</small></td>
+      <td>2025-12-09</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">11777_Data Entry System Private</span><br><small class="ws-id">ID: 2189538</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">39</td>
+      <td>2025-10-06</td>
+      <td>2026-01-08</td>
+      <td class="num">626</td>
+      <td>212d 12h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>josemanuel.avellanedaalfaro@metlife.com.mx<br>juanpablo.resendizsanchez@metlifeexternos.com.mx</small></td>
+      <td>2025-03-27</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">7981_Total Absence Mgmt Web App for Employee Employer</span><br><small class="ws-id">ID: 2196151</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">36</td>
+      <td>2025-10-09</td>
+      <td>2025-12-05</td>
+      <td class="num">505</td>
+      <td>2160d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>manisha.kant@metlife.com<br>nagakavya.matta@metlife.com</small></td>
+      <td>2025-04-17</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">1662_Life - Statement of Health (StarTrak)</span><br><small class="ws-id">ID: 2139185</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">35</td>
+      <td>2025-11-24</td>
+      <td>2026-04-03</td>
+      <td class="num">3,322</td>
+      <td>494d 4h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>katta.naveen@metlife.com<br>maddirala.dhanalaxmi@metlife.com<br>manisha.kant@metlife.com<br>nagakavya.matta@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13811_My Leave Navigator</span><br><small class="ws-id">ID: 2152448</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">34</td>
+      <td>2025-10-06</td>
+      <td>2026-03-25</td>
+      <td class="num">1,324</td>
+      <td>959d 17h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>dhamodharan.ravi@metlife.com<br>katta.naveen@metlife.com<br>pavithra.bhaskaran@metlife.com</small></td>
+      <td>2024-12-03</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">8058_V3 Benefits Administration System (ACE)</span><br><small class="ws-id">ID: 2152058</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">34</td>
+      <td>2025-10-06</td>
+      <td>2026-04-08</td>
+      <td class="num">2,252</td>
+      <td>240d 5h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>sandhya.perumal@metlife.com</small></td>
+      <td>2024-12-02</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">5591_Payroll Deduction System (PDS)</span><br><small class="ws-id">ID: 2228768</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">33</td>
+      <td>2025-10-03</td>
+      <td>2026-03-11</td>
+      <td class="num">5,183</td>
+      <td>559d 20h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>aratrika.bhaumik@metlife.com<br>dhamodharan.ravi@metlife.com<br>moulimita.maiti@metlife.com<br>shravya.kalal@metlife.com<br>sstrauser@metlife.com</small></td>
+      <td>2025-07-30</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13867_CloudPortal</span><br><small class="ws-id">ID: 2244065</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">32</td>
+      <td>2025-10-22</td>
+      <td>2026-01-02</td>
+      <td class="num">4,950</td>
+      <td>131d 3h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>dinesh.gadewal1@metlife.com<br>rajesh.nichenametla1@metlife.com</small></td>
+      <td>2025-10-20</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13225_Group Cloud Integration Services</span><br><small class="ws-id">ID: 2152441</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">31</td>
+      <td>2025-10-20</td>
+      <td>2026-04-08</td>
+      <td class="num">703</td>
+      <td>879d 9h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>derek.m.jennings@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2024-12-03</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">14344_Disability HCM Connect (DHC)</span><br><small class="ws-id">ID: 2228470</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">31</td>
+      <td>2025-10-01</td>
+      <td>2026-03-12</td>
+      <td class="num">8,627</td>
+      <td>280d 15h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>dhamodharan.ravi@metlife.com</small></td>
+      <td>2025-07-29</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">12038_API Hub-JPN</span><br><small class="ws-id">ID: 2135807</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">30</td>
+      <td>2025-10-06</td>
+      <td>2026-01-22</td>
+      <td class="num">2,227</td>
+      <td>1086d 7h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>anusha.karre@metlife.co.jp<br>karri.nagendrakumar@metlife.co.jp<br>reddy.nukalashekar@metlife.co.jp<br>subbarayudu.jadala@metlife.co.jp</small></td>
+      <td>2024-10-16</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">12710_MLH Salescomp(PMACS)</span><br><small class="ws-id">ID: 2156898</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">30</td>
+      <td>2025-10-13</td>
+      <td>2026-04-07</td>
+      <td class="num">1,968</td>
+      <td>31d 11h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>avinash.suresh@metlife.com<br>gudepu.shekar@metlife.com<br>vijayanand.kuppurao@metlife.com</small></td>
+      <td>2024-12-17</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">7184_Workflow and Imaging Now(WinWeb)</span><br><small class="ws-id">ID: 2139195</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">29</td>
+      <td>2025-12-03</td>
+      <td>2026-03-19</td>
+      <td class="num">5,575</td>
+      <td>95d 20h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>gudepu.shekar@metlife.com<br>maneesha.kondadi@metlife.com<br>rajesh.nichenametla1@metlife.com</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">1754_Group Life Web Site</span><br><small class="ws-id">ID: 2196158</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">28</td>
+      <td>2025-10-15</td>
+      <td>2026-04-01</td>
+      <td class="num">950</td>
+      <td>70d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>manisha.kant@metlife.com</small></td>
+      <td>2025-04-17</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13679_ADN Plus(ADN)-CL</span><br><small class="ws-id">ID: 2151974</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">27</td>
+      <td>2025-12-03</td>
+      <td>2025-12-04</td>
+      <td class="num">437</td>
+      <td>186d 10h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>diegoarmando.gomez@provida.cl<br>rajesh.nichenametla1@metlife.com</small></td>
+      <td>2024-12-02</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13476_Apps Portal-JPN</span><br><small class="ws-id">ID: 2135810</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">26</td>
+      <td>2025-12-03</td>
+      <td>2026-01-14</td>
+      <td class="num">747</td>
+      <td>141d 6h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>anguluri.saiakhil@metlife.co.jp<br>karri.nagendrakumar@metlife.co.jp<br>maneesha.pidugu@metlife.co.jp<br>subbarayudu.jadala@metlife.co.jp</small></td>
+      <td>2024-10-16</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">8167_eDpm (eDelivery Preference Management)</span><br><small class="ws-id">ID: 2170527</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">26</td>
+      <td>2025-11-03</td>
+      <td>2026-04-02</td>
+      <td class="num">1,701</td>
+      <td>1325d 20h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>aravind.balakrishnan@metlife.com<br>katta.naveen@metlife.com</small></td>
+      <td>2025-01-30</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">8911_MetOnline Portal</span><br><small class="ws-id">ID: 2139199</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">26</td>
+      <td>2025-10-14</td>
+      <td>2026-01-15</td>
+      <td class="num">1,065</td>
+      <td>1560d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>avinashkumar.padapu@metlife.com<br>mugdha.mukundkale@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13885_SharedServices</span><br><small class="ws-id">ID: 2227760</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">25</td>
+      <td>2025-10-07</td>
+      <td>2026-03-27</td>
+      <td class="num">4,285</td>
+      <td>184d 7h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>rajesh.miryala@metlife.com<br>salony.khare@metlife.com</small></td>
+      <td>2025-07-25</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">12618_MXSANPRA-Mexico</span><br><small class="ws-id">ID: 2213648</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">24</td>
+      <td>2026-03-04</td>
+      <td>2026-03-19</td>
+      <td class="num">520</td>
+      <td>14d 19h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>mireli.m.bustamante@metlife.com.mx</small></td>
+      <td>2025-06-12</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">1485_MyBenefits Admin</span><br><small class="ws-id">ID: 2152443</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">24</td>
+      <td>2025-11-17</td>
+      <td>2026-04-01</td>
+      <td class="num">1,665</td>
+      <td>60d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>pavithra.bhaskaran@metlife.com<br>rajesh.miryala@metlife.com<br>spoorthi.bc@metlife.com</small></td>
+      <td>2024-12-03</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">10856_Correspondence</span><br><small class="ws-id">ID: 2140125</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">23</td>
+      <td>2025-11-20</td>
+      <td>2026-04-07</td>
+      <td class="num">3,465</td>
+      <td>1013d 18h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>aratrika.bhaumik@metlife.com<br>katta.naveen@metlife.com<br>shravya.kalal@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">10556_MGTAS (Metlife Global Trusted Authentication System)</span><br><small class="ws-id">ID: 2170524</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">22</td>
+      <td>2025-10-01</td>
+      <td>2026-04-02</td>
+      <td class="num">580</td>
+      <td>53d 8h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>maddirala.dhanalaxmi@metlife.com</small></td>
+      <td>2025-01-30</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">7257_Profile DB Applications and Services</span><br><small class="ws-id">ID: 2196150</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">22</td>
+      <td>2025-10-14</td>
+      <td>2026-03-30</td>
+      <td class="num">6,400</td>
+      <td>55d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>manisha.kant@metlife.com</small></td>
+      <td>2025-04-17</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">9691_MMSECL</span><br><small class="ws-id">ID: 2244504</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">22</td>
+      <td>2025-10-24</td>
+      <td>2026-01-22</td>
+      <td class="num">25</td>
+      <td>61d 22h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>juanpablo.resendizsanchez@metlifeexternos.com.mx</small></td>
+      <td>2025-10-22</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">10615_Ensemble-JPN (eMirai1.0)</span><br><small class="ws-id">ID: 2135804</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">21</td>
+      <td>2025-10-23</td>
+      <td>2025-11-14</td>
+      <td class="num">534</td>
+      <td>28d 15h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>anguluri.saiakhil@metlife.co.jp<br>maneesha.pidugu@metlife.co.jp<br>palvai.pravalika@metlife.co.jp</small></td>
+      <td>2024-10-16</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">1753_WebSOH (Web Statement of Health)</span><br><small class="ws-id">ID: 2170523</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">21</td>
+      <td>2025-10-01</td>
+      <td>2026-03-12</td>
+      <td class="num">608</td>
+      <td>1260d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>nagakavya.matta@metlife.com</small></td>
+      <td>2025-01-30</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13678_Metlife Orienta-CL</span><br><small class="ws-id">ID: 2151975</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">20</td>
+      <td>2025-10-23</td>
+      <td>2025-11-25</td>
+      <td class="num">11,065</td>
+      <td>127d 1h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>diegoarmando.gomez@provida.cl<br>rajesh.nichenametla1@metlife.com</small></td>
+      <td>2024-12-02</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">2452_Business Office Service Solution(BOSS)</span><br><small class="ws-id">ID: 2139192</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">19</td>
+      <td>2025-11-20</td>
+      <td>2026-03-11</td>
+      <td class="num">2,495</td>
+      <td>401d 16h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>maneesha.kondadi@metlife.com</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">11618_Distributed Services Framework</span><br><small class="ws-id">ID: 2264079</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">18</td>
+      <td>2026-03-06</td>
+      <td>2026-03-19</td>
+      <td class="num">18</td>
+      <td>182d 19h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>kiet.ho@metlife.com<br>rajesh.nichenametla1@metlife.com</small></td>
+      <td>2026-03-05</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">14015_Disability AI Foundation Applications</span><br><small class="ws-id">ID: 2155744</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">18</td>
+      <td>2025-10-15</td>
+      <td>2026-02-13</td>
+      <td class="num">1,602</td>
+      <td>503d 8h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>dhamodharan.ravi@metlife.com<br>obinaboina.vengaiah@metlife.com</small></td>
+      <td>2024-12-13</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">1081_Case Definition Facility (CDF)</span><br><small class="ws-id">ID: 2196146</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">16</td>
+      <td>2025-10-15</td>
+      <td>2026-03-31</td>
+      <td class="num">3,068</td>
+      <td>960d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>maddirala.dhanalaxmi@metlife.com</small></td>
+      <td>2025-04-17</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">14426_X-iSeries-Mexico</span><br><small class="ws-id">ID: 2239553</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">16</td>
+      <td>2025-11-14</td>
+      <td>2026-02-19</td>
+      <td class="num">396</td>
+      <td>320d 22h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>josemanuel.avellanedaalfaro@metlife.com.mx<br>raid.contrerasdelvalle@metlifeexternos.com.mx</small></td>
+      <td>2025-09-24</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13990_WebSBR</span><br><small class="ws-id">ID: 2243011</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">15</td>
+      <td>2025-10-15</td>
+      <td>2025-11-06</td>
+      <td class="num">1,058</td>
+      <td>192d 2h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>avinash.suresh@metlife.com<br>gudepu.shekar@metlife.com<br>rajesh.nichenametla1@metlife.com<br>salony.khare@metlife.com</small></td>
+      <td>2025-10-14</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">1745_Group Life Web Site Admin</span><br><small class="ws-id">ID: 2152445</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">15</td>
+      <td>2025-10-16</td>
+      <td>2026-03-30</td>
+      <td class="num">1,056</td>
+      <td>900d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>mugdha.mukundkale@metlife.com</small></td>
+      <td>2024-12-03</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">6664_Common eServices - Webservices</span><br><small class="ws-id">ID: 2196149</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">15</td>
+      <td>2025-11-27</td>
+      <td>2026-04-01</td>
+      <td class="num">210</td>
+      <td>35d 20h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>avinashkumar.padapu@metlife.com<br>rajesh.miryala@metlife.com<br>spoorthi.bc@metlife.com</small></td>
+      <td>2025-04-17</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">10245_EDM Workflow (Case Manager)</span><br><small class="ws-id">ID: 2140123</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">14</td>
+      <td>2026-02-20</td>
+      <td>2026-03-03</td>
+      <td class="num">1,255</td>
+      <td>165d 7h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>avinash.suresh@metlife.com<br>gudepu.shekar@metlife.com</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">11166_PMACS2</span><br><small class="ws-id">ID: 2177835</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">14</td>
+      <td>2025-10-21</td>
+      <td>2025-12-04</td>
+      <td class="num">240</td>
+      <td>135d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>maneesha.kondadi@metlife.com<br>rajesh.nichenametla1@metlife.com<br>vijayanand.kuppurao@metlife.com</small></td>
+      <td>2025-02-21</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">11900_Quadient_RAD</span><br><small class="ws-id">ID: 2243212</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">14</td>
+      <td>2025-10-17</td>
+      <td>2026-03-09</td>
+      <td class="num">371</td>
+      <td>840d 0h 0m</td>
+      <td><small>collection, taurus</small></td>
+      <td><small>dhamodharan.ravi@metlife.com<br>obinaboina.vengaiah@metlife.com</small></td>
+      <td>2025-10-15</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">12363_MLR Digital Enrollment</span><br><small class="ws-id">ID: 2157666</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">13</td>
+      <td>2025-10-08</td>
+      <td>2026-04-02</td>
+      <td class="num">260</td>
+      <td>10d 20h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>vijayanand.kuppurao@metlife.com</small></td>
+      <td>2024-12-19</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">14245_PINGIdentity</span><br><small class="ws-id">ID: 2201932</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">13</td>
+      <td>2025-10-02</td>
+      <td>2025-12-02</td>
+      <td class="num">205</td>
+      <td>549d 7h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>karri.nagendrakumar@metlife.co.jp<br>pranitha.panchadri@metlife.com<br>senthilraja.palaniappan2@metlife.com<br>subbarayudu.jadala@metlife.co.jp</small></td>
+      <td>2025-05-06</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">6908_ContentDistributionHub(CDH)</span><br><small class="ws-id">ID: 2253413</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">12</td>
+      <td>2025-12-05</td>
+      <td>2025-12-11</td>
+      <td class="num">91</td>
+      <td>22d 12h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>ananya.agarwal@metlife.com</small></td>
+      <td>2025-12-04</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">11998_MXPortalGEB</span><br><small class="ws-id">ID: 2229674</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">11</td>
+      <td>2025-10-14</td>
+      <td>2026-04-07</td>
+      <td class="num">68</td>
+      <td>367d 12h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>mireli.m.bustamante@metlife.com.mx</small></td>
+      <td>2025-08-04</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">1750_MetDental</span><br><small class="ws-id">ID: 2140102</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">11</td>
+      <td>2025-12-17</td>
+      <td>2026-04-06</td>
+      <td class="num">452</td>
+      <td>428d 3h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>katta.naveen@metlife.com<br>salony.khare@metlife.com<br>sivaranjani.ramasamynagalakshmi@metlife.com<br>sudipta.dhara@metlife.com</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">1138_CSS</span><br><small class="ws-id">ID: 2231271</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">10</td>
+      <td>2025-10-03</td>
+      <td>2025-11-13</td>
+      <td class="num">17,111</td>
+      <td>129d 8h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>rajesh.nichenametla1@metlife.com<br>salony.khare@metlife.com<br>sreekanth.rachamadugu@metlife.com</small></td>
+      <td>2025-08-12</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">2924_New Debit Authorization System(MIDAS)</span><br><small class="ws-id">ID: 2140114</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">10</td>
+      <td>2025-11-12</td>
+      <td>2025-12-02</td>
+      <td class="num">1,189</td>
+      <td>37d 2h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>gudepu.shekar@metlife.com<br>maneesha.kondadi@metlife.com<br>vijayanand.kuppurao@metlife.com</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">6794_IDS Acords</span><br><small class="ws-id">ID: 2239991</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">10</td>
+      <td>2025-10-01</td>
+      <td>2025-10-07</td>
+      <td class="num">160</td>
+      <td>18d 8h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>maddirala.dhanalaxmi@metlife.com</small></td>
+      <td>2025-09-26</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">14031_MetLife Digital SOH</span><br><small class="ws-id">ID: 2152439</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">9</td>
+      <td>2025-10-15</td>
+      <td>2026-03-10</td>
+      <td class="num">350</td>
+      <td>540d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>spoorthi.bc@metlife.com</small></td>
+      <td>2024-12-03</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">9365_Research Wall(RWall)</span><br><small class="ws-id">ID: 2139200</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">9</td>
+      <td>2025-11-24</td>
+      <td>2025-12-31</td>
+      <td class="num">369</td>
+      <td>69d 17h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>avinash.suresh@metlife.com<br>maneesha.kondadi@metlife.com<br>salony.khare@metlife.com</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13341_MLH Digital Retail APIs</span><br><small class="ws-id">ID: 2138803</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">8</td>
+      <td>2025-10-08</td>
+      <td>2025-10-10</td>
+      <td class="num">140</td>
+      <td>5d 21h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>sivaranjani.ramasamynagalakshmi@metlife.com</small></td>
+      <td>2024-10-24</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">11994_Files transformation and validation-Mexico</span><br><small class="ws-id">ID: 2259001</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">7</td>
+      <td>2026-01-16</td>
+      <td>2026-01-19</td>
+      <td class="num">51</td>
+      <td>12d 9h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>juanpablo.resendizsanchez@metlifeexternos.com.mx</small></td>
+      <td>2026-01-15</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13342_TargetProcess</span><br><small class="ws-id">ID: 2204485</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">7</td>
+      <td>2026-01-12</td>
+      <td>2026-04-07</td>
+      <td class="num">450</td>
+      <td>9d 4h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>avinash.suresh@metlife.com<br>prathamesh.dhavale@metlife.com<br>salony.khare@metlife.com</small></td>
+      <td>2025-05-14</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">14604_Simplified Coverage Page (SCP)</span><br><small class="ws-id">ID: 2266718</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">7</td>
+      <td>2026-04-06</td>
+      <td>2026-04-08</td>
+      <td class="num">153</td>
+      <td>13d 3h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>avinash.suresh@metlife.com</small></td>
+      <td>2026-04-02</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">1175_CorrKMS</span><br><small class="ws-id">ID: 2208961</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">6</td>
+      <td>2026-03-05</td>
+      <td>2026-03-09</td>
+      <td class="num">1,050</td>
+      <td>50d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>dhamodharan.ravi@metlife.com</small></td>
+      <td>2025-05-28</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13930_Xcelerator LATAM</span><br><small class="ws-id">ID: 2195004</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">6</td>
+      <td>2025-12-15</td>
+      <td>2025-12-15</td>
+      <td class="num">1,210</td>
+      <td>6h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>johana.orozco@metlife.com.co</small></td>
+      <td>2025-04-14</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">1996_Provida-Mexico</span><br><small class="ws-id">ID: 2183767</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">5</td>
+      <td>2025-10-30</td>
+      <td>2025-10-31</td>
+      <td class="num">24</td>
+      <td>12d 12h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>emmanuel.espinozasales@metlifeexternos.com.mx</small></td>
+      <td>2025-03-11</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">8927_EMC xPressions</span><br><small class="ws-id">ID: 2235781</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">5</td>
+      <td>2026-02-03</td>
+      <td>2026-04-08</td>
+      <td class="num">325</td>
+      <td>300d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>katta.naveen@metlife.com</small></td>
+      <td>2025-09-05</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">ExecutionGrid_POC_Asia</span><br><small class="ws-id">ID: 2255765</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">5</td>
+      <td>2026-01-05</td>
+      <td>2026-02-17</td>
+      <td class="num">55</td>
+      <td>181d 16h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>malaya.parida@metlife.com<br>rajesh.nichenametla1@metlife.com</small></td>
+      <td>2025-12-18</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">12396_NextGen Analytics Application</span><br><small class="ws-id">ID: 2202201</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">4</td>
+      <td>2025-11-25</td>
+      <td>2025-12-08</td>
+      <td class="num">64</td>
+      <td>27d 12h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>dhamodharan.ravi@metlife.com</small></td>
+      <td>2025-05-07</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">14280_Claims AI Assistant</span><br><small class="ws-id">ID: 2203994</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">4</td>
+      <td>2026-03-27</td>
+      <td>2026-04-01</td>
+      <td class="num">280</td>
+      <td>8d 8h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>gudepu.shekar@metlife.com</small></td>
+      <td>2025-05-13</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">11431_CotadorAgents</span><br><small class="ws-id">ID: 2252164</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">3</td>
+      <td>2026-02-21</td>
+      <td>2026-02-21</td>
+      <td class="num">50</td>
+      <td>60d 11h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>leonardo.silva@metlife.com</small></td>
+      <td>2025-11-27</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">12415_Data Analytics Hub-Mexico </span><br><small class="ws-id">ID: 2140130</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">3</td>
+      <td>2025-10-03</td>
+      <td>2025-10-06</td>
+      <td class="num">603</td>
+      <td>6d 6h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>avinash.suresh@metlife.com</small></td>
+      <td>2024-10-28</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13331_Brazil PWP</span><br><small class="ws-id">ID: 2243729</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">3</td>
+      <td>2026-02-12</td>
+      <td>2026-03-20</td>
+      <td class="num">22</td>
+      <td>60d 2h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>rodrigo.granata@metlife.com</small></td>
+      <td>2025-10-17</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">14446_CallCenterOutsourcingPortfoli-Mexico</span><br><small class="ws-id">ID: 2261101</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">3</td>
+      <td>2026-02-06</td>
+      <td>2026-02-06</td>
+      <td class="num">10</td>
+      <td>1d 11h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>mayraselene.olguinarias@metlifeexternos.com.mx</small></td>
+      <td>2026-02-05</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">5629_Service Problem And Resolution Communication(iSparc)</span><br><small class="ws-id">ID: 2139194</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">3</td>
+      <td>2026-03-11</td>
+      <td>2026-03-12</td>
+      <td class="num">120</td>
+      <td>5d 10h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>avinash.suresh@metlife.com</small></td>
+      <td>2024-10-25</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">14076_BlazeMeter</span><br><small class="ws-id">ID: 2140087</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">2</td>
+      <td>2025-10-09</td>
+      <td>2025-10-09</td>
+      <td class="num">10</td>
+      <td>10h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>salony.khare@metlife.com</small></td>
+      <td>2024-10-28</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">10966_GSSP US Platform</span><br><small class="ws-id">ID: 2237613</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">1</td>
+      <td>2025-10-01</td>
+      <td>2025-10-01</td>
+      <td class="num">5</td>
+      <td>5h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>rajesh.miryala@metlife.com</small></td>
+      <td>2025-09-15</td>
+      <td>–</td>
+      <td>✓</td>
+    </tr>
+    <tr class="active-row">
+      <td><span class="ws-name">13545_Chile Insurance Data hub</span><br><small class="ws-id">ID: 2142920</small></td>
+      <td><span class="badge badge-active">Active</span></td>
+      <td class="num">1</td>
+      <td>2025-10-09</td>
+      <td>2025-10-09</td>
+      <td class="num">2</td>
+      <td>60d 0h 0m</td>
+      <td><small>taurus</small></td>
+      <td><small>avinash.suresh@metlife.com</small></td>
+      <td>2024-11-06</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    </tbody>
+  </table>
+  <p style="margin-top:8px;color:#888;font-size:11px" id="rowCount"></p>
+</div>
+
+<footer>BlazeMeter Performance Report &mdash; Account 1961586 &mdash; 2026-04-08</footer>
+
+<script>
+const labels = ["13197_GSSP-JPN (eMirai2.0)", "12402_Need Analysis Tool(NAT-B", "8244_GVWB Messaging", "7966_Enterprise Integration Pl", "14647_RIS UKL Quoting Portal", "13401_ER Digital Experience", "12932_Digital Portal-JPN", "13399_EE Digital Experience", "Training_Workspace", "11835_Catalyst (FINEOS)"];
+const values = [1090, 482, 391, 345, 262, 259, 212, 208, 191, 156];
+
+// Pie
+new Chart(document.getElementById('pieChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Active (100)', 'No Activity (76)'],
+    datasets: [{ data: [100, 76],
+      backgroundColor: ['#27ae60','#e74c3c'], borderWidth:2 }]
+  },
+  options: { plugins: { legend: { position:'bottom', labels:{ font:{size:11} } } }, cutout:'65%' }
+});
+
+// Bar
+new Chart(document.getElementById('barChart'), {
+  type: 'bar',
+  data: {
+    labels: labels,
+    datasets: [{ label:'Test Runs', data: values,
+      backgroundColor:'#2980b9', borderRadius:4 }]
+  },
+  options: {
+    indexAxis:'y',
+    plugins: { legend:{display:false} },
+    scales: { x:{ ticks:{font:{size:10}} }, y:{ticks:{font:{size:10}}} }
+  }
+});
+
+// Filter & Sort
+function filterTable() {
+  const q = document.getElementById('searchBox').value.toLowerCase();
+  const sf = document.getElementById('statusFilter').value;
+  const rows = document.querySelectorAll('#tableBody tr');
+  let visible = 0;
+  rows.forEach(r => {
+    const name = r.cells[0].textContent.toLowerCase();
+    const isActive   = r.classList.contains('active-row');
+    const isInactive = r.classList.contains('inactive-row');
+    const isDisabled = r.classList.contains('disabled-ws');
+    const matchQ = !q || name.includes(q);
+    const matchS = sf==='all' 
+      || (sf==='active'   && isActive && !isInactive)
+      || (sf==='inactive' && isInactive)
+      || (sf==='disabled' && isDisabled);
+    r.style.display = (matchQ && matchS) ? '' : 'none';
+    if(matchQ && matchS) visible++;
+  });
+  document.getElementById('rowCount').textContent = `Showing ${visible} of 176 workspaces`;
+}
+filterTable();
+
+let sortDir = {};
+function sortTable(col) {
+  const tbody = document.getElementById('tableBody');
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  sortDir[col] = !sortDir[col];
+  rows.sort((a, b) => {
+    const av = a.cells[col].textContent.trim().replace(/,/g,'');
+    const bv = b.cells[col].textContent.trim().replace(/,/g,'');
+    const an = parseFloat(av), bn = parseFloat(bv);
+    const cmp = (!isNaN(an) && !isNaN(bn)) ? an-bn : av.localeCompare(bv);
+    return sortDir[col] ? cmp : -cmp;
+  });
+  rows.forEach(r => tbody.appendChild(r));
+  filterTable();
+}
+</script>
+</body>
+</html>

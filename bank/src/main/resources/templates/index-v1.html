@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo App</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+        // Redirect users who are not logged in
+        if (sessionStorage.getItem('loggedIn') !== 'true') {
+            window.location.replace('login-demo.html');
+        }
+    </script>
+</head>
+
+<body>
+    <div class="app-shell">
+        <main class="phone">
+            <section class="screen">
+
+                <div class="top-status">
+                    <div>9:41</div>
+
+                    <div class="top-right">
+                        <div class="icon-dot">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <div class="icon-wifi"></div>
+                        <div class="icon-cell"></div>
+                    </div>
+                </div>
+
+                <h1 class="hero-title">Demo App</h1>
+
+                <p class="subtext">
+                    Mobile-style demo pages aligned to the supplied screenshots
+                    and ready for UI automation.
+                </p>
+
+                <div class="landing-links">
+
+                    <a class="landing-card"
+                       href="business.html"
+                       data-testid="nav-business">
+                        <h3>About your business</h3>
+                        <p>Five-step onboarding flow.</p>
+                    </a>
+
+                    <a class="landing-card"
+                       href="loan.html"
+                       data-testid="nav-loan">
+                        <h3>Loan</h3>
+                        <p>Interactive slider + term chips + calculated results.</p>
+                    </a>
+
+                    <a class="landing-card"
+                       href="pin.html"
+                       data-testid="nav-pin">
+                        <h3>Create PIN and biometrics</h3>
+                        <p>PIN keypad, Face ID opt-in and success state.</p>
+                    </a>
+
+                </div>
+
+                <div class="footer-space"></div>
+
+            </section>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<script>
+if (!sessionStorage.getItem('loggedIn')) {
+  if (window.location.pathname.indexOf('login-demo.html') === -1) {
+    window.location.href = 'login.html';
+  }
+}
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loan Submitted</title>
+<link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+<div class="app-shell">
+<main class="phone">
+<section class="screen">
+
+<!-- Status bar -->
+<div class="top-status">
+  <div>9:41</div>
+  <div class="top-right">
+    <div class="icon-dot"><span></span><span></span><span></span><span></span></div>
+    <div class="icon-wifi"></div>
+    <div class="icon-cell"></div>
+  </div>
+</div>
+
+<!-- Progress -->
+<div class="progress"><div style="width:100%"></div></div>
+
+<!-- ✅ Success Icon -->
+<div class="check-big"></div>
+
+<!-- ✅ Title -->
+<h1 class="hero-title center">Thank you</h1>
+
+<!-- ✅ Message -->
+<p class="subtext center">
+  Your loan amount has been successfully locked in.
+</p>
+
+<p class="subtext center mt-12">
+  Your quote is secured for the next 7 days.
+</p>
+
+<!-- ✅ CTA -->
+<button class="btn mt-24"
+        data-testid="loan-success-continue"
+        onclick="location.href='index-v1.html'">
+  Return to home
+</button>
+
+</section>
+</main>
+</div>
+
+</body>
+</html>

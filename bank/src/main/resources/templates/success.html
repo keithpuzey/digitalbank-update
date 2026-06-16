@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><head>
+
+<script>
+if (!sessionStorage.getItem('loggedIn')) {
+  if (window.location.pathname.indexOf('login-demo.html') === -1) {
+    window.location.href = 'login-demo.html';
+  }
+}
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Face ID enabled</title><link rel="stylesheet" href="styles.css"></head><body><div class="app-shell"><main class="phone"><section class="screen">
+<div class="top-status">
+  <div>9:41</div>
+  <div class="top-right">
+    <div class="icon-dot"><span></span><span></span><span></span><span></span></div>
+    <div class="icon-wifi"></div>
+    <div class="icon-cell"></div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-left">
+    <button class="circle-btn" aria-label="Back" onclick="location.href='faceid.html'">&#8592;</button>
+  </div>
+  <button class="info-btn" aria-label="Information">i</button>
+</div>
+
+<div class="progress"><div style="width:100%"></div></div>
+<div class="check-big"></div>
+<h1 class="hero-title center">Face ID enabled</h1>
+<p class="subtext center">Face ID is set up for quick, secure sign-in. Your PIN is the fallback.</p>
+<button class="btn mt-24" data-testid="success-continue" onclick="location.href='index-v1.html'">Continue</button>
+</section></main></div></body></html>

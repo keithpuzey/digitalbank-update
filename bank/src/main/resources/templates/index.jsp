@@ -94,6 +94,7 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:15px 8
 <span style="position:absolute;right:25px;top:20px;cursor:pointer;font-size:2rem;color:#999;" onclick="closeModal()">&times;</span>
 <h2 style="color:var(--primary-blue);margin-top:0;">Demo Directory</h2>
 <div class="demo-grid">
+<a href="/login-demo.html" class="demo-card"><h3>Secure Demo Portal</h3><p>Sample Demos.</p></a>
 <a href="https://blazedemo.com" class="demo-card"><h3>Travel WebSite</h3><p>Partner Integration: Flight Booking.</p></a>
 <a href="/query.html" class="demo-card"><h3>Database Demo</h3><p>Back-end data tools.</p></a>
 <a href="/guicardexample.html" class="demo-card"><h3>Dashboard</h3><p>Card-based UI overview.</p></a>

@@ -1,0 +1,2828 @@
+{
+  "api_version": 4,
+  "error": null,
+  "result": [
+    {
+      "id": 2140121,
+      "name": "10103_MetLife Process Manager (BizFlow)",
+      "userId": 2466289,
+      "created": 1730139769,
+      "updated": 1749761464,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140123,
+      "name": "10245_EDM Workflow (Case Manager)",
+      "userId": 2466289,
+      "created": 1730140064,
+      "updated": 1773252754,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2196168,
+      "name": "1027_Atlas",
+      "userId": 2466289,
+      "created": 1744922578,
+      "updated": 1749679366,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2196141,
+      "name": "1027_Atlas(Duplicate)",
+      "userId": 2466289,
+      "created": 1744917360,
+      "updated": 1765552171,
+      "enabled": false,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2167879,
+      "name": "10285_OnlinePrinterController-Mexico",
+      "userId": 2466289,
+      "created": 1737565485,
+      "updated": 1768494075,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2239111,
+      "name": "10411_FileNet(API's)",
+      "userId": 2466289,
+      "created": 1758567870,
+      "updated": 1758567981,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2254230,
+      "name": "10415_MXICUCE(MDM)-Mexico",
+      "userId": 2466289,
+      "created": 1765306834,
+      "updated": 1768494373,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140106,
+      "name": "10444_PeopleSoft 9.2-LatAm",
+      "userId": 2466289,
+      "created": 1730139202,
+      "updated": 1749761490,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2170524,
+      "name": "10556_MGTAS (Metlife Global Trusted Authentication System)",
+      "userId": 2466289,
+      "created": 1738252106,
+      "updated": 1749761495,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2135804,
+      "name": "10615_Ensemble-JPN (eMirai1.0)",
+      "userId": 2466289,
+      "created": 1729091342,
+      "updated": 1769174292,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139202,
+      "name": "10643_Document Management Framework(DMF)",
+      "userId": 2466289,
+      "created": 1729884396,
+      "updated": 1756481103,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2236701,
+      "name": "1072_CBS",
+      "userId": 2466289,
+      "created": 1757515632,
+      "updated": 1757519751,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2196146,
+      "name": "1081_Case Definition Facility (CDF)",
+      "userId": 2466289,
+      "created": 1744918805,
+      "updated": 1753281359,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140124,
+      "name": "10826_Dental Management Application(DMA)",
+      "userId": 2466289,
+      "created": 1730140079,
+      "updated": 1749851334,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2170525,
+      "name": "10829_Salesforce.com Insight",
+      "userId": 2466289,
+      "created": 1738252130,
+      "updated": 1749851348,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140125,
+      "name": "10856_Correspondence",
+      "userId": 2466289,
+      "created": 1730140086,
+      "updated": 1749851360,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2153218,
+      "name": "10942_API Management Platform(APIM)-MX",
+      "userId": 2466289,
+      "created": 1733423180,
+      "updated": 1767887392,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2237613,
+      "name": "10966_GSSP US Platform",
+      "userId": 2466289,
+      "created": 1757942936,
+      "updated": 1757943042,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2213646,
+      "name": "10969_Reserve Calculator-México",
+      "userId": 2466289,
+      "created": 1749751078,
+      "updated": 1759240899,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2180962,
+      "name": "11034_Turkey Servicing Platform (TR)",
+      "userId": 2466289,
+      "created": 1741018838,
+      "updated": 1741018910,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2177835,
+      "name": "11166_PMACS2",
+      "userId": 2466289,
+      "created": 1740148624,
+      "updated": 1766158480,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2196147,
+      "name": "1134_Critical Illness",
+      "userId": 2466289,
+      "created": 1744918820,
+      "updated": 1749850481,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2130494,
+      "name": "11388_Metlife Group insurance",
+      "userId": 2466289,
+      "created": 1727908014,
+      "updated": 1758555195,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2231271,
+      "name": "1138_CSS",
+      "userId": 2466289,
+      "created": 1755009469,
+      "updated": 1769195204,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2252164,
+      "name": "11431_CotadorAgents",
+      "userId": 2466289,
+      "created": 1764262781,
+      "updated": 1764262821,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2183833,
+      "name": "11483_Orchestration for Manual Underwriting-Mexico",
+      "userId": 2466289,
+      "created": 1741739008,
+      "updated": 1767887517,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2151725,
+      "name": "11512_Channel API for Americas",
+      "userId": 2466289,
+      "created": 1733115956,
+      "updated": 1747315912,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2196152,
+      "name": "11538_GVWB Informatica Service",
+      "userId": 2466289,
+      "created": 1744918889,
+      "updated": 1749851375,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2179805,
+      "name": "11544_Mobile Sales App-Mexico",
+      "userId": 2466289,
+      "created": 1740664393,
+      "updated": 1768494102,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2173967,
+      "name": "11596_Portfolio Leads Public-Mexico",
+      "userId": 2466289,
+      "created": 1739196578,
+      "updated": 1768494129,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140126,
+      "name": "11606_UIS Extension Maintenance",
+      "userId": 2466289,
+      "created": 1730140100,
+      "updated": 1749851383,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2264079,
+      "name": "11618_Distributed Services Framework",
+      "userId": 2466289,
+      "created": 1772743144,
+      "updated": 1775071522,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139203,
+      "name": "11622_Claim and Leave Intake(CALI)",
+      "userId": 2466289,
+      "created": 1729884410,
+      "updated": 1749851392,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2196153,
+      "name": "11626_ID DataWeb",
+      "userId": 2466289,
+      "created": 1744918900,
+      "updated": 1749851433,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139186,
+      "name": "11658_Enterprise Online Store(EOS) API's",
+      "userId": 2466289,
+      "created": 1729883098,
+      "updated": 1749851440,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2152365,
+      "name": "1174_Data Quality Services",
+      "userId": 2466289,
+      "created": 1733239458,
+      "updated": 1761684279,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2208961,
+      "name": "1175_CorrKMS",
+      "userId": 2466289,
+      "created": 1748447741,
+      "updated": 1748448077,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2189538,
+      "name": "11777_Data Entry System Private",
+      "userId": 2466289,
+      "created": 1743097199,
+      "updated": 1744224598,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2165831,
+      "name": "11835_Catalyst (FINEOS)",
+      "userId": 2466289,
+      "created": 1737040130,
+      "updated": 1770842914,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140127,
+      "name": "11885_Omni Docker to AKS Migration",
+      "userId": 2466289,
+      "created": 1730140112,
+      "updated": 1730908543,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140101,
+      "name": "1189_eBizReporting",
+      "userId": 2466289,
+      "created": 1730139131,
+      "updated": 1730908399,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2243212,
+      "name": "11900_Quadient_RAD",
+      "userId": 2466289,
+      "created": 1760532613,
+      "updated": 1763734171,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2206357,
+      "name": "11908_AzDO Platform",
+      "userId": 2466289,
+      "created": 1747750939,
+      "updated": 1749003872,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140107,
+      "name": "11919_RIS Enhanced Data Store(RDS)",
+      "userId": 2466289,
+      "created": 1730139281,
+      "updated": 1751403690,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2259001,
+      "name": "11994_Files transformation and validation-Mexico",
+      "userId": 2466289,
+      "created": 1768493925,
+      "updated": 1768596392,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2229674,
+      "name": "11998_MXPortalGEB",
+      "userId": 2466289,
+      "created": 1754321829,
+      "updated": 1767887591,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2135807,
+      "name": "12038_API Hub-JPN",
+      "userId": 2466289,
+      "created": 1729091496,
+      "updated": 1769174178,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140128,
+      "name": "12074_BizFlow Platform - LatAm",
+      "userId": 2466289,
+      "created": 1730140121,
+      "updated": 1749851454,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140129,
+      "name": "12075_MetLife Identity Service (MIS)",
+      "userId": 2466289,
+      "created": 1730140131,
+      "updated": 1749851459,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2157666,
+      "name": "12363_MLR Digital Enrollment",
+      "userId": 2466289,
+      "created": 1734616315,
+      "updated": 1734616402,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2202201,
+      "name": "12396_NextGen Analytics Application",
+      "userId": 2466289,
+      "created": 1746633237,
+      "updated": 1765375572,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2135805,
+      "name": "12402_Need Analysis Tool(NAT-Banca)-JPN",
+      "userId": 2466289,
+      "created": 1729091450,
+      "updated": 1769174378,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139204,
+      "name": "12410_Pet Internal",
+      "userId": 2466289,
+      "created": 1729884417,
+      "updated": 1749851478,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139205,
+      "name": "12411_Pet Claims",
+      "userId": 2466289,
+      "created": 1729884424,
+      "updated": 1749851482,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140130,
+      "name": "12415_Data Analytics Hub-Mexico ",
+      "userId": 2466289,
+      "created": 1730140138,
+      "updated": 1768494178,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2213965,
+      "name": "12495_Iseries gate-Mexico",
+      "userId": 2466289,
+      "created": 1749829445,
+      "updated": 1767887682,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2213648,
+      "name": "12618_MXSANPRA-Mexico",
+      "userId": 2466289,
+      "created": 1749751587,
+      "updated": 1772643770,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2156898,
+      "name": "12710_MLH Salescomp(PMACS)",
+      "userId": 2466289,
+      "created": 1734442478,
+      "updated": 1766158810,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2135811,
+      "name": "12932_Digital Portal-JPN",
+      "userId": 2466289,
+      "created": 1729091658,
+      "updated": 1769174425,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2193158,
+      "name": "12947_USD Login",
+      "userId": 2466289,
+      "created": 1744133279,
+      "updated": 1744133362,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2225328,
+      "name": "1295_GroupFacts(GFAX)",
+      "userId": 2466289,
+      "created": 1752603557,
+      "updated": 1752603742,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2157800,
+      "name": "12963_FINEOS Leave Intake",
+      "userId": 2466289,
+      "created": 1734655607,
+      "updated": 1761683816,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2152446,
+      "name": "13064_eReporting webServices",
+      "userId": 2466289,
+      "created": 1733258657,
+      "updated": 1750082201,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140109,
+      "name": "1312_Enterprise KMS Calligo(Livelink)",
+      "userId": 2466289,
+      "created": 1730139352,
+      "updated": 1761684206,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2196169,
+      "name": "1315_Group Universal Life (GUL)",
+      "userId": 2466289,
+      "created": 1744922582,
+      "updated": 1747075470,
+      "enabled": false,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139187,
+      "name": "13171_Pet Quote Funnel(PetQF)",
+      "userId": 2466289,
+      "created": 1729883117,
+      "updated": 1753902969,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2135803,
+      "name": "13197_GSSP-JPN (eMirai2.0)",
+      "userId": 2466289,
+      "created": 1729091312,
+      "updated": 1769174452,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2152441,
+      "name": "13225_Group Cloud Integration Services",
+      "userId": 2466289,
+      "created": 1733258459,
+      "updated": 1754665981,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2152363,
+      "name": "13236_Disability Plan Master Services",
+      "userId": 2466289,
+      "created": 1733239311,
+      "updated": 1744122977,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2148670,
+      "name": "13239_Latam Data Hub-Brazil",
+      "userId": 2466289,
+      "created": 1732293849,
+      "updated": 1733259348,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2231513,
+      "name": "13263_Sitio web de ProVida",
+      "userId": 2466289,
+      "created": 1755101373,
+      "updated": 1763559712,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2243729,
+      "name": "13331_Brazil PWP",
+      "userId": 2466289,
+      "created": 1760707055,
+      "updated": 1761834048,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2138803,
+      "name": "13341_MLH Digital Retail APIs",
+      "userId": 2466289,
+      "created": 1729781121,
+      "updated": 1766157621,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2204485,
+      "name": "13342_TargetProcess",
+      "userId": 2466289,
+      "created": 1747246440,
+      "updated": 1775129551,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2255406,
+      "name": "1334_Individual Disability Income (IDIMSR)",
+      "userId": 2466289,
+      "created": 1765912618,
+      "updated": 1765912981,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2152437,
+      "name": "13399_EE Digital Experience",
+      "userId": 2466289,
+      "created": 1733258355,
+      "updated": 1774374734,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2152438,
+      "name": "13401_ER Digital Experience",
+      "userId": 2466289,
+      "created": 1733258374,
+      "updated": 1775652690,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2135810,
+      "name": "13476_Apps Portal-JPN",
+      "userId": 2466289,
+      "created": 1729091622,
+      "updated": 1769174218,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2152442,
+      "name": "13491_Digital Payment Center (DPC)",
+      "userId": 2466289,
+      "created": 1733258496,
+      "updated": 1754665378,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2152440,
+      "name": "13522_Dental OverJet",
+      "userId": 2466289,
+      "created": 1733258427,
+      "updated": 1753903016,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2142920,
+      "name": "13545_Chile Insurance Data hub",
+      "userId": 2466289,
+      "created": 1730900977,
+      "updated": 1730908566,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2142507,
+      "name": "13561_Rewards360-BD",
+      "userId": 2466289,
+      "created": 1730813447,
+      "updated": 1733259221,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2163660,
+      "name": "13632_Quadient Inspire-TR",
+      "userId": 2466289,
+      "created": 1736440797,
+      "updated": 1759958643,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140131,
+      "name": "13638_RIS Broker Case Link",
+      "userId": 2466289,
+      "created": 1730140145,
+      "updated": 1730908555,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2151975,
+      "name": "13678_Metlife Orienta-CL",
+      "userId": 2466289,
+      "created": 1733158126,
+      "updated": 1755101214,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2151974,
+      "name": "13679_ADN Plus(ADN)-CL",
+      "userId": 2466289,
+      "created": 1733158068,
+      "updated": 1763559750,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2155030,
+      "name": "13687_V3locity Annuitant Portal",
+      "userId": 2466289,
+      "created": 1733926388,
+      "updated": 1755624285,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2151976,
+      "name": "13747_Digital Payments-CL",
+      "userId": 2466289,
+      "created": 1733158160,
+      "updated": 1763559781,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2170526,
+      "name": "13760_Connected_Benefits",
+      "userId": 2466289,
+      "created": 1738252202,
+      "updated": 1747315692,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2152448,
+      "name": "13811_My Leave Navigator",
+      "userId": 2466289,
+      "created": 1733258728,
+      "updated": 1765375652,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2244065,
+      "name": "13867_CloudPortal",
+      "userId": 2466289,
+      "created": 1760969138,
+      "updated": 1760969178,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2202198,
+      "name": "13882_MetIQ",
+      "userId": 2466289,
+      "created": 1746632903,
+      "updated": 1747057922,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2227760,
+      "name": "13885_SharedServices",
+      "userId": 2466289,
+      "created": 1753449656,
+      "updated": 1770219638,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2142923,
+      "name": "13900_Quote In a Box (QIB2)",
+      "userId": 2466289,
+      "created": 1730901145,
+      "updated": 1745930676,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2188654,
+      "name": "13909_MetIPaQs",
+      "userId": 2466289,
+      "created": 1742911112,
+      "updated": 1742913527,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2199433,
+      "name": "13912_ProducerConnectDataServices",
+      "userId": 2466289,
+      "created": 1745849341,
+      "updated": 1766158932,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2135391,
+      "name": "13917_MetLifeOneAUS",
+      "userId": 2466289,
+      "created": 1729020212,
+      "updated": 1730813634,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2195004,
+      "name": "13930_Xcelerator LATAM",
+      "userId": 2466289,
+      "created": 1744658472,
+      "updated": 1754658734,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139129,
+      "name": "13961_MetLife Agency Recruitment System(MARS)-NP",
+      "userId": 2466289,
+      "created": 1729866073,
+      "updated": 1733777413,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2243011,
+      "name": "13990_WebSBR",
+      "userId": 2466289,
+      "created": 1760454159,
+      "updated": 1760454318,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2155744,
+      "name": "14015_Disability AI Foundation Applications",
+      "userId": 2466289,
+      "created": 1734104191,
+      "updated": 1770992985,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2152439,
+      "name": "14031_MetLife Digital SOH",
+      "userId": 2466289,
+      "created": 1733258399,
+      "updated": 1754665735,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140087,
+      "name": "14076_BlazeMeter",
+      "userId": 2466289,
+      "created": 1730135686,
+      "updated": 1754321950,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2219588,
+      "name": "14215_RIS Hyperscience",
+      "userId": 2466289,
+      "created": 1750882523,
+      "updated": 1750882630,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2201932,
+      "name": "14245_PINGIdentity",
+      "userId": 2466289,
+      "created": 1746563559,
+      "updated": 1769174116,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2235386,
+      "name": "14264_LifeLines Plus (Bangladesh)",
+      "userId": 2466289,
+      "created": 1756904371,
+      "updated": 1758027872,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2203994,
+      "name": "14280_Claims AI Assistant",
+      "userId": 2466289,
+      "created": 1747139979,
+      "updated": 1766158669,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2235782,
+      "name": "14319_GroupLifeWebsite",
+      "userId": 2466289,
+      "created": 1757080159,
+      "updated": 1757080778,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2251104,
+      "name": "14340_Accident and Health(AnH)",
+      "userId": 2466289,
+      "created": 1763733762,
+      "updated": 1764857190,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2228470,
+      "name": "14344_Disability HCM Connect (DHC)",
+      "userId": 2466289,
+      "created": 1753799580,
+      "updated": 1765375617,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2251119,
+      "name": "14370_ControlFunctionsSearchPlatform",
+      "userId": 2466289,
+      "created": 1763738546,
+      "updated": 1767801489,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2239553,
+      "name": "14426_X-iSeries-Mexico",
+      "userId": 2466289,
+      "created": 1758736871,
+      "updated": 1768494192,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2253414,
+      "name": "14441_CloudLab",
+      "userId": 2466289,
+      "created": 1764860193,
+      "updated": 1764860243,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2261101,
+      "name": "14446_CallCenterOutsourcingPortfoli-Mexico",
+      "userId": 2466289,
+      "created": 1770261838,
+      "updated": 1770261947,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2266718,
+      "name": "14604_Simplified Coverage Page (SCP)",
+      "userId": 2466289,
+      "created": 1775129182,
+      "updated": 1775129275,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2261503,
+      "name": "14647_RIS UKL Quoting Portal",
+      "userId": 2466289,
+      "created": 1770645574,
+      "updated": 1770645617,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2152443,
+      "name": "1485_MyBenefits Admin",
+      "userId": 2466289,
+      "created": 1733258570,
+      "updated": 1770219519,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139185,
+      "name": "1662_Life - Statement of Health (StarTrak)",
+      "userId": 2466289,
+      "created": 1729883069,
+      "updated": 1774353860,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140110,
+      "name": "1668_EZ Service Portal",
+      "userId": 2466289,
+      "created": 1730139590,
+      "updated": 1761684135,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2178643,
+      "name": "1713_Unified Inforce System (UIS)",
+      "userId": 2466289,
+      "created": 1740407790,
+      "updated": 1761684044,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2152447,
+      "name": "1726_MetLife Legal Plans(MLP)",
+      "userId": 2466289,
+      "created": 1733258693,
+      "updated": 1747315704,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139189,
+      "name": "1744_Web Services Interface(HWSI)",
+      "userId": 2466289,
+      "created": 1729884163,
+      "updated": 1774375060,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2152445,
+      "name": "1745_Group Life Web Site Admin",
+      "userId": 2466289,
+      "created": 1733258619,
+      "updated": 1754666009,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139191,
+      "name": "1748_Mybenefits",
+      "userId": 2466289,
+      "created": 1729884214,
+      "updated": 1754666025,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140102,
+      "name": "1750_MetDental",
+      "userId": 2466289,
+      "created": 1730139147,
+      "updated": 1774375023,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2170523,
+      "name": "1753_WebSOH (Web Statement of Health)",
+      "userId": 2466289,
+      "created": 1738252089,
+      "updated": 1754666041,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2196158,
+      "name": "1754_Group Life Web Site",
+      "userId": 2466289,
+      "created": 1744920037,
+      "updated": 1747315744,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2196170,
+      "name": "1754_Group Life Web Site(Duplicate)",
+      "userId": 2466289,
+      "created": 1744922584,
+      "updated": 1749679456,
+      "enabled": false,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2261500,
+      "name": "1902_Reservas RV-Chile",
+      "userId": 2466289,
+      "created": 1770645195,
+      "updated": 1770645373,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2183767,
+      "name": "1996_Provida-Mexico",
+      "userId": 2466289,
+      "created": 1741716693,
+      "updated": 1767887845,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140111,
+      "name": "2393_BOBR Liberty Migration",
+      "userId": 2466289,
+      "created": 1730139596,
+      "updated": 1730908511,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139192,
+      "name": "2452_Business Office Service Solution(BOSS)",
+      "userId": 2466289,
+      "created": 1729884221,
+      "updated": 1768317461,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140112,
+      "name": "2468_Consolidated Disbursements Init(CDI)",
+      "userId": 2466289,
+      "created": 1730139605,
+      "updated": 1733777570,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140113,
+      "name": "2903_Enterprise Funds Admin (EFA)",
+      "userId": 2466289,
+      "created": 1730139649,
+      "updated": 1730908515,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140114,
+      "name": "2924_New Debit Authorization System(MIDAS)",
+      "userId": 2466289,
+      "created": 1730139657,
+      "updated": 1762964275,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2196148,
+      "name": "2942_Individual Business Security and Entitlements",
+      "userId": 2466289,
+      "created": 1744918840,
+      "updated": 1747315749,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2199408,
+      "name": "4340_AGENCY OFFICE CASHIERING (AOC)",
+      "userId": 2466289,
+      "created": 1745844997,
+      "updated": 1745849651,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140103,
+      "name": "4400_SmartApp",
+      "userId": 2466289,
+      "created": 1730139165,
+      "updated": 1730908406,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139193,
+      "name": "5089_Metlink Employer",
+      "userId": 2466289,
+      "created": 1729884229,
+      "updated": 1754666057,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2228768,
+      "name": "5591_Payroll Deduction System (PDS)",
+      "userId": 2466289,
+      "created": 1753902820,
+      "updated": 1761684021,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139194,
+      "name": "5629_Service Problem And Resolution Communication(iSparc)",
+      "userId": 2466289,
+      "created": 1729884236,
+      "updated": 1733777644,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140115,
+      "name": "5639_Pensions Work Bench (API)",
+      "userId": 2466289,
+      "created": 1730139688,
+      "updated": 1730908518,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140104,
+      "name": "5646_Enterprise Accounting System(EAS)",
+      "userId": 2466289,
+      "created": 1730139171,
+      "updated": 1761683930,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140105,
+      "name": "6525_Disability Process Automation",
+      "userId": 2466289,
+      "created": 1730139179,
+      "updated": 1754665396,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140116,
+      "name": "6546_Underwriting Platform(IMPAQS)",
+      "userId": 2466289,
+      "created": 1730139695,
+      "updated": 1761683916,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2196149,
+      "name": "6664_Common eServices - Webservices",
+      "userId": 2466289,
+      "created": 1744918852,
+      "updated": 1747315752,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2239991,
+      "name": "6794_IDS Acords",
+      "userId": 2466289,
+      "created": 1758899625,
+      "updated": 1759178052,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2223956,
+      "name": "6896_Docucorp_MetPAC Plus",
+      "userId": 2466289,
+      "created": 1752168078,
+      "updated": 1761683901,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2253413,
+      "name": "6908_ContentDistributionHub(CDH)",
+      "userId": 2466289,
+      "created": 1764860062,
+      "updated": 1766158997,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2181754,
+      "name": "6981_Portal Individual Policies-Mexico",
+      "userId": 2466289,
+      "created": 1741203274,
+      "updated": 1768253595,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139195,
+      "name": "7184_Workflow and Imaging Now(WinWeb)",
+      "userId": 2466289,
+      "created": 1729884242,
+      "updated": 1744288491,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2196150,
+      "name": "7257_Profile DB Applications and Services",
+      "userId": 2466289,
+      "created": 1744918864,
+      "updated": 1747315754,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140118,
+      "name": "7286_Archer Smart Suite",
+      "userId": 2466289,
+      "created": 1730139704,
+      "updated": 1730908523,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140119,
+      "name": "7351_Absence Management",
+      "userId": 2466289,
+      "created": 1730139714,
+      "updated": 1761932616,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2234108,
+      "name": "7538_AgentsAdministrationSystem-Mexico ",
+      "userId": 2466289,
+      "created": 1756327348,
+      "updated": 1768494215,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139196,
+      "name": "7573_Retail Messaging Services",
+      "userId": 2466289,
+      "created": 1729884251,
+      "updated": 1774874948,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2182409,
+      "name": "7966_Enterprise Integration Platform",
+      "userId": 2466289,
+      "created": 1741361403,
+      "updated": 1770218643,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139197,
+      "name": "7970_Global Product System(GPS)",
+      "userId": 2466289,
+      "created": 1729884257,
+      "updated": 1764690389,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2196151,
+      "name": "7981_Total Absence Mgmt Web App for Employee Employer",
+      "userId": 2466289,
+      "created": 1744918873,
+      "updated": 1747315759,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2152058,
+      "name": "8058_V3 Benefits Administration System (ACE)",
+      "userId": 2466289,
+      "created": 1733172392,
+      "updated": 1774622525,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2140120,
+      "name": "8112_MetLife Check Processing Application(Metcheck)",
+      "userId": 2466289,
+      "created": 1730139720,
+      "updated": 1747315722,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2170527,
+      "name": "8167_eDpm (eDelivery Preference Management)",
+      "userId": 2466289,
+      "created": 1738252247,
+      "updated": 1774374956,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139198,
+      "name": "8244_GVWB Messaging",
+      "userId": 2466289,
+      "created": 1729884265,
+      "updated": 1768317367,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139199,
+      "name": "8911_MetOnline Portal",
+      "userId": 2466289,
+      "created": 1729884342,
+      "updated": 1747315727,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2235781,
+      "name": "8927_EMC xPressions",
+      "userId": 2466289,
+      "created": 1757080126,
+      "updated": 1757081066,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139200,
+      "name": "9365_Research Wall(RWall)",
+      "userId": 2466289,
+      "created": 1729884349,
+      "updated": 1766158210,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2231512,
+      "name": "9482_Portal Clientes Privado(Chile)",
+      "userId": 2466289,
+      "created": 1755101310,
+      "updated": 1763559683,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2211058,
+      "name": "9658_Comprobante Fiscal Digital",
+      "userId": 2466289,
+      "created": 1749050870,
+      "updated": 1749664348,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2244504,
+      "name": "9691_MMSECL",
+      "userId": 2466289,
+      "created": 1761161464,
+      "updated": 1761161537,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2139201,
+      "name": "9768_Metlife Automated Renewal System(MARS)",
+      "userId": 2466289,
+      "created": 1729884369,
+      "updated": 1761683868,
+      "enabled": true,
+      "dedicatedIpsEnabled": true,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2073236,
+      "name": "Admin_WS",
+      "userId": 2466289,
+      "created": 1716924246,
+      "updated": 1761058152,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2255765,
+      "name": "ExecutionGrid_POC_Asia",
+      "userId": 2466289,
+      "created": 1766058883,
+      "updated": 1773670955,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2138424,
+      "name": "SVL_MockServices",
+      "userId": 2466289,
+      "created": 1729701345,
+      "updated": 1775071134,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2035507,
+      "name": "Training_Workspace",
+      "userId": 2466289,
+      "created": 1711127067,
+      "updated": 1775482821,
+      "enabled": true,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": true,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2073235,
+      "name": "Workspace-Public",
+      "userId": 2466289,
+      "created": 1716924152,
+      "updated": 1727908101,
+      "enabled": false,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": false,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    },
+    {
+      "id": 2262649,
+      "name": "oneTest",
+      "userId": 2466289,
+      "created": 1771448911,
+      "updated": 1771448989,
+      "enabled": false,
+      "dedicatedIpsEnabled": false,
+      "privateLocationsEnabled": false,
+      "owner": {
+        "id": 2466289,
+        "email": "rajesh.nichenametla1@metlife.com",
+        "displayName": "RAJESH NICHENAMETLA"
+      },
+      "accountId": 1961586
+    }
+  ],
+  "request_id": "69d68c3880103",
+  "cached": false,
+  "limit": 300,
+  "skip": 0,
+  "total": 176,
+  "hidden": 0
+}

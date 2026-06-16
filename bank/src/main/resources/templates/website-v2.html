@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><head>
+
+<script>
+if (!sessionStorage.getItem('loggedIn')) {
+  if (window.location.pathname.indexOf('login.html') === -1) {
+    window.location.href = 'login.html';
+  }
+}
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Company Website</title><link rel="stylesheet" href="styles-v2.css"></head><body><div class="app-shell"><main class="phone"><section class="screen">
+<div class="top-status">
+  <div>9:41</div>
+  <div class="top-right">
+    <div class="icon-dot"><span></span><span></span><span></span><span></span></div>
+    <div class="icon-wifi"></div>
+    <div class="icon-cell"></div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-left">
+    <button class="circle-btn" aria-label="Back" onclick="location.href='business-v2.html'">&#8592;</button>
+  </div>
+  <button class="info-btn" aria-label="Information">i</button>
+</div>
+
+<div class="progress"><div style="width:22%"></div></div>
+<h2 class="hero-title" style="font-size:22px">Company Website</h2>
+<p class="subtext">This could be your business page on a website like Facebook, Instagram, eBay, or LinkedIn.</p>
+<div class="input-label">Website URL</div>
+<input class="text-input" data-testid="website-input" value="https://www.examplebusiness.co.uk" />
+<button class="btn mt-24" data-testid="website-continue" onclick="location.href='activity-v2.html'">Continue</button>
+</section></main></div></body></html>

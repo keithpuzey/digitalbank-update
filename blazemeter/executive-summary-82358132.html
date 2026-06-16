@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BlazeMeter Executive Summary — Master 82358132</title>
+  <style>
+    :root {
+      --primary: #1a2b4a;
+      --accent:  #e85d2f;
+      --green:   #27ae60;
+      --yellow:  #f39c12;
+      --red:     #c0392b;
+      --gray:    #7f8c8d;
+      --bg:      #f5f7fa;
+      --card:    #ffffff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: #2c3e50; }
+
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    header h1 { font-size: 1.7rem; font-weight: 700; margin-bottom: 4px; }
+    header .sub { font-size: 0.9rem; opacity: 0.75; }
+    header .badge {
+      background: #e8e8e8;
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .badge.unset { background: #f0ad4e; color: #fff; }
+
+    main { max-width: 1200px; margin: 0 auto; padding: 32px 24px 64px; }
+
+    .section-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gray);
+      margin-bottom: 12px;
+      margin-top: 36px;
+    }
+
+    /* KPI cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+    .kpi {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 20px 22px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      border-left: 4px solid var(--primary);
+    }
+    .kpi.green  { border-color: var(--green);  }
+    .kpi.yellow { border-color: var(--yellow); }
+    .kpi.red    { border-color: var(--red);    }
+    .kpi .label { font-size: 0.76rem; color: var(--gray); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .kpi .value { font-size: 1.8rem; font-weight: 700; line-height: 1; }
+    .kpi .unit  { font-size: 0.75rem; color: var(--gray); margin-top: 4px; }
+
+    /* Tables */
+    .card {
+      background: var(--card);
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    thead th {
+      background: var(--primary);
+      color: #fff;
+      padding: 11px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+    }
+    tbody tr:nth-child(even) { background: #fafbfc; }
+    tbody td { padding: 10px 14px; vertical-align: middle; border-bottom: 1px solid #edf0f2; }
+    tbody tr:last-child td { border-bottom: none; }
+    .right { text-align: right; }
+    .center { text-align: center; }
+
+    .pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .pill.ok   { background: #d5f5e3; color: var(--green);  }
+    .pill.warn { background: #fef9e7; color: var(--yellow); }
+    .pill.fail { background: #fadbd8; color: var(--red);    }
+    .pill.crit { background: #922b21; color: #fff;          }
+
+    /* Errors table */
+    .err-name { font-weight: 600; color: var(--primary); }
+    .url-cell { font-family: monospace; font-size: 0.78rem; word-break: break-all; color: #555; }
+
+    /* Info grid */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .info-item {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    }
+    .info-item .il { font-size: 0.75rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+    .info-item .iv { font-size: 0.95rem; font-weight: 600; }
+
+    footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--gray);
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid #e0e4e8;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="sub">BlazeMeter Performance Test — Executive Summary</div>
+    <h1>RTM_FIFAWC1_MultiTest_Embedded — 200k Users</h1>
+    <div class="sub" style="margin-top:6px;">
+      Master ID: 82358132 &nbsp;|&nbsp;
+      <a href="https://a.blazemeter.com/app/#/masters/82358132" style="color:#aad4f5;" target="_blank">View in BlazeMeter ↗</a>
+    </div>
+  </div>
+  <div>
+    <span class="badge unset">STATUS: UNSET (No Pass/Fail Criteria)</span>
+    <div class="sub" style="margin-top:8px; text-align:right;">Report generated: June 10, 2026</div>
+  </div>
+</header>
+
+<main>
+
+  <!-- TEST METADATA -->
+  <div class="section-title">Test Metadata</div>
+  <div class="info-grid">
+    <div class="info-item"><div class="il">Test Name</div><div class="iv">RTM_FIFAWC1_MultiTest_Embedded — 200k Users</div></div>
+    <div class="info-item"><div class="il">Execution ID</div><div class="iv">82358132</div></div>
+    <div class="info-item"><div class="il">Project ID</div><div class="iv">2601934</div></div>
+    <div class="info-item"><div class="il">Test Start</div><div class="iv">June 9, 2026 &nbsp;19:10:57 UTC</div></div>
+    <div class="info-item"><div class="il">Test End</div><div class="iv">June 9, 2026 &nbsp;20:19:30 UTC</div></div>
+    <div class="info-item"><div class="il">Active Test Duration</div><div class="iv">26 min 35 sec (1,595 s)</div></div>
+    <div class="info-item"><div class="il">Target Virtual Users</div><div class="iv">200,000</div></div>
+    <div class="info-item"><div class="il">Peak Virtual Users Achieved</div><div class="iv">192,204 (96.1% of target)</div></div>
+  </div>
+
+  <!-- TOP-LINE KPIs -->
+  <div class="section-title">Overall Performance (ALL Transactions)</div>
+  <div class="kpi-grid">
+    <div class="kpi green">
+      <div class="label">Total Requests</div>
+      <div class="value">451.5M</div>
+      <div class="unit">451,472,843 hits</div>
+    </div>
+    <div class="kpi green">
+      <div class="label">Avg Throughput</div>
+      <div class="value">283K</div>
+      <div class="unit">req/s sustained</div>
+    </div>
+    <div class="kpi green">
+      <div class="label">Overall Error Rate</div>
+      <div class="value">0.027%</div>
+      <div class="unit">119,944 failed requests</div>
+    </div>
+    <div class="kpi green">
+      <div class="label">Avg Response Time</div>
+      <div class="value">11.6ms</div>
+      <div class="unit">all transactions</div>
+    </div>
+    <div class="kpi green">
+      <div class="label">P90 Response Time</div>
+      <div class="value">3ms</div>
+      <div class="unit">driven by HLS volume</div>
+    </div>
+    <div class="kpi">
+      <div class="label">P99 Response Time</div>
+      <div class="value">20ms</div>
+      <div class="unit">overall</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Max Response Time</div>
+      <div class="value">62.3s</div>
+      <div class="unit">login flow outlier</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Total Data Transferred</div>
+      <div class="value">~11 TB</div>
+      <div class="unit">10,959 GB transferred</div>
+    </div>
+  </div>
+
+  <!-- TRANSACTION BREAKDOWN -->
+  <div class="section-title">Transaction-Level Performance Breakdown</div>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Transaction / Label</th>
+          <th class="right">Samples</th>
+          <th class="right">Avg RT (ms)</th>
+          <th class="right">P90 (ms)</th>
+          <th class="right">P95 (ms)</th>
+          <th class="right">P99 (ms)</th>
+          <th class="right">Max RT (ms)</th>
+          <th class="right">Errors</th>
+          <th class="right">Error Rate</th>
+          <th class="center">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Homepage</strong></td>
+          <td class="right">200,000</td>
+          <td class="right">172.8</td>
+          <td class="right">211</td>
+          <td class="right">244</td>
+          <td class="right">428</td>
+          <td class="right">3,127</td>
+          <td class="right">0</td>
+          <td class="right">0.000%</td>
+          <td class="center"><span class="pill ok">PASS</span></td>
+        </tr>
+        <tr>
+          <td><strong>Click_FIFAWC1_StreamingLink</strong></td>
+          <td class="right">200,000</td>
+          <td class="right">821.6</td>
+          <td class="right">197</td>
+          <td class="right">4,815</td>
+          <td class="right">18,943</td>
+          <td class="right">27,247</td>
+          <td class="right">7,181</td>
+          <td class="right">3.59%</td>
+          <td class="center"><span class="pill warn">WARN</span></td>
+        </tr>
+        <tr>
+          <td><strong>Click_LoginLink</strong></td>
+          <td class="right">60,000</td>
+          <td class="right">17,841.6</td>
+          <td class="right">30,511</td>
+          <td class="right">30,543</td>
+          <td class="right">32,063</td>
+          <td class="right">34,719</td>
+          <td class="right">56,229</td>
+          <td class="right">93.72%</td>
+          <td class="center"><span class="pill crit">CRITICAL</span></td>
+        </tr>
+        <tr>
+          <td><strong>EnterUserDetails_ClickLogin</strong></td>
+          <td class="right">60,000</td>
+          <td class="right">45,779.2</td>
+          <td class="right">60,319</td>
+          <td class="right">60,319</td>
+          <td class="right">60,415</td>
+          <td class="right">62,303</td>
+          <td class="right">50,621</td>
+          <td class="right">84.37%</td>
+          <td class="center"><span class="pill crit">CRITICAL</span></td>
+        </tr>
+        <tr>
+          <td>HLS Sampler — Master Playlist</td>
+          <td class="right">192,819</td>
+          <td class="right">6.8</td>
+          <td class="right">8</td>
+          <td class="right">9</td>
+          <td class="right">12</td>
+          <td class="right">4,727</td>
+          <td class="right">2</td>
+          <td class="right">0.001%</td>
+          <td class="center"><span class="pill ok">PASS</span></td>
+        </tr>
+        <tr>
+          <td>HLS Sampler — Audio Playlist</td>
+          <td class="right">105,296,062</td>
+          <td class="right">2.1</td>
+          <td class="right">3</td>
+          <td class="right">3</td>
+          <td class="right">7</td>
+          <td class="right">9,999</td>
+          <td class="right">1,070</td>
+          <td class="right">0.001%</td>
+          <td class="center"><span class="pill ok">PASS</span></td>
+        </tr>
+        <tr>
+          <td>HLS Sampler — Media Playlist</td>
+          <td class="right">115,231,719</td>
+          <td class="right">2.3</td>
+          <td class="right">3</td>
+          <td class="right">4</td>
+          <td class="right">10</td>
+          <td class="right">10,007</td>
+          <td class="right">1,520</td>
+          <td class="right">0.001%</td>
+          <td class="center"><span class="pill ok">PASS</span></td>
+        </tr>
+        <tr>
+          <td>HLS Sampler — Media Segment</td>
+          <td class="right">115,020,671</td>
+          <td class="right">4.0</td>
+          <td class="right">3</td>
+          <td class="right">4</td>
+          <td class="right">89</td>
+          <td class="right">9,999</td>
+          <td class="right">1,866</td>
+          <td class="right">0.002%</td>
+          <td class="center"><span class="pill ok">PASS</span></td>
+        </tr>
+        <tr>
+          <td>HLS Sampler — Audio Segment</td>
+          <td class="right">115,211,572</td>
+          <td class="right">2.2</td>
+          <td class="right">3</td>
+          <td class="right">3</td>
+          <td class="right">7</td>
+          <td class="right">9,999</td>
+          <td class="right">1,455</td>
+          <td class="right">0.001%</td>
+          <td class="center"><span class="pill ok">PASS</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ERROR ANALYSIS -->
+  <div class="section-title">Error Analysis</div>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Transaction</th>
+          <th class="right">Error Count</th>
+          <th>HTTP Code</th>
+          <th>Error Message</th>
+          <th>Affected Endpoint</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="err-name">Click_LoginLink</td>
+          <td class="right">42,081</td>
+          <td><span class="pill fail">504</span></td>
+          <td>Gateway Timeout (14-step transaction)</td>
+          <td class="url-cell">rtmklik.rtm.gov.my/login</td>
+        </tr>
+        <tr>
+          <td class="err-name">Click_LoginLink</td>
+          <td class="right">14,152</td>
+          <td><span class="pill fail">503</span></td>
+          <td>Service Unavailable (14-step transaction)</td>
+          <td class="url-cell">rtmklik.rtm.gov.my/login</td>
+        </tr>
+        <tr>
+          <td class="err-name">EnterUserDetails_ClickLogin</td>
+          <td class="right">37,754</td>
+          <td><span class="pill fail">504</span></td>
+          <td>Gateway Timeout (5-step transaction, 2 failing)</td>
+          <td class="url-cell">rtmklik.rtm.gov.my/background</td>
+        </tr>
+        <tr>
+          <td class="err-name">EnterUserDetails_ClickLogin</td>
+          <td class="right">9,469</td>
+          <td><span class="pill fail">504</span></td>
+          <td>Gateway Timeout (5-step transaction, 1 failing)</td>
+          <td class="url-cell">rtmklik.rtm.gov.my/background</td>
+        </tr>
+        <tr>
+          <td class="err-name">EnterUserDetails_ClickLogin</td>
+          <td class="right">1,847 + 1,329</td>
+          <td><span class="pill warn">503</span></td>
+          <td>Service Temporarily Unavailable</td>
+          <td class="url-cell">rtmklik.rtm.gov.my/background</td>
+        </tr>
+        <tr>
+          <td class="err-name">Click_FIFAWC1_StreamingLink</td>
+          <td class="right">7,193</td>
+          <td><span class="pill fail">500</span></td>
+          <td>Internal Server Error (4-step transaction)</td>
+          <td class="url-cell">rtm.glueapi.io/v3/content/35272</td>
+        </tr>
+        <tr>
+          <td class="err-name">HLS Media Segment</td>
+          <td class="right">1,866</td>
+          <td><span class="pill warn">503</span></td>
+          <td>Service Temporarily Unavailable</td>
+          <td class="url-cell">d30aylox5wvifh.cloudfront.net (HLS .m4s segments)</td>
+        </tr>
+        <tr>
+          <td class="err-name">HLS Audio Playlist</td>
+          <td class="right">1,070</td>
+          <td><span class="pill warn">503</span></td>
+          <td>Service Temporarily Unavailable</td>
+          <td class="url-cell">d30aylox5wvifh.cloudfront.net (audio .m3u8)</td>
+        </tr>
+        <tr>
+          <td class="err-name">HLS Media Playlist</td>
+          <td class="right">1,520</td>
+          <td><span class="pill warn">503</span></td>
+          <td>Service Temporarily Unavailable</td>
+          <td class="url-cell">d30aylox5wvifh.cloudfront.net (media .m3u8)</td>
+        </tr>
+        <tr>
+          <td class="err-name">HLS Master Playlist</td>
+          <td class="right">2</td>
+          <td><span class="pill warn">503</span></td>
+          <td>Service Temporarily Unavailable</td>
+          <td class="url-cell">d30aylox5wvifh.cloudfront.net/live/media0/wc1/HLS/wc1.m3u8</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- KEY FINDINGS -->
+  <div class="section-title">Key Findings &amp; Recommendations</div>
+  <div class="card" style="padding: 24px 28px;">
+
+    <h3 style="color:var(--green); margin-bottom:10px;">✅ Strengths</h3>
+    <ul style="line-height:1.9; padding-left: 20px; margin-bottom:20px; font-size:0.92rem;">
+      <li><strong>Live Streaming (HLS) Infrastructure — Excellent.</strong> All five HLS samplers (master playlist, audio/media playlists, audio/media segments) achieved sub-5ms average response times and error rates &lt;0.002%, even at 192,000+ concurrent users simultaneously fetching ~350K HLS segment requests per second.</li>
+      <li><strong>Homepage Performance — Outstanding.</strong> The landing page served 200,000 users with 0 errors. P99 latency of 428ms is well within acceptable thresholds.</li>
+      <li><strong>CloudFront CDN Resilience.</strong> The CDN layer (d30aylox5wvifh.cloudfront.net) handled massive HLS media load (~11 TB transferred) with near-perfect reliability.</li>
+      <li><strong>Scale Achieved.</strong> 192,204 peak concurrent virtual users — 96.1% of the 200,000 user target — were successfully ramped up and sustained for the test duration.</li>
+    </ul>
+
+    <h3 style="color:var(--red); margin-bottom:10px;">❌ Critical Issues</h3>
+    <ul style="line-height:1.9; padding-left: 20px; margin-bottom:20px; font-size:0.92rem;">
+      <li>
+        <strong>Authentication / Login Flow — Complete Failure at Scale.</strong><br/>
+        <em>Click_LoginLink</em>: 93.72% error rate (56,229 / 60,000 requests failed) with avg response time of 17.8 seconds and P90 of 30.5 seconds — indicating the login endpoint (rtmklik.rtm.gov.my/login) is completely overwhelmed. Errors are 503 (Service Unavailable) and 504 (Gateway Timeout).<br/>
+        <em>EnterUserDetails_ClickLogin</em>: 84.37% error rate (50,621 / 60,000 requests failed) with avg response time of 45.8 seconds and P90 at timeout (60.3 seconds). These are 5-step transactions timing out.
+      </li>
+      <li>
+        <strong>Authentication backend capacity is the primary bottleneck.</strong> The login path fails catastrophically before the test even simulates full streaming load for authenticated users. This needs urgent attention before any live event.
+      </li>
+    </ul>
+
+    <h3 style="color:var(--yellow); margin-bottom:10px;">⚠️ Warnings</h3>
+    <ul style="line-height:1.9; padding-left: 20px; font-size:0.92rem;">
+      <li>
+        <strong>Content API (rtm.glueapi.io) — HTTP 500 Errors.</strong> 7,193 errors (3.59%) on the streaming link click hit rtm.glueapi.io/v3/content/35272 with HTTP 500. This is the API that serves streaming content metadata. While the error rate is low, any content API failure prevents users from reaching the stream.
+      </li>
+      <li>
+        <strong>Peak VU Shortfall.</strong> The test targeted 200,000 VUs but reached 192,204 (a deficit of 7,796 users). This may indicate engine capacity limits and should be validated before production load events.
+      </li>
+      <li>
+        <strong>High Std Dev on ALL.</strong> The overall standard deviation of 628ms against a 11.6ms mean reflects the wide variance between HLS streaming (2-4ms) and the login flow (45,000ms). The HLS infrastructure is healthy; the login system is not.
+      </li>
+    </ul>
+  </div>
+
+  <!-- EXECUTIVE VERDICT -->
+  <div class="section-title">Executive Verdict</div>
+  <div class="card" style="padding: 24px 28px; border-left: 5px solid var(--accent);">
+    <p style="font-size:1.05rem; line-height:1.75;">
+      The <strong>live streaming infrastructure (HLS via CloudFront)</strong> is <strong>production-ready at 200,000 concurrent users</strong>, demonstrating sub-5ms streaming response times and &lt;0.002% error rates across 435+ million HLS requests and ~11 TB of data served.
+    </p>
+    <p style="font-size:1.05rem; line-height:1.75; margin-top:14px;">
+      However, the <strong>authentication and login system is a critical blocker</strong>. With 84–94% failure rates on login transactions, authenticated user flows will fail at scale. This must be resolved — through horizontal scaling of the auth backend, rate limiting tuning, session management optimization, or infrastructure upgrades — <em>before any live broadcast event</em>.
+    </p>
+    <p style="font-size:1.05rem; line-height:1.75; margin-top:14px;">
+      Additionally, the <strong>content API (rtm.glueapi.io)</strong> should be reviewed to resolve the 3.59% HTTP 500 rate on streaming link resolution.
+    </p>
+    <table style="margin-top:20px; width:auto; font-size:0.9rem;">
+      <thead>
+        <tr>
+          <th style="padding:8px 14px;">System Component</th>
+          <th style="padding:8px 14px;">Readiness at 200K Users</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:8px 14px;">HLS Live Streaming (CDN)</td><td style="padding:8px 14px;"><span class="pill ok">READY</span></td></tr>
+        <tr><td style="padding:8px 14px;">Homepage / Public Access</td><td style="padding:8px 14px;"><span class="pill ok">READY</span></td></tr>
+        <tr><td style="padding:8px 14px;">Content Metadata API</td><td style="padding:8px 14px;"><span class="pill warn">NEEDS REVIEW</span></td></tr>
+        <tr><td style="padding:8px 14px;">Login / Authentication</td><td style="padding:8px 14px;"><span class="pill crit">NOT READY</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer>
+  BlazeMeter Executive Summary &mdash; Master ID 82358132 &mdash; RTM FIFA WC1 MultiTest &mdash; Generated June 10, 2026 by Keith Puzey (kpuzey@perforce.com)
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><head>
+
+<script>
+if (!sessionStorage.getItem('loggedIn')) {
+  if (window.location.pathname.indexOf('login.html') === -1) {
+    window.location.href = 'login.html';
+  }
+}
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Tell us about your business</title><link rel="stylesheet" href="styles-v2.css"></head><body><div class="app-shell"><main class="phone"><section class="screen">
+<div class="top-status">
+  <div>9:41</div>
+  <div class="top-right">
+    <div class="icon-dot"><span></span><span></span><span></span><span></span></div>
+    <div class="icon-wifi"></div>
+    <div class="icon-cell"></div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-left">
+    <button class="circle-btn" aria-label="Back" onclick="location.href='index.html'">&#8592;</button>
+  </div>
+  <button class="info-btn" aria-label="Information">i</button>
+</div>
+
+<div class="progress"><div style="width:12%"></div></div>
+<div class="phone-frame" aria-hidden="true">
+  <svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="7" y="10" width="61" height="55" rx="10" fill="#ffffff" stroke="#2F60BF"/>
+    <circle cx="25" cy="29" r="8" fill="#eef2ff" stroke="#2F60BF"/>
+    <circle cx="50" cy="29" r="8" fill="#eef2ff" stroke="#2F60BF"/>
+    <rect x="18" y="43" width="39" height="10" rx="5" fill="#2F60BF" opacity=".16"/>
+  </svg>
+</div>
+<h1 class="hero-title center">Tell us about your business</h1>
+<p class="subtext center">We ask these questions to understand how you'll use your account.</p>
+<div class="step-list">
+  <div class="step-item"><div class="left"><span class="step-dot"></span><span>Your bank connected</span></div></div>
+  <div class="step-item"><div class="left"><span class="step-dot active"></span><span>Business Activity</span></div><span class="helper">Up next</span></div>
+  <div class="step-item"><div class="left"><span class="step-dot"></span><span>Confirm your plan</span></div></div>
+</div>
+<button class="btn" data-testid="business-continue" onclick="location.href='website-v2.html'">Continue</button>
+</section></main></div></body></html>

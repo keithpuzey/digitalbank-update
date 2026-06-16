@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Performance Testing — Executive Briefing</title>
+<style>
+  :root {
+    --blue:    #0057B8;
+    --blue-lt: #E8F0FB;
+    --teal:    #007B8A;
+    --green:   #1D8348;
+    --orange:  #D97706;
+    --red:     #C0392B;
+    --grey:    #F4F6F8;
+    --border:  #D0D7DE;
+    --text:    #1A202C;
+    --muted:   #6B7280;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--text); background: #fff; }
+
+  /* Header */
+  .header { background: var(--blue); color: #fff; padding: 40px 48px 32px; }
+  .header .brand { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; opacity: .7; margin-bottom: 8px; }
+  .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+  .header .sub { font-size: 15px; opacity: .85; }
+  .header .meta { margin-top: 20px; font-size: 13px; opacity: .7; display: flex; gap: 32px; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 48px 60px; }
+  section { margin-bottom: 48px; }
+  h2 { font-size: 18px; font-weight: 700; color: var(--blue); border-bottom: 2px solid var(--blue-lt); padding-bottom: 8px; margin-bottom: 20px; }
+  h3 { font-size: 14px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px; }
+
+  /* KPI cards */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .kpi { background: var(--grey); border: 1px solid var(--border); border-radius: 10px; padding: 20px 22px; }
+  .kpi .val { font-size: 32px; font-weight: 800; color: var(--blue); line-height: 1.1; }
+  .kpi .label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .kpi .delta { font-size: 12px; margin-top: 8px; color: var(--green); font-weight: 600; }
+
+  /* Chart bars */
+  .bar-chart { display: flex; flex-direction: column; gap: 10px; }
+  .bar-row { display: flex; align-items: center; gap: 12px; }
+  .bar-label { width: 270px; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0; }
+  .bar-track { flex: 1; background: var(--grey); border-radius: 4px; height: 22px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; background: var(--blue); display: flex; align-items: center; padding-left: 8px; }
+  .bar-fill span { font-size: 11px; color: #fff; font-weight: 600; white-space: nowrap; }
+  .bar-fill.teal { background: var(--teal); }
+  .bar-count { width: 55px; font-size: 12px; color: var(--muted); text-align: right; flex-shrink: 0; }
+
+  /* Monthly trend table */
+  .trend-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+  .month-card { background: var(--grey); border: 1px solid var(--border); border-radius: 8px; padding: 14px 12px; text-align: center; }
+  .month-card .month { font-size: 12px; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+  .month-card .tests { font-size: 22px; font-weight: 800; color: var(--text); }
+  .month-card .vus { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .month-card.highlight { background: var(--blue-lt); border-color: var(--blue); }
+
+  /* Mini chart */
+  .sparkline { display: flex; align-items: flex-end; gap: 4px; height: 60px; margin-top: 4px; }
+  .spark-bar { flex: 1; background: var(--blue); border-radius: 2px 2px 0 0; opacity: .8; }
+  .spark-bar:hover { opacity: 1; }
+
+  /* Two columns */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead tr { background: var(--blue); color: #fff; }
+  thead th { padding: 10px 14px; text-align: left; font-weight: 600; }
+  tbody tr:nth-child(even) { background: var(--grey); }
+  tbody td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+  tbody tr:hover { background: var(--blue-lt); }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .badge-blue { background: var(--blue-lt); color: var(--blue); }
+  .badge-teal { background: #E0F4F6; color: var(--teal); }
+
+  /* Highlight strip */
+  .callout { background: var(--blue-lt); border-left: 4px solid var(--blue); border-radius: 0 8px 8px 0; padding: 16px 20px; font-size: 14px; margin-bottom: 20px; }
+  .callout strong { color: var(--blue); }
+
+  /* Footer */
+  footer { border-top: 1px solid var(--border); padding: 24px 48px; margin-top: 0; font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brand">BlazeMeter Performance Testing Platform</div>
+  <h1>Executive Briefing — Platform Usage Report</h1>
+  <div class="sub">Account: MetLife Global (ID 1961586) &nbsp;|&nbsp; Period: October 2025 – April 2026</div>
+  <div class="meta">
+    <span>Report generated: 8 April 2026</span>
+    <span>Source: BlazeMeter API export</span>
+    <span>Scope: All workspaces, all test types</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- KPIs -->
+  <section>
+    <h2>Key Metrics at a Glance</h2>
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="val">6,335</div>
+        <div class="label">Total Test Executions</div>
+        <div class="delta">7 months of activity</div>
+      </div>
+      <div class="kpi">
+        <div class="val">381K</div>
+        <div class="label">Total Virtual Users Simulated</div>
+        <div class="delta">Peak: 10,000 VUs single test</div>
+      </div>
+      <div class="kpi">
+        <div class="val">104</div>
+        <div class="label">Active Workspaces / Projects</div>
+        <div class="delta">81 individual testers</div>
+      </div>
+      <div class="kpi">
+        <div class="val">7.0 hrs</div>
+        <div class="label">Average Test Duration</div>
+        <div class="delta">Longest: 24 hrs (endurance)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Monthly trend -->
+  <section>
+    <h2>Monthly Activity Trend</h2>
+    <div class="callout">
+      <strong>October 2025</strong> was the peak month with <strong>1,361 executions</strong>, followed by a seasonal dip in Jan–Feb 2026, then a strong rebound to <strong>1,172 tests in March 2026</strong>. April 2026 is on track with 279 tests in the first 8 days.
+    </div>
+    <div class="trend-grid">
+      <div class="month-card highlight">
+        <div class="month">OCT 25</div>
+        <div class="tests">1,361</div>
+        <div class="vus">82,159 VUs</div>
+        <div class="sparkline"><div class="spark-bar" style="height:100%"></div></div>
+      </div>
+      <div class="month-card">
+        <div class="month">NOV 25</div>
+        <div class="tests">972</div>
+        <div class="vus">66,528 VUs</div>
+        <div class="sparkline"><div class="spark-bar" style="height:71%"></div></div>
+      </div>
+      <div class="month-card">
+        <div class="month">DEC 25</div>
+        <div class="tests">1,009</div>
+        <div class="vus">63,930 VUs</div>
+        <div class="sparkline"><div class="spark-bar" style="height:74%"></div></div>
+      </div>
+      <div class="month-card">
+        <div class="month">JAN 26</div>
+        <div class="tests">755</div>
+        <div class="vus">41,252 VUs</div>
+        <div class="sparkline"><div class="spark-bar" style="height:55%"></div></div>
+      </div>
+      <div class="month-card">
+        <div class="month">FEB 26</div>
+        <div class="tests">787</div>
+        <div class="vus">41,022 VUs</div>
+        <div class="sparkline"><div class="spark-bar" style="height:58%"></div></div>
+      </div>
+      <div class="month-card highlight">
+        <div class="month">MAR 26</div>
+        <div class="tests">1,172</div>
+        <div class="vus">71,873 VUs</div>
+        <div class="sparkline"><div class="spark-bar" style="height:86%"></div></div>
+      </div>
+      <div class="month-card">
+        <div class="month">APR 26</div>
+        <div class="tests">279</div>
+        <div class="vus">14,357 VUs</div>
+        <div class="sparkline"><div class="spark-bar" style="height:21%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Top workspaces + test type split -->
+  <section>
+    <h2>Usage by Project / Workspace</h2>
+    <div class="two-col">
+      <div>
+        <h3>Top 15 Projects by Executions</h3>
+        <div class="bar-chart">
+          <div class="bar-row">
+            <div class="bar-label">13197_GSSP-JPN (eMirai2.0)</div>
+            <div class="bar-track"><div class="bar-fill" style="width:100%"><span>1,090</span></div></div>
+            <div class="bar-count">75,831 VU</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">12402_Need Analysis Tool (NAT-JPN)</div>
+            <div class="bar-track"><div class="bar-fill" style="width:44%"><span>482</span></div></div>
+            <div class="bar-count">31,797 VU</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">8244_GVWB Messaging</div>
+            <div class="bar-track"><div class="bar-fill" style="width:36%"><span>391</span></div></div>
+            <div class="bar-count">6,892 VU</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">7966_Enterprise Integration Platform</div>
+            <div class="bar-track"><div class="bar-fill" style="width:32%"><span>345</span></div></div>
+            <div class="bar-count">7,452 VU</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">14647_RIS UKL Quoting Portal</div>
+            <div class="bar-track"><div class="bar-fill" style="width:24%"><span>262</span></div></div>
+            <div class="bar-count">273 VU</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">13401_ER Digital Experience</div>
+            <div class="bar-track"><div class="bar-fill" style="width:24%"><span>259</span></div></div>
+            <div class="bar-count">11,840 VU</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">12932_Digital Portal-JPN</div>
+            <div class="bar-track"><div class="bar-fill" style="width:19%"><span>212</span></div></div>
+            <div class="bar-count">4,904 VU</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">13399_EE Digital Experience</div>
+            <div class="bar-track"><div class="bar-fill" style="width:19%"><span>208</span></div></div>
+            <div class="bar-count">11,443 VU</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">Training_Workspace</div>
+            <div class="bar-track"><div class="bar-fill teal" style="width:17%"><span>191</span></div></div>
+            <div class="bar-count">5,303 VU</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">11835_Catalyst (FINEOS)</div>
+            <div class="bar-track"><div class="bar-fill" style="width:14%"><span>156</span></div></div>
+            <div class="bar-count">9,213 VU</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">7573_Retail Messaging Services</div>
+            <div class="bar-track"><div class="bar-fill" style="width:10%"><span>114</span></div></div>
+            <div class="bar-count">3,245 VU</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">7970_Global Product System (GPS)</div>
+            <div class="bar-track"><div class="bar-fill" style="width:9%"><span>101</span></div></div>
+            <div class="bar-count">717 VU</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">14319_GroupLifeWebsite</div>
+            <div class="bar-track"><div class="bar-fill" style="width:8%"><span>87</span></div></div>
+            <div class="bar-count">1,914 VU</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">11388_MetLife Group Insurance</div>
+            <div class="bar-track"><div class="bar-fill" style="width:8%"><span>86</span></div></div>
+            <div class="bar-count">3,684 VU</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">10829_Salesforce.com Insight</div>
+            <div class="bar-track"><div class="bar-fill" style="width:8%"><span>86</span></div></div>
+            <div class="bar-count">2,966 VU</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3>Test Type Distribution</h3>
+        <table>
+          <thead><tr><th>Type</th><th>Count</th><th>Share</th></tr></thead>
+          <tbody>
+            <tr><td>Taurus / JMeter</td><td>4,493</td><td>70.9%</td></tr>
+            <tr><td>Collection (multi-test)</td><td>1,842</td><td>29.1%</td></tr>
+          </tbody>
+        </table>
+        <br>
+        <h3>Execution Mode</h3>
+        <table>
+          <thead><tr><th>Mode</th><th>Count</th><th>Share</th></tr></thead>
+          <tbody>
+            <tr><td>GUI (self-service)</td><td>6,098</td><td>96.3%</td></tr>
+            <tr><td>API / CI pipeline</td><td>212</td><td>3.3%</td></tr>
+            <tr><td>Browser-based (Chrome)</td><td>25</td><td>0.4%</td></tr>
+          </tbody>
+        </table>
+        <br>
+        <h3>Platform Engagement</h3>
+        <table>
+          <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Active workspaces</td><td>104</td></tr>
+            <tr><td>Individual testers</td><td>81</td></tr>
+            <tr><td>Tests per active user (avg)</td><td>78</td></tr>
+            <tr><td>Avg tests per day</td><td>~31</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Top users -->
+  <section>
+    <h2>Most Active Users</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>User</th>
+          <th>Email</th>
+          <th>Executions</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Nukala Reddy</td><td>reddy.nukalashekar@metlife.co.jp</td><td>566</td><td><span class="badge badge-teal">JPN</span></td></tr>
+        <tr><td>2</td><td>Mahendarreddy Chanuvala</td><td>chanuvala.mahendarreddy@metlife.co.jp</td><td>331</td><td><span class="badge badge-teal">JPN</span></td></tr>
+        <tr><td>3</td><td>Nukala Reddy</td><td>reddy.nukalashekar@metlife.com</td><td>290</td><td><span class="badge badge-blue">Global</span></td></tr>
+        <tr><td>4</td><td>Megha Mourey</td><td>megha.mourey@metlife.com</td><td>262</td><td><span class="badge badge-blue">Global</span></td></tr>
+        <tr><td>4</td><td>Abhirup Nandi</td><td>abhirup.nandi@metlife.com</td><td>262</td><td><span class="badge badge-blue">Global</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Summary & observations -->
+  <section>
+    <h2>Observations &amp; Recommendations</h2>
+    <div class="two-col">
+      <div>
+        <h3>Key Observations</h3>
+        <ul style="font-size:14px; line-height:1.8; padding-left:18px; color:var(--text);">
+          <li><strong>Japan region dominates usage</strong> — GSSP-JPN and NAT-Banca-JPN alone account for 25% of all executions and 28% of total VUs.</li>
+          <li><strong>CI/API adoption low</strong> — Only 3.3% of tests are triggered via API/CI pipeline, indicating significant opportunity to shift-left and automate test triggering in delivery pipelines.</li>
+          <li><strong>Q1 2026 dip</strong> — Activity dropped ~45% from the Oct 2025 peak in Jan–Feb 2026, recovering strongly in March, suggesting seasonal project cycles.</li>
+          <li><strong>High average duration</strong> — Average test run exceeds 7 hours, reflecting a heavy emphasis on endurance and soak testing across teams.</li>
+          <li><strong>Scale validated</strong> — Peak load of 10,000 concurrent virtual users demonstrates platform capability for large-scale enterprise performance validation.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Recommendations</h3>
+        <ul style="font-size:14px; line-height:1.8; padding-left:18px; color:var(--text);">
+          <li><strong>Increase CI/CD integration</strong> — Grow API-triggered test runs from 3.3% to 20%+ by embedding BlazeMeter into Jenkins / GitHub Actions pipelines.</li>
+          <li><strong>Optimise Training_Workspace</strong> — 191 executions in a training workspace suggest teams are running production-scale tests in non-production environments; review and migrate to dedicated project workspaces.</li>
+          <li><strong>Standardise test naming</strong> — Multiple runs with "Untitled test" entries make traceability difficult; enforce naming conventions via CI gate checks.</li>
+          <li><strong>Review endurance test scheduling</strong> — Concentrate 24-hour endurance tests during off-peak windows to optimise concurrency credit consumption.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <span>BlazeMeter Performance Testing Platform &nbsp;|&nbsp; MetLife Global Account (1961586)</span>
+  <span>Data period: 1 Oct 2025 – 8 Apr 2026 &nbsp;|&nbsp; Generated: 9 April 2026</span>
+</footer>
+
+</body>
+</html>

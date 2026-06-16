@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><head>
+
+<script>
+if (!sessionStorage.getItem('loggedIn')) {
+  if (window.location.pathname.indexOf('login.html') === -1) {
+    window.location.href = 'login.html';
+  }
+}
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Business Activity</title><link rel="stylesheet" href="styles.css"></head><body><div class="app-shell"><main class="phone"><section class="screen">
+<div class="top-status">
+  <div>9:41</div>
+  <div class="top-right">
+    <div class="icon-dot"><span></span><span></span><span></span><span></span></div>
+    <div class="icon-wifi"></div>
+    <div class="icon-cell"></div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-left">
+    <button class="circle-btn" aria-label="Back" onclick="location.href='website.html'">&#8592;</button>
+  </div>
+  <button class="info-btn" aria-label="Information">i</button>
+</div>
+
+<div class="progress"><div style="width:44%"></div></div>
+<div class="helper" style="color:#2f60bf;font-weight:700;margin-bottom:6px">AI suggested</div>
+<h2 class="hero-title" style="font-size:22px">Business Activity</h2>
+<p class="subtext">What is your expected annual turnover for the next 12 months?</p>
+<div class="option-list" id="activity-options">
+  <label class="option active" data-value="0-250k"><span>£0 – £250K</span><span class="radio"></span></label>
+  <label class="option" data-value="250k-1m"><span>£250K – £1M</span><span class="radio"></span></label>
+  <label class="option" data-value="1m-5m"><span>£1M – £5M</span><span class="radio"></span></label>
+  <label class="option" data-value="5m-plus"><span>£5M+</span><span class="radio"></span></label>
+</div>
+<button class="btn mt-24" data-testid="activity-continue" onclick="location.href='employees.html'">Continue</button>
+<script>
+for(const opt of document.querySelectorAll('#activity-options .option')){
+  opt.addEventListener('click', ()=>{
+    document.querySelectorAll('#activity-options .option').forEach(o=>o.classList.remove('active'));
+    opt.classList.add('active');
+  });
+}
+</script></section></main></div></body></html>

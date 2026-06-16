@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><head>
+
+<script>
+if (!sessionStorage.getItem('loggedIn')) {
+  if (window.location.pathname.indexOf('login.html') === -1) {
+    window.location.href = 'login.html';
+  }
+}
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Number of Employees</title><link rel="stylesheet" href="styles-v2.css"></head><body><div class="app-shell"><main class="phone"><section class="screen">
+<div class="top-status">
+  <div>9:41</div>
+  <div class="top-right">
+    <div class="icon-dot"><span></span><span></span><span></span><span></span></div>
+    <div class="icon-wifi"></div>
+    <div class="icon-cell"></div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-left">
+    <button class="circle-btn" aria-label="Back" onclick="location.href='activity-v2.html'">&#8592;</button>
+  </div>
+  <button class="info-btn" aria-label="Information">i</button>
+</div>
+
+<div class="progress"><div style="width:62%"></div></div>
+<div class="helper" style="color:#2f60bf;font-weight:700;margin-bottom:6px">AI suggested</div>
+<h2 class="hero-title" style="font-size:22px">Number of Employees</h2>
+<p class="subtext">How many people does your business employ?</p>
+<div class="option-list" id="employee-options">
+  <label class="option active"><span>0 – 5</span><span class="radio"></span></label>
+  <label class="option"><span>5 – 10</span><span class="radio"></span></label>
+  <label class="option"><span>10 – 50</span><span class="radio"></span></label>
+  <label class="option"><span>50+</span><span class="radio"></span></label>
+</div>
+<button class="btn mt-24" data-testid="employees-continue" onclick="location.href='payments-v2.html'">Continue</button>
+<script>
+for(const opt of document.querySelectorAll('#employee-options .option')){
+  opt.addEventListener('click', ()=>{
+    document.querySelectorAll('#employee-options .option').forEach(o=>o.classList.remove('active'));
+    opt.classList.add('active');
+  });
+}
+</script></section></main></div></body></html>

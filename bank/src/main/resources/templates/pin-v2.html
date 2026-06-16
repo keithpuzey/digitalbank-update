@@ -1,0 +1,47 @@
+<!doctype html><html lang="en"><head>
+
+<script>
+if (!sessionStorage.getItem('loggedIn')) {
+  if (window.location.pathname.indexOf('login.html') === -1) {
+    window.location.href = 'login.html';
+  }
+}
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Create your PIN</title><link rel="stylesheet" href="styles-v2.css"></head><body><div class="app-shell"><main class="phone"><section class="screen">
+<div class="top-status">
+  <div>9:41</div>
+  <div class="top-right">
+    <div class="icon-dot"><span></span><span></span><span></span><span></span></div>
+    <div class="icon-wifi"></div>
+    <div class="icon-cell"></div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-left">
+    <button class="circle-btn" aria-label="Back" onclick="location.href='index-v2.html'">&#8592;</button>
+  </div>
+  <button class="info-btn" aria-label="Information">i</button>
+</div>
+
+<div class="progress"><div style="width:24%"></div></div>
+<div class="pin-lock"><span class="pin-hole"></span></div>
+<h1 class="hero-title center">Create your PIN</h1>
+<p class="subtext center">Choose a 6-digit PIN to secure your account on this device.</p>
+<div class="pin-dots" id="pinDots" data-testid="pin-dots"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<div class="keypad" data-testid="pin-keypad">
+  <button class="key" data-number="1">1</button><button class="key" data-number="2">2</button><button class="key" data-number="3">3</button>
+  <button class="key" data-number="4">4</button><button class="key" data-number="5">5</button><button class="key" data-number="6">6</button>
+  <button class="key" data-number="7">7</button><button class="key" data-number="8">8</button><button class="key" data-number="9">9</button>
+  <div></div><button class="key" data-number="0">0</button><div></div>
+</div>
+<script>
+let pin = '';
+const dots = [...document.querySelectorAll('#pinDots span')];
+document.querySelectorAll('.key').forEach(btn=>btn.addEventListener('click', ()=>{
+  if(pin.length >= 6) return;
+  pin += btn.dataset.number;
+  dots[pin.length-1].classList.add('filled');
+  if(pin.length === 6){ setTimeout(()=> location.href='faceid-v2.html', 160); }
+}));
+</script></section></main></div></body></html>
