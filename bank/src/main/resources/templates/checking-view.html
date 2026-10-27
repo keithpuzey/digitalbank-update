@@ -77,7 +77,12 @@
 				                      <tr th:each="trans : ${transactionList}">
 				                        <td th:text="${#dates.format(trans.transactionDate, 'yyyy-MM-dd HH:mm')}"></td>
 				                        <td th:text="${trans.transactionCategory.name}"></td>
-				                        <td th:text="${trans.transactionNumber + ' (' + trans.transactionType.code +') - ' + trans.description}"></td>
+				                        <td>
+    <span th:text="${trans.transactionNumber + ' (' + trans.transactionType.code +') - ' + trans.description}"></span>
+    <span class="new-badge"
+          th:if="${trans.transactionType.code == 'DPT' and @featureFlags.isRecent('new-deposit-badge', trans.transactionDate)}"
+          th:attr="data-remaining-ms=${@featureFlags.remainingMs('new-deposit-badge', trans.transactionDate)}"></span>
+</td>
 				                        <td th:class="${trans.amount < 0} ? text-danger" th:text="'$' + ${trans.amount}"></td>
 				                        <td th:class="${trans.runningBalance < 0} ? text-danger" th:text="'$' + ${trans.runningBalance}"></td>
 				                      </tr>

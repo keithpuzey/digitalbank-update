@@ -1,4 +1,4 @@
-FROM tomcat:11.0.22-jdk17-temurin-jammy
+FROM tomcat:11.0.27-jdk21-temurin-jammy
 # Environment variables
 ENV CATALINA_HOME=/usr/local/tomcat
 EXPOSE 8080
@@ -64,7 +64,8 @@ COPY /target/classes/templates/success.html /usr/local/tomcat/webapps/ROOT/succe
 COPY /target/classes/templates/website-v2.html /usr/local/tomcat/webapps/ROOT/website-v2.html
 COPY /target/classes/templates/website.html /usr/local/tomcat/webapps/ROOT/website.html
 COPY /target/classes/templates/login-demo.html /usr/local/tomcat/webapps/ROOT/login-demo.html
-
+COPY /target/classes/templates/button-progressbar.html /usr/local/tomcat/webapps/ROOT/button-progressbar.html
+COPY /target/classes/templates/dashboard.html /usr/local/tomcat/webapps/ROOT/dashboard.html
 COPY /target/classes/templates/web.xml /usr/local/tomcat/conf/web.xml
 
 

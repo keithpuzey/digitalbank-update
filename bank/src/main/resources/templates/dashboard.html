@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Black Friday War Room - Revenue & Checkout Funnel</title>
+<style>
+  :root {
+    --bg-color: #0b0f19;
+    --card-bg: #111827;
+    --border-color: #1f2937;
+    --text-main: #f9fafb;
+    --text-muted: #9ca3af;
+    --accent-green: #10b981;
+    --accent-red: #ef4444;
+    --accent-yellow: #f59e0b;
+    --accent-blue: #3b82f6;
+  }
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 24px;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .title-group { display: flex; align-items: center; gap: 12px; }
+  .live-badge {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: var(--accent-red);
+    border: 1px solid var(--accent-red);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .grid-3-2 { display: grid; grid-template-columns: 3fr 2fr; gap: 16px; margin-bottom: 24px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .card-title { color: var(--text-muted); font-size: 13px; text-transform: uppercase; margin-bottom: 8px; }
+  .metric-value { font-size: 32px; font-weight: bold; }
+  .metric-sub { font-size: 13px; margin-top: 4px; }
+  .text-red { color: var(--accent-red); }
+  .text-green { color: var(--accent-green); }
+
+  /* SVG Line Graph */
+  .chart-container { position: relative; width: 100%; height: 180px; }
+  svg { width: 100%; height: 100%; overflow: visible; }
+  .line-revenue { stroke: var(--accent-green); stroke-width: 3; fill: url(#green-gradient); }
+  .line-latency { stroke: var(--accent-red); stroke-width: 3; stroke-dasharray: 4; fill: none; }
+
+  /* CSS Pie Chart */
+  .pie-wrapper { display: flex; align-items: center; gap: 24px; justify-content: center; height: 180px; }
+  .pie-chart {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: conic-gradient(
+      var(--accent-blue) 0% 45%,
+      var(--accent-purple, #8b5cf6) 45% 75%,
+      var(--accent-yellow) 75% 90%,
+      var(--accent-red) 90% 100%
+    );
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  }
+  .pie-legend { font-size: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .color-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* Funnel Visualization */
+  .funnel-step { margin-bottom: 16px; }
+  .funnel-label { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 14px; }
+  .progress-bg { background: #1f2937; border-radius: 4px; height: 28px; overflow: hidden; }
+  .progress-fill { height: 100%; display: flex; align-items: center; padding-left: 12px; font-weight: bold; font-size: 12px; }
+
+  /* Log Table */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 10px; border-bottom: 1px solid var(--border-color); }
+  th { color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="title-group">
+      <h1 style="margin:0; font-size: 20px;">Black Friday Command Center</h1>
+      <span class="live-badge">● CRITICAL LOAD</span>
+    </div>
+    <div style="color: var(--text-muted); font-size: 14px;">Target Load: <strong>500,000 VUs</strong></div>
+  </div>
+
+  <!-- Metric Cards -->
+  <div class="grid-4">
+    <div class="card">
+      <div class="card-title">Real-Time Revenue</div>
+      <div class="metric-value">$42,850 <span style="font-size:16px;">/min</span></div>
+      <div class="metric-sub text-red">▼ 38% vs target ($68,000/min)</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Payment API Latency (P99)</div>
+      <div class="metric-value text-red">4,850 ms</div>
+      <div class="metric-sub text-red">SLA Breach (&gt; 250ms)</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Cart Abandonment</div>
+      <div class="metric-value text-red">42.4%</div>
+      <div class="metric-sub text-red">▲ 28% from baseline</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Active Checkout Sessions</div>
+      <div class="metric-value">184,200</div>
+      <div class="metric-sub text-green">Queue Capacity: 82%</div>
+    </div>
+  </div>
+
+  <!-- Visual Charts Row -->
+  <div class="grid-3-2">
+    <!-- Line Graph Card -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+        <div class="card-title">Revenue Velocity vs. Gateway Latency</div>
+        <div style="font-size: 12px; display: flex; gap: 16px;">
+          <span style="color: var(--accent-green);">— Revenue ($/min)</span>
+          <span style="color: var(--accent-red);">--- Latency (ms)</span>
+        </div>
+      </div>
+      <div class="chart-container">
+        <svg viewBox="0 0 500 150">
+          <defs>
+            <linearGradient id="green-gradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#10b981" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#10b981" stop-opacity="0.0"/>
+            </linearGradient>
+          </defs>
+          <!-- Grid lines -->
+          <line x1="0" y1="30" x2="500" y2="30" stroke="#1f2937" stroke-dasharray="2"/>
+          <line x1="0" y1="75" x2="500" y2="75" stroke="#1f2937" stroke-dasharray="2"/>
+          <line x1="0" y1="120" x2="500" y2="120" stroke="#1f2937" stroke-dasharray="2"/>
+
+          <!-- Revenue Line & Area (Dropping off) -->
+          <path class="line-revenue" d="M 0 130 Q 100 20, 200 40 T 350 110 L 500 135 L 500 150 L 0 150 Z"/>
+
+          <!-- Latency Line (Spiking up as revenue drops) -->
+          <path class="line-latency" d="M 0 140 Q 120 135, 220 110 T 360 30 L 500 15"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Pie Chart Card -->
+    <div class="card">
+      <div class="card-title">Traffic Distribution by Region</div>
+      <div class="pie-wrapper">
+        <div class="pie-chart"></div>
+        <div class="pie-legend">
+          <div class="legend-item"><div class="color-dot" style="background:var(--accent-blue);"></div> US-East (45%)</div>
+          <div class="legend-item"><div class="color-dot" style="background:#8b5cf6;"></div> US-West (30%)</div>
+          <div class="legend-item"><div class="color-dot" style="background:var(--accent-yellow);"></div> EU-Central (15%)</div>
+          <div class="legend-item"><div class="color-dot" style="background:var(--accent-red);"></div> AP-South (10%)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Funnel & Logs Row -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Checkout Conversion Funnel</div>
+
+      <div class="funnel-step">
+        <div class="funnel-label"><span>1. Homepage / Landing</span><span>450,000 users</span></div>
+        <div class="progress-bg"><div class="progress-fill" style="width: 100%; background: var(--accent-blue);">100%</div></div>
+      </div>
+
+      <div class="funnel-step">
+        <div class="funnel-label"><span>2. Product Search &amp; Catalog</span><span>382,500 users</span></div>
+        <div class="progress-bg"><div class="progress-fill" style="width: 85%; background: var(--accent-blue);">85%</div></div>
+      </div>
+
+      <div class="funnel-step">
+        <div class="funnel-label"><span>3. Add to Cart</span><span>297,000 users</span></div>
+        <div class="progress-bg"><div class="progress-fill" style="width: 66%; background: var(--accent-yellow);">66%</div></div>
+      </div>
+
+      <div class="funnel-step">
+        <div class="funnel-label"><span>4. Payment Execution (Bottleneck)</span><span class="text-red">78,500 users completed</span></div>
+        <div class="progress-bg"><div class="progress-fill" style="width: 17%; background: var(--accent-red);">17% (Drop-off Spike)</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Live Gateway Errors</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Service</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>00:04:12</td>
+            <td>Payment-Gateway</td>
+            <td class="text-red">504 Gateway Timeout</td>
+          </tr>
+          <tr>
+            <td>00:04:11</td>
+            <td>Auth-Token-Svc</td>
+            <td class="text-red">429 Rate Limited</td>
+          </tr>
+          <tr>
+            <td>00:04:09</td>
+            <td>Payment-Gateway</td>
+            <td class="text-red">504 Gateway Timeout</td>
+          </tr>
+          <tr>
+            <td>00:04:08</td>
+            <td>Inventory-DB</td>
+            <td class="text-green">200 OK (2100ms)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>
+

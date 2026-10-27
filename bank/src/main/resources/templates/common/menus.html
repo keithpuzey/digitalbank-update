@@ -174,6 +174,13 @@
                                 <a class="nav-link" th:href="@{/user/password}"><i class="fa fa-user"></i>&nbsp;Change Password</a>
                                 <a class="nav-link" th:href="@{/user/create-data}"><i class="fa fa-cogs"></i>&nbsp;Create Data</a>
                                 <a class="nav-link" th:href="@{/user/delete-data}"><i class="fa fa-trash-o"></i>&nbsp;Delete Data</a>
+<a class="nav-link feature-toggle" href="#"
+   th:each="f : ${featureMenu}"
+   th:attr="data-feature=${f['key']}, data-url=@{/user/features/{k}/toggle(k=${f['key']})}">
+    <i class="fa" th:classappend="${f['icon']}"></i>&nbsp;<span th:text="${f['label']}"></span>
+    <i class="fa feature-state" th:classappend="${f['enabled']} ? 'fa-check-square-o' : 'fa-square-o'"
+       style="float:right; margin-top:3px;"></i>
+</a>
                                 <a class="nav-link" th:href="@{/logout}"><i class="fa fa-power-off"></i>&nbsp;Logout</a> 
                         </div>
                     </div>
@@ -210,7 +217,7 @@
 		    	
 		    	<!--  About Modal End -->
             </div>
-
+            <script th:src="@{/js/features.js}"></script>
         </header><!-- /header -->
         <!-- Header-->
 

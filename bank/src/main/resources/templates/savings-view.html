@@ -76,15 +76,24 @@
 				                        <th data-field="balance" data-sortable="true">Balance</th>
 				                      </tr>
 				                    </thead>
-				                    <tbody>
-				                      <tr th:each="trans : ${transactionList}">
-				                        <td th:text="${#dates.format(trans.transactionDate, 'yyyy-MM-dd HH:mm')}"></td>
-				                        <td th:text="${trans.transactionCategory.name}"></td>
-				                        <td th:text="${trans.transactionNumber + ' (' + trans.transactionType.code +') - ' + trans.description}"></td>
-				                        <td th:class="${trans.amount < 0} ? text-danger" th:text="'$' + ${trans.amount}"></td>
-				                        <td th:class="${trans.runningBalance < 0} ? text-danger" th:text="'$' + ${trans.runningBalance}"></td>
-				                      </tr>
-				                   </tbody>
+<tbody>
+  <tr th:each="trans : ${transactionList}">
+    <td th:text="${#dates.format(trans.transactionDate, 'yyyy-MM-dd HH:mm')}"></td>
+    <td th:text="${trans.transactionCategory.name}"></td>
+    <td>
+      <span th:text="${trans.transactionNumber + ' (' + trans.transactionType.code +') - ' + trans.description}"></span>
+      <span class="new-badge"
+            th:if="${trans.transactionType.code == 'DPT' and @featureFlags.isRecent('new-deposit-badge', trans.transactionDate)}"
+            th:attr="data-remaining-ms=${@featureFlags.remainingMs('new-deposit-badge', trans.transactionDate)}"></span>
+
+      <!-- TEMP DIAGNOSTIC: remove once the badge works -->
+      <small style="color:#999"
+             th:text="' [flag=' + ${@featureFlags.isEnabled('new-deposit-badge')} + ', remainingMs=' + ${@featureFlags.remainingMs('new-deposit-badge', trans.transactionDate)} + ']'"></small>
+    </td>
+    <td th:class="${trans.amount < 0} ? text-danger" th:text="'$' + ${trans.amount}"></td>
+    <td th:class="${trans.runningBalance < 0} ? text-danger" th:text="'$' + ${trans.runningBalance}"></td>
+  </tr>
+</tbody>
 	                  			</table>
 	                        </div> <!-- End Card Body -->
 	                    </div> <!-- End Card -->

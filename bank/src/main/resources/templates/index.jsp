@@ -103,6 +103,8 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:15px 8
 <a href="/flow-demo.html" class="demo-card"><h3>Process Flow</h3><p>Process Visualization.</p></a>
 <a href="/sv-user-profile.html" class="demo-card"><h3>SV Query Directory</h3><p>Virtual Service SQL query example.</p></a>
 <a href="/sv-profile.html" class="demo-card"><h3>SV Query Profile</h3><p>SQL Profiling.</p></a>
+<a href="/button-progressbar.html" class="demo-card"><h3>Button Progress Bar</h3><p>Interactive UI component.</p></a>
+
 <div class="tomcat-info">Server Instance: <%= application.getServerInfo() %></div>
 </div>
 </div>

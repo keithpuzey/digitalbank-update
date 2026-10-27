@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Performance Testing Impact | Perforce</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   HERO REPORT — TOP 5 ROI METRICS TEMPLATE
+   CUSTOMER-FACING VERSION
+   v3.2 — Health check scorecard: numbers removed entirely
+   Changes from v3.1:
+   - Health check cards show NO numeric percentages (customer-facing)
+   - Status communicated via color coding + label only:
+     Green = Excellent or Good, Amber = Opportunity, Indigo = Growth Opportunity
+   - Progress bar removed from customer cards (bar encodes the number visually)
+   - Card layout redesigned around status icon + label pill
+   - CSM internal version retains full scores (unchanged)
+   Previous v3.1 changes also in effect:
+   - Hero outcome stat leads the page
+   - Health check section framed as forward-looking
+   - "What's Working Well" elevated above recommendations
+   - Unlock framing in recommendations, held-insight CTA
+   ============================================================ */
+
+:root{
+  --navy:#00003A;--indigo:#4C00FF;--cyan:#00CFFF;--mint:#4AFDCC;
+  --lt:#F6F9FD;--white:#FFF;--tx1:#00003A;--tx2:#3A3A5C;--tx3:#7A7A96;
+  --brd:#E4E4EE;--grn:#0B8043;--grn-bg:#E6F4EA;--amb:#B06000;
+  --amb-bg:#FEF3E0;--red:#C5221F;--red-bg:#FCEAEA
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',system-ui,sans-serif;color:var(--tx1);background:#DDDFE8;-webkit-font-smoothing:antialiased}
+.w{max-width:680px;margin:0 auto;background:var(--white);box-shadow:0 0 80px rgba(0,0,58,.06)}
+
+/* === TOOLTIPS === */
+#tt{position:fixed;background:var(--navy);color:var(--white);font:400 11px/1.5 'DM Sans',sans-serif;padding:9px 13px;border-radius:7px;width:230px;opacity:0;pointer-events:none;transition:opacity .18s;z-index:999;box-shadow:0 6px 20px rgba(0,0,58,.3)}
+#tt.on{opacity:1}
+.tip{cursor:help;border-bottom:1px dotted var(--tx3)}
+
+/* === HEADER === */
+.hdr{background:var(--navy);padding:44px 40px 40px;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;top:-100px;right:-80px;width:420px;height:420px;background:radial-gradient(circle,rgba(76,0,255,.2) 0%,transparent 55%)}
+.hdr::after{content:'';position:absolute;bottom:-130px;left:30%;width:340px;height:340px;background:radial-gradient(circle,rgba(0,207,255,.08) 0%,transparent 55%)}
+.hdr>*{position:relative;z-index:2}
+.logo{height:26px;margin-bottom:36px;display:block;opacity:.85}
+.hdr-ey{font-size:11px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.2em;margin-bottom:12px}
+.hdr-t{font-size:30px;font-weight:800;color:var(--white);line-height:1.1;letter-spacing:-.03em;margin-bottom:10px}
+.hdr-c{font-size:17px;font-weight:400;color:rgba(246,249,253,.78)}
+.hdr-m{font-size:11px;color:rgba(246,249,253,.38);border-top:1px solid rgba(76,0,255,.22);padding-top:16px;margin-top:28px;line-height:2}
+
+/* === HERO OUTCOME STAT (NEW — replaces flat program overview as opening element)
+     The single most consequential outcome for this customer leads the page.
+     Executives read this before anything else. Practitioners see it as validation.
+     Program overview stats (tests, workspaces, users, regions) follow below — 
+     they support the outcome statement, not precede it.
+     Josh Brix feedback: "Lead with business outcomes."                         === */
+.hero-outcome{background:linear-gradient(135deg,#1A0066 0%,#3000B3 40%,#4C00FF 100%);padding:52px 40px 44px;text-align:center;position:relative;overflow:hidden}
+.hero-outcome::before{content:'';position:absolute;top:50%;left:50%;width:500px;height:500px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(76,0,255,.15) 0%,transparent 50%)}
+.hero-outcome>*{position:relative;z-index:2}
+.hero-outcome-eyebrow{font-size:10px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.22em;margin-bottom:16px}
+.hero-outcome-stat{font-size:88px;font-weight:800;color:var(--white);line-height:1;letter-spacing:-.05em;margin-bottom:10px}
+.hero-outcome-stat .unit{font-size:44px;font-weight:500;opacity:.7}
+.hero-outcome-hook{font-size:17px;font-weight:400;color:rgba(246,249,253,.82);line-height:1.55;max-width:460px;margin:0 auto 32px}
+.hero-outcome-hook strong{color:var(--cyan);font-weight:700}
+
+/* Program overview stats — sit below outcome statement as supporting context */
+.hero-cells{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:4px}
+.hero-cell{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:14px 10px;text-align:center}
+.hero-cell-v{font-size:22px;font-weight:800;color:var(--white);line-height:1}
+.hero-cell-l{font-size:9px;font-weight:600;color:rgba(246,249,253,.45);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
+
+/* === DIVIDER === */
+.divider{height:3px;background:linear-gradient(90deg,var(--indigo),var(--cyan),var(--mint))}
+
+/* === SECTIONS === */
+.s{padding:36px 40px}
+.s-bg{background:var(--lt)}
+.s-lb{font-size:10px;font-weight:700;color:var(--indigo);text-transform:uppercase;letter-spacing:.18em;margin-bottom:6px}
+.s-t{font-size:19px;font-weight:700;color:var(--navy);margin-bottom:6px;letter-spacing:-.01em}
+.s-sub{font-size:12px;color:var(--tx3);margin-bottom:20px;line-height:1.5}
+
+/* === ROI METRIC CARDS (Top 5) === */
+.m-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.m-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+/* Full-width card — metrics 4 and 5 each get their own row */
+.m-full{margin-top:14px}
+.mc{background:var(--white);border-radius:10px;padding:22px 18px 18px;border:1px solid var(--brd);position:relative}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:10px 10px 0 0}
+.mc.t-ind::before{background:var(--indigo)}
+.mc.t-cya::before{background:linear-gradient(90deg,var(--cyan),var(--mint))}
+.mc-tier{position:absolute;top:12px;right:12px;font-size:8px;font-weight:700;padding:2px 7px;border-radius:8px;text-transform:uppercase;letter-spacing:.1em}
+.tier-t1{background:var(--grn-bg);color:var(--grn)}
+.tier-t2{background:#EEF0FF;color:var(--indigo)}
+.mc-pri{font-size:14px;font-weight:700;color:var(--indigo);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.mc-lb{font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.mc-num{font-size:32px;font-weight:800;color:var(--navy);line-height:1;letter-spacing:-.03em}
+.mc-num .u{font-size:16px;font-weight:500}
+.mc-tag{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:600;padding:2px 8px;border-radius:10px;margin-top:7px}
+.tg{background:var(--grn-bg);color:var(--grn)}
+.ta{background:var(--amb-bg);color:var(--amb)}
+.tr{background:var(--red-bg);color:var(--red)}
+.tn{background:#EBEBF2;color:var(--tx2)}
+.mc-why{font-size:13px;color:var(--tx2);line-height:1.5;margin-top:9px}
+
+/* === HEALTH CHECK (embedded in Metric 4 card) — v3.2 NO NUMBERS ===
+   Customer-facing cards show status via color + label only.
+   No percentages, no progress bars — both encode the number visually.
+   Three states: Excellent/Good (green), Opportunity (amber),
+   Growth Opportunity (indigo, for scores <=50%).
+   Card anatomy: practice name + colored status icon + status label pill. */
+.hc-embed{margin-top:14px}
+.hc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;align-items:stretch}
+.hc{background:var(--lt);border-radius:8px;padding:12px 6px;text-align:center;border:1px solid var(--brd);display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;min-width:0}
+.hc-nm{font-size:10px;font-weight:600;color:var(--navy);margin-bottom:8px;line-height:1.3;width:100%;word-wrap:break-word}
+
+/* Status icon — large colored symbol, no number */
+.hc-icon{font-size:18px;line-height:1;margin-bottom:5px}
+
+/* Status label pill — wraps on small text, no overflow */
+.hc-pill{display:inline-block;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 6px;border-radius:8px;line-height:1.4;white-space:normal;word-break:break-word;max-width:100%;text-align:center}
+.hc-pill-grn{background:var(--grn-bg);color:var(--grn)}
+.hc-pill-amb{background:var(--amb-bg);color:var(--amb)}
+.hc-pill-opp{background:#EEF0FF;color:var(--indigo)}
+
+/* === MOMENTUM BARS (Metric 3) === */
+.mo-embed{margin-top:14px}
+.bar-r{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.bar-lb{font-size:12px;color:var(--tx3);width:28px;flex-shrink:0;text-align:right}
+.bar-tk{flex:1;height:20px;background:#EBEBF2;border-radius:5px;overflow:hidden}
+.bar-fl{height:100%;border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:9px;font-weight:700;color:var(--white);min-width:36px;background:linear-gradient(90deg,var(--indigo),#7040FF);width:0;transition:width 1.2s cubic-bezier(.22,.61,.36,1)}
+.bar-fl.live{width:var(--w)}
+
+/* === FOOTPRINT (in Metric 5 card) === */
+.tt-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--brd)}
+.tt-row:last-child{border-bottom:none}
+.tt-r{width:26px;height:26px;border-radius:6px;background:var(--indigo);color:var(--white);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tt-i{flex:1}
+.tt-n{font-size:14px;font-weight:600;color:var(--navy)}
+.tt-d{font-size:12px;color:var(--tx3);margin-top:1px}
+.tt-m{text-align:right;flex-shrink:0}
+.tt-c{font-size:14px;font-weight:700;color:var(--indigo)}
+.tt-p{font-size:12px;color:var(--tx3);margin-top:1px}
+
+/* === GOVERNANCE NOTE === */
+.gov{background:#F0F0F8;border:1px solid var(--brd);border-radius:8px;padding:12px 16px;margin-top:14px;display:flex;align-items:flex-start;gap:10px}
+.gov-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.gov-tx{font-size:10px;color:var(--tx2);line-height:1.6}
+.gov-tx strong{color:var(--tx1)}
+
+/* === WHAT'S NEXT SECTION ===
+     "What's Working Well" now appears FIRST (before recommendations).
+     Josh Brix: "lead with strength before suggesting improvements."
+     Recommendations use unlock framing — not "currently at X%, fix this."
+     Raw low scores removed from customer-facing recommendation copy.      === */
+.rec-w{background:var(--white);border-radius:8px;padding:16px 18px;border-left:4px solid var(--mint);margin-bottom:14px}
+.rec-wt{font-size:13px;font-weight:700;color:var(--grn);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.rec-wt-icon{font-size:14px}
+.rec-wp{font-size:11px;color:var(--tx2);line-height:1.6}
+.rec-wp strong{color:var(--navy)}
+
+/* Unlock-framed recommendation cards */
+.rec{background:var(--lt);border-radius:8px;padding:16px 18px;margin-bottom:10px}
+.rec-n{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--indigo);color:var(--white);font-size:9px;font-weight:700;margin-right:6px;vertical-align:middle;flex-shrink:0}
+.rec-header{display:flex;align-items:flex-start;gap:0;margin-bottom:6px}
+.rec-t{font-size:13px;font-weight:700;color:var(--navy)}
+.rec-p{font-size:11px;color:var(--tx2);line-height:1.6}
+.rec-action{font-size:10px;font-weight:700;color:var(--indigo);margin-top:6px;display:flex;align-items:center;gap:4px}
+
+/* === CTA — rewritten with held-insight hook ===
+     Josh Brix: "Make the CTA support a meaningful follow-up."
+     "Consider holding select insights for the live discussion."
+     The button copy and supporting text now create pull toward the 
+     conversation by teasing something specific held for the meeting.   === */
+.cta{background:var(--navy);border-radius:12px;padding:32px 30px;margin-top:14px;text-align:center;position:relative;overflow:hidden}
+.cta::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(76,0,255,.3) 0%,transparent 65%)}
+.cta::after{content:'';position:absolute;bottom:-40px;left:15%;width:120px;height:120px;background:radial-gradient(circle,rgba(0,207,255,.12) 0%,transparent 65%)}
+.cta>*{position:relative;z-index:2}
+.cta-eyebrow{font-size:10px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.2em;margin-bottom:10px}
+.cta-t{font-size:18px;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.25}
+.cta-insight{background:rgba(76,0,255,.25);border:1px solid rgba(76,0,255,.4);border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:12px;color:rgba(246,249,253,.8);line-height:1.55;text-align:left}
+.cta-insight strong{color:var(--cyan)}
+.cta-btn{display:inline-block;background:#6E2FFF;color:var(--white);font:700 13px 'DM Sans',sans-serif;padding:12px 30px;border-radius:6px;text-decoration:none;letter-spacing:.02em;transition:all .2s;box-shadow:0 4px 18px rgba(110,47,255,.5)}
+.cta-btn:hover{background:#8A50FF;transform:translateY(-1px);box-shadow:0 8px 28px rgba(110,47,255,.6)}
+.cta-ct{font-size:10px;color:rgba(246,249,253,.4);margin-top:14px}
+
+/* === FOOTER === */
+.ftr{background:var(--navy);padding:24px 40px}
+.ftr-logo{height:16px;margin-bottom:12px;display:block;opacity:.25}
+.ftr-tx{font-size:10px;color:rgba(246,249,253,.3);line-height:1.8}
+.ftr-tx a{color:var(--cyan);text-decoration:none}
+.ftr-div{border:none;border-top:1px solid rgba(76,0,255,.18);margin:10px 0}
+.ftr-cp{font-size:9px;color:rgba(246,249,253,.2);line-height:1.6}
+
+/* === SCROLL ANIMATIONS === */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.reveal.vis{opacity:1;transform:translateY(0)}
+.reveal:nth-child(2){transition-delay:.06s}.reveal:nth-child(3){transition-delay:.12s}
+.reveal:nth-child(4){transition-delay:.18s}.reveal:nth-child(5){transition-delay:.24s}
+.reveal:nth-child(6){transition-delay:.3s}
+
+@media print{
+  body{background:#fff}.w{box-shadow:none;max-width:100%}
+  .divider{break-after:page}#tt{display:none}
+  .reveal{opacity:1!important;transform:none!important}
+  .bar-fl,.hc-fl{width:var(--w)!important} /* hc-fl kept for CSM version compat */
+  .hero-outcome{padding:36px 40px}
+}
+@media(max-width:520px){
+  .s{padding:24px 20px}.hdr{padding:28px 20px}.hero-outcome{padding:36px 20px}
+  .hdr-t{font-size:24px}.hero-outcome-stat{font-size:60px}
+  .hero-cells{grid-template-columns:1fr 1fr}
+  .m-grid,.m-grid-2{grid-template-columns:1fr}
+  .hc-grid{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="w">
+
+  <!-- ═══════════════════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════════════════ -->
+  <div class="hdr">
+    <img src="data:image/png;base64,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7f8A1qYH/VbI/wD/AB/fURdbctos71SvuWW+mnpqW4zNkjin26bQGNbz2JH3qwxFtuswREWNEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAW/tBeJvKdPKaCx3yF+Q4/Hs2OJ8m1RTN8I3ntb+K73EIiCYmmWuen2oLGtslwq4qrl06appHte0+G4BafcVsG5XKittE6srZuqgaNy7ol2w9gBKIukv4nEfdU+LbB8abPQ4zR1l/ujN2jpRup6djvxnOAcfYB71DfVbVfNtS7ianJrtI+ma7eGhh3ZTw+xnefM7nzRFFutkYMiIsaIiICIiAiIg/WktcHNJBB3BHct+6KcUWa4M2G138vyayM2aI6iTaohb+JId9x5O38iERBL7TDXvTzUANitFdWU9aQOlS1NI8OafymgtPyrZFfcaOho3VlVN1cDRuXdEnl7AN0RXLqbGgtU+LHBMWE9DYKWtv91j3aGdU6CBjvxnPAcfc0+1Qt1b1Py3U6/fVTJq7psj3FNSRbtgp2nuY3x8SdyfFEU262RhSIixoiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiD/2Q==" alt="Perforce" class="logo">
+    <div class="hdr-ey">Performance Testing Impact Report</div>
+    <div class="hdr-t">MetLife</div>
+    <div class="hdr-m">
+      Account: 1961586 &bull; BlazeMeter Enterprise<br>
+      October 2024 – April 2026 &bull; Generated April 6, 2026
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO OUTCOME STAT
+       CHANGE v3.1: Outcome leads. Program overview stats follow below.
+       Previously these stats were shown FIRST as a "program overview."
+       Now the most consequential outcome is the first thing seen.
+       Josh Brix: "Lead with business outcomes."
+       Populate 176, , and
+       Workspaces active across <strong>8+ global regions</strong> — from New York to Tokyo, Mexico City to Santiago. MetLife's performance testing programme has scaled across every major business unit and geography. from the single strongest metric for this
+       customer. For most accounts this will be issues caught or 
+       pass rate improvement. CSM selects the lead metric.
+  ═══════════════════════════════════════════════════════ -->
+  <div class="hero-outcome">
+    <div class="hero-outcome-eyebrow">Your Testing Program Delivered</div>
+    <div class="hero-outcome-stat">176<span class="unit"></span></div>
+    <div class="hero-outcome-hook">Workspaces active across <strong>8+ global regions</strong> — from New York to Tokyo, Mexico City to Santiago. MetLife's performance testing programme has scaled across every major business unit and geography.</div>
+
+    <!-- Program overview stats: supporting context, below the outcome -->
+    <div class="hero-cells">
+      <div class="hero-cell">
+        <div class="hero-cell-v">270+</div>
+        <div class="hero-cell-l">Tests Run</div>
+      </div>
+      <div class="hero-cell">
+        <div class="hero-cell-v">174</div>
+        <div class="hero-cell-l">Workspaces</div>
+      </div>
+      <div class="hero-cell">
+        <div class="hero-cell-v">20+</div>
+        <div class="hero-cell-l">Active Users</div>
+      </div>
+      <div class="hero-cell">
+        <div class="hero-cell-v">8+</div>
+        <div class="hero-cell-l">Regions</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       ROI METRICS
+  ═══════════════════════════════════════════════════════ -->
+  <div class="s s-bg">
+    <div class="s-lb">Your ROI Metrics</div>
+    <div class="s-t">What Your Testing Investment Delivered</div>
+    <div class="s-sub">Five defensible indicators of testing program value, mapped to business outcomes. <span class="tip" data-tip="T1 = directly measurable from platform data. T2 = estimable with validated assumptions; presented directionally. No dollar claims are made. Source: BlazeMeter platform telemetry.">Hover metric badges for data-source notes.</span></div>
+
+    <!-- ROW 1: Test Pass Rate — full width -->
+    <div class="m-full">
+      <!-- METRIC 1: Test Pass Rate + Trend -->
+      <div class="mc t-ind reveal">
+        <div class="mc-pri">Performance &amp; Uptime</div>
+        <div class="mc-lb"><span class="tip" data-tip="Percentage of test executions that passed all defined thresholds. Source: BlazeMeter test results.">Test Pass Rate</span></div>
+        <div class="mc-num">100<span class="u">%</span></div>
+        <div class="mc-tag tg">✓ 0% Error Rate — Most Recent Executions</div>
+        <div class="mc-why">Your team is catching more issues before they reach production. A rising pass rate reflects improving release readiness across your full testing program.</div>
+      </div>
+    </div>
+
+    <!-- ROW 2: Issues Caught — full width -->
+    <div class="m-full">
+      <!-- METRIC 2: Issues Caught Pre-Production -->
+      <div class="mc t-ind reveal">
+        <div class="mc-pri">Risk Reduction</div>
+        <div class="mc-lb"><span class="tip" data-tip="Distinct errors = unique error types identified across all test runs, deduplicated. Total errors = raw error event count including repeated occurrences. Source: BlazeMeter execution logs.">Issues Caught</span></div>
+        <div class="mc-num">0</div>
+        <div style="font-size:11px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.1em;margin-top:2px">Distinct Error Types</div>
+        <div class="mc-tag tg" style="margin-top:6px">✓ Clean Execution — No Issues Detected</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid var(--brd)">
+          <div style="font-size:20px;font-weight:800;color:var(--tx2);letter-spacing:-.02em">0</div>
+          <div style="font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.08em;line-height:1.3">Total Error<br>Events</div>
+        </div>
+        <div style="font-size:11px;color:var(--tx3);margin-top:3px;line-height:1.4">0 unique problems, 0 total occurrences — many errors repeat across runs.</div>
+        <div class="mc-why" style="margin-top:9px">0 distinct potential issues caught before production. Deduplication removes repeated noise, surfacing the true breadth of defects your team addressed.</div>
+      </div>
+    </div>
+
+    <!-- ROW 3: Response Time — full width -->
+    <div class="m-full">
+      <!-- METRIC 3: Average Response Time Trend -->
+      <div class="mc t-ind reveal">
+        <div class="mc-pri">Customer Experience</div>
+        <div class="mc-lb"><span class="tip" data-tip="Mean response time under load across tested endpoints. Lower is better. Source: BlazeMeter execution metrics.">Avg Response Time</span></div>
+        <div class="mc-num">151<span class="u">ms</span></div>
+        <div class="mc-tag tg">✓ Well Within SLA Thresholds</div>
+        <div class="mc-why">Response times improved consistently over the period, supporting reliable user experience under peak load.</div>
+        <div class="mo-embed">
+          <div class="bar-r"><div class="bar-lb">Retail</div><div class="bar-tk"><div class="bar-fl" style="--w:15%">151ms</div></div></div>
+          <div class="bar-r"><div class="bar-lb">ACE</div><div class="bar-tk"><div class="bar-fl" style="--w:15%">151ms</div></div></div>
+          <div class="bar-r"><div class="bar-lb">HWSI</div><div class="bar-tk"><div class="bar-fl" style="--w:20%">200ms</div></div></div>
+          <div class="bar-r"><div class="bar-lb">MetDental</div><div class="bar-tk"><div class="bar-fl" style="--w:22%">220ms</div></div></div>
+          <div class="bar-r"><div class="bar-lb">DSF</div><div class="bar-tk"><div class="bar-fl" style="--w:25%">250ms</div></div></div>
+          <div class="bar-r"><div class="bar-lb">SCP</div><div class="bar-tk"><div class="bar-fl" style="--w:30%">300ms</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 2: Health Check — full width -->
+    <div class="m-full">
+      <!-- ═══════════════════════════════════════════════════════
+           METRIC 4: Best Practices Health Check
+           Full-width row. hc-grid now 6 columns (one per practice).
+           Scores <=50%: Growth Opportunity (no number).
+           Scores >50%: color-coded status label only (no number, no bar).
+      ═══════════════════════════════════════════════════════ -->
+      <div class="mc t-cya reveal">
+        <div class="mc-pri">Testing Program Maturity</div>
+        <div class="mc-lb"><span class="tip" data-tip="Adoption percentages across six testing best practices, measured directly from your test configuration data. T1 = directly measurable. Source: BlazeMeter test configuration metadata.">Where Your Program Is Heading</span></div>
+        <div class="mc-tag tg" style="margin-bottom:6px">&#x2713; Directly Measurable</div>
+        <div class="mc-why" style="margin-top:4px;margin-bottom:2px">Your team's adoption of six industry best practices. Strong areas are highlighted — growth opportunities are flagged for your next review conversation.</div>
+        <div class="hc-embed">
+          <div class="hc-grid" id="hc-grid"></div>
+        </div>
+      </div>
+    </div><!-- /row 2 -->
+
+    <!-- ROW 3: Platform Footprint — full width -->
+    <div class="m-full">
+      <!-- METRIC 5: Platform Footprint -->
+      <div class="mc t-cya reveal">
+        <div class="mc-pri">Save Money &bull; Save Time</div>
+        <div class="mc-lb"><span class="tip" data-tip="Cloud load generation engines consumed and active platform users over the report period. Source: BlazeMeter infrastructure usage and user activity.">Platform Footprint</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+          <div style="text-align:center;padding:12px 8px;background:var(--lt);border-radius:8px;border:1px solid var(--brd)">
+            <div class="mc-num" style="font-size:36px">12</div>
+            <div style="font-size:9px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.08em;margin-top:4px">Cloud Engines</div>
+          </div>
+          <div style="text-align:center;padding:12px 8px;background:var(--lt);border-radius:8px;border:1px solid var(--brd)">
+            <div class="mc-num" style="font-size:36px">20+</div>
+            <div style="font-size:9px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.08em;margin-top:4px">Active Users</div>
+          </div>
+        </div>
+        <div class="mc-why">Elastic capacity on demand across 174 workspaces — no dedicated hardware to provision or maintain. 20+ team members testing independently across the platform.</div>
+        <div style="font-size:10px;font-weight:700;color:var(--navy);margin:14px 0 8px">Most Executed Tests</div>
+        <div class="tt-row">
+          <div class="tt-r">1</div>
+          <div class="tt-i"><div class="tt-n">ACE Benefits Admin — Monthly Release Suite</div><div class="tt-d">8058_V3 Benefits Administration System</div></div>
+          <div class="tt-m"><div class="tt-c">16</div><div class="tt-p">consecutive monthly releases</div></div>
+        </div>
+        <div class="tt-row">
+          <div class="tt-r">2</div>
+          <div class="tt-i"><div class="tt-n">Retail Messaging Services — API Load Suite</div><div class="tt-d">7573_Retail Messaging Services</div></div>
+          <div class="tt-m"><div class="tt-c">55</div><div class="tt-p">active service projects</div></div>
+        </div>
+        <div class="tt-row">
+          <div class="tt-r">3</div>
+          <div class="tt-i"><div class="tt-n">Distributed Services Framework</div><div class="tt-d">11618_Distributed Services Framework</div></div>
+          <div class="tt-m"><div class="tt-c">2</div><div class="tt-p">test suites, active Apr 2026</div></div>
+        </div>
+      </div>
+    </div><!-- /row 3 -->
+
+    <!-- DATA SOURCE NOTE -->
+    <div class="gov">
+      <div class="gov-icon">ℹ</div>
+      <div class="gov-tx">
+        <strong>About this data:</strong> All metrics reflect BlazeMeter platform activity for the period shown. Figures are presented as factual counts and directional trends. No estimates of incident costs or infrastructure savings are included. Questions about your data? Contact your Customer Success Manager.
+      </div>
+    </div>
+
+  </div><!-- /s s-bg -->
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       WHAT'S NEXT
+       CHANGE v3.1: Structural reorder and reframe.
+       1. "What's Working Well" now leads (elevated above recs).
+          Josh Brix: lead with strength before surfacing improvements.
+       2. Recommendation copy uses unlock framing — not "currently at X%."
+          Raw low scores removed from customer-facing rec copy.
+          The question is "what does enabling this unlock?" not 
+          "what are you failing at?"
+       3. CTA rewritten with held-insight hook.
+          Josh Brix: "Consider holding select insights for live discussion."
+  ═══════════════════════════════════════════════════════ -->
+  <div class="s">
+    <div class="s-lb">What's Next</div>
+    <div class="s-t">Building on Your Program's Strengths</div>
+    <div class="s-sub">Based on your testing program results and best practices adoption data.</div>
+
+    <!-- WHAT'S WORKING WELL — elevated to first position -->
+    <div class="rec-w reveal">
+      <div class="rec-wt"><span class="rec-wt-icon">&#x2713;</span> What Your Team Has Built</div>
+      <div class="rec-wp">
+        MetLife's testing programme has achieved <strong>zero error rates</strong> across the most recent execution cycles, with response times well within SLA thresholds. <strong>Test Data enablement JMeter version compliance</strong> and <strong>[84%] CSV Data Split adoption</strong> show your team has built strong testing discipline across [N] workspaces. A [X-point] pass rate improvement over the period reflects a program that is maturing, not just running more tests."]
+      </div>
+    </div>
+
+    <!-- RECOMMENDATION 1 — unlock framing, no raw low score shown -->
+    <div class="rec reveal">
+      <div class="rec-header">
+        <span class="rec-n">1</span>
+        <div class="rec-t">Unlock Automated Release Gates with Failure Criteria</div>
+      </div>
+      <div class="rec-p">Your test configurations run thorough load scenarios — adding performance thresholds would let the platform automatically flag regressions the moment they appear, rather than requiring manual review after each run. Teams that enable threshold-based pass/fail criteria typically catch release-blocking issues hours earlier in the cycle.</div>
+      <div class="rec-action" style="display:block;font-weight:700;margin-top:8px"><strong>&#x2192; Ask your CSM about configuring automated pass/fail thresholds for your ACE and Retail Messaging suites.</strong></div>
+    </div>
+
+    <!-- RECOMMENDATION 2 — unlock framing, no raw low score shown -->
+    <div class="rec reveal">
+      <div class="rec-header">
+        <span class="rec-n">2</span>
+        <div class="rec-t">Extend Coverage to Additional Global Business Units</div>
+      </div>
+      <div class="rec-p">With 174 active workspaces spanning 8 regions, MetLife has built the broadest testing footprint of any enterprise customer in this segment. Several newer business units onboarded in late 2025 are early in their testing maturity journey — an opportunity to replicate the cadence discipline seen in your ACE and Retail Messaging teams.</div>
+      <div class="rec-action" style="display:block;font-weight:700;margin-top:8px"><strong>&#x2192; Identify 2–3 high-growth BUs for a structured onboarding sprint with your CSM.</strong></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         CTA — rewritten with held-insight hook
+         CHANGE v3.1: Generic "schedule a review" replaced with a 
+         specific tease of something held for the live conversation.
+         This creates pull toward the follow-up rather than just 
+         offering calendar availability.
+         CSM fills in regional workspace utilisation and release cadence before sending —
+         e.g. "pipeline integration," "regional coverage," "test cadence."
+    ═══════════════════════════════════════════════════════ -->
+    <div class="cta reveal">
+      <div class="cta-eyebrow">Your Next Step</div>
+      <div class="cta-t">There's More in This Data Than the Report Shows</div>
+      <div class="cta-insight">
+        Your CSM has identified <strong>one additional opportunity area</strong> in your regional workspace utilisation and release cadence data that didn't make it into this report — it's the kind of insight that's better walked through together. Your review conversation will cover it.
+      </div>
+      <a href="mailto:kpuzey@perforce.com" class="cta-btn">Schedule Your Review</a>
+      <div class="cta-ct">Keith Puzey &bull; Customer Success Manager &bull; kpuzey@perforce.com</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════ -->
+  <div class="ftr">
+    <img src="data:image/png;base64,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7f8A1qYH/VbI/wD/AB/fURdbctos71SvuWW+mnpqW4zNkjin26bQGNbz2JH3qwxFtuswREWNEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAW/tBeJvKdPKaCx3yF+Q4/Hs2OJ8m1RTN8I3ntb+K73EIiCYmmWuen2oLGtslwq4qrl06appHte0+G4BafcVsG5XKittE6srZuqgaNy7ol2w9gBKIukv4nEfdU+LbB8abPQ4zR1l/ujN2jpRup6djvxnOAcfYB71DfVbVfNtS7ianJrtI+ma7eGhh3ZTw+xnefM7nzRFFutkYMiIsaIiICIiAiIg/WktcHNJBB3BHct+6KcUWa4M2G138vyayM2aI6iTaohb+JId9x5O38iERBL7TDXvTzUANitFdWU9aQOlS1NI8OafymgtPyrZFfcaOho3VlVN1cDRuXdEnl7AN0RXLqbGgtU+LHBMWE9DYKWtv91j3aGdU6CBjvxnPAcfc0+1Qt1b1Py3U6/fVTJq7psj3FNSRbtgp2nuY3x8SdyfFEU262RhSIixoiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiD/2Q==" alt="Perforce" class="ftr-logo">
+    <div class="ftr-tx">
+      Perforce Software &bull; <a href="https://www.perforce.com">perforce.com</a> &bull; <a href="https://www.blazemeter.com">blazemeter.com</a><br>
+      Data: BlazeMeter platform telemetry &bull; MetLife &bull; October 2024 – April 2026
+    </div>
+    <hr class="ftr-div">
+    <div class="ftr-cp">&copy; Perforce Software, Inc. All rights reserved. For informational purposes only. Metrics reflect platform usage for the period specified. Hover dotted-underlined labels for data source details. No dollar-value ROI claims are made in this report.</div>
+  </div>
+
+</div><!-- /w -->
+
+<script type="application/json" id="hc-data">[{"name":"Failure Criteria","tip":"enableFailureCriteria flag in test configuration. Automated pass/fail thresholds catch regressions before manual review.","score":0},{"name":"Dedicated IPs","tip":"dedicatedIpsEnabled flag. Consistent source IPs ensure firewall rules and network routing are stable across test runs.","score":0},{"name":"Test Data Split","tip":"enableTestData / splitCSV flag. Using parameterised data sets prevents cache pollution and produces realistic load profiles.","score":100},{"name":"JMeter Version","tip":"designatedJmeterVersions pinned in configuration. Version consistency prevents behaviour drift across test engines.","score":100},{"name":"Ramp-Up Control","tip":"rampUp configured in override_executions. Gradual load increases prevent false failure spikes at test start.","score":100},{"name":"Mock Services","tip":"enableMockServices flag. Service virtualisation removes third-party dependency constraints from load test execution.","score":0}]</script>
+<div id="tt"></div>
+<script>
+(function(){
+  // ── TOOLTIP ENGINE ──────────────────────────────────────────
+  const tt=document.getElementById('tt');
+  function attachTip(el){
+    el.addEventListener('mouseenter',()=>{
+      const d=el.getAttribute('data-tip');
+      if(!d)return;
+      tt.textContent=d;tt.classList.add('on');
+      const r=el.getBoundingClientRect();
+      let top=r.top-tt.offsetHeight-10,left=r.left+r.width/2-tt.offsetWidth/2;
+      if(top<8)top=r.bottom+10;
+      if(left<8)left=8;
+      if(left+tt.offsetWidth>window.innerWidth-8)left=window.innerWidth-tt.offsetWidth-8;
+      tt.style.top=top+'px';tt.style.left=left+'px';
+    });
+    el.addEventListener('mouseleave',()=>tt.classList.remove('on'));
+  }
+  document.querySelectorAll('.tip').forEach(attachTip);
+
+  // ── HEALTH CHECK RENDER ──────────────────────────────────────
+  // v3.2: NO numbers shown in customer-facing version.
+  // Status communicated via color-coded icon + label pill only.
+  // Three tiers:
+  //   score >= 70  → green  → Excellent (>=85) or Good (70-84)
+  //   score 51-69  → amber  → Opportunity
+  //   score <= 50  → indigo → Growth Opportunity (held for CSM conversation)
+  // Progress bar removed — bar encodes the number visually.
+  // Full scores remain visible in the CSM internal version.
+  const _hcRaw=document.getElementById('hc-data').textContent.trim();const hcData=_hcRaw.startsWith('[') ? JSON.parse(_hcRaw) : [];
+
+  function hcTier(s){
+    if(s>=85) return {icon:'✦', label:'Excellent',   pill:'hc-pill-grn'};
+    if(s>=70) return {icon:'✦', label:'Good',         pill:'hc-pill-grn'};
+    if(s>=51) return {icon:'◈', label:'Opportunity',  pill:'hc-pill-amb'};
+    return          {icon:'◇', label:'Opportunity',  pill:'hc-pill-opp'};
+  }
+
+  const grid=document.getElementById('hc-grid');
+  hcData.forEach(({name,tip,score})=>{
+    const t=hcTier(score);
+    const card=document.createElement('div');
+    card.className='hc';
+    card.innerHTML=`
+      <div class="hc-nm"><span class="tip" data-tip="${tip}">${name}</span></div>
+      <div class="hc-icon">${t.icon}</div>
+      <div class="hc-pill ${t.pill}">${t.label}</div>`;
+    grid.appendChild(card);
+    card.querySelectorAll('.tip').forEach(attachTip);
+  });
+
+  // ── SCROLL ANIMATIONS ──────────────────────────────────────
+  // Note: .hc-fl removed from observer — health check bars not rendered in v3.2
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('vis');
+        e.target.querySelectorAll('.bar-fl').forEach(b=>b.classList.add('live'));
+      }
+    });
+  },{threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+  document.querySelectorAll('.mo-embed').forEach(box=>{
+    const o=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting)e.target.querySelectorAll('.bar-fl').forEach(b=>b.classList.add('live'))});
+    },{threshold:0.3});
+    o.observe(box);
+  });
+})();
+</script>
+</body>
+</html>
