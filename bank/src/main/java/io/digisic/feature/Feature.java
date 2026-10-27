@@ -2,7 +2,7 @@ package io.digisic.bank.feature;
 
 public enum Feature {
     // key, menu label, font-awesome icon, badge lifetime (minutes)
-    NEW_DEPOSIT_BADGE("new-deposit-badge", "Highlight New Deposits", "fa-star-o", 60);
+    NEW_DEPOSIT_BADGE("new-deposit-badge", "Highlight New Deposits", "fa-star-o", 2);
     // Future features: add a line here
 
     private final String key, label, icon;

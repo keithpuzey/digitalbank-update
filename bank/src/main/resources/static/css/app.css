@@ -132,6 +132,22 @@ aside.left-panel {
     background-color: #f8faff !important;
 }
 
+
+.new-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  border-radius: 10px;
+  background: #e53935;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  animation: newPulse 1.4s ease-in-out infinite;
+}
+.new-badge::before { content: "NEW"; }
+@keyframes newPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+
+
 /* -------------------------
    Header & Search 
    ------------------------- */
